@@ -1,5 +1,5 @@
 // Komponent dla ABI z fade-in animacją
-function AbiContract() {
+function AbiContract({ theme }) {
   const [show, setShow] = React.useState(false);
   React.useEffect(() => {
     const timer = setTimeout(() => setShow(true), 500);
@@ -9,20 +9,20 @@ function AbiContract() {
     <div style={{
       maxWidth: 843,
       margin: '60px auto 32px auto',
-      background: '#f5f7fa',
+      background: theme.bg,
       borderRadius: 12,
-      boxShadow: '0 2px 16px rgba(0,82,255,0.08)',
+      boxShadow: theme.shadow,
       padding: '28px 32px',
       textAlign: 'left',
       fontFamily: 'Inter, Arial, sans-serif',
       fontWeight: 500,
       fontSize: '1.08em',
-      color: '#2563eb',
+      color: theme.primary,
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
-      <p style={{ color: '#2563eb', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
+      <p style={{ color: '#E2B13C', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
         Wklej tutaj ABI (Application Binary Interface) swojego kontraktu, aby zobaczyć jego metody i zdarzenia.<br /><br />
         To okno służy tylko do podglądu i analizy ABI.
       </p>
@@ -41,7 +41,7 @@ const contracts = [
 ];
 
 // Komponent dla Home z fade-in animacją
-function HomeContract() {
+function HomeContract({ theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -53,9 +53,9 @@ function HomeContract() {
     <div style={{
       maxWidth: 540,
       margin: '60px auto 32px auto',
-      background: '#f5f7fa',
+      background: theme.bg,
       borderRadius: 12,
-      boxShadow: '0 2px 16px rgba(0,82,255,0.08)',
+      boxShadow: theme.shadow,
       padding: '28px 32px',
       textAlign: 'center',
       fontFamily: 'Inter, Arial, sans-serif',
@@ -66,7 +66,7 @@ function HomeContract() {
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
-      <span style={{ color: '#2563eb', fontWeight: 700 }}>
+      <span style={{ color: '#E2B13C', fontWeight: 700 }}>
         <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
           Deploy Your Contract – Fast & Secure!
         </span>
@@ -76,7 +76,7 @@ function HomeContract() {
         <br />
         Deploy your own contracts in seconds!
       </span>
-      <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: '#888', marginTop: 28, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+      <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: '#E2B13C', marginTop: 28, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
         Currently 4 contracts available. More coming soon.
       </span>
     </div>
@@ -84,7 +84,7 @@ function HomeContract() {
 }
 
 // Komponent dla How It Works z fade-in animacją
-function HowItWorksContract() {
+function HowItWorksContract({ theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -96,21 +96,21 @@ function HowItWorksContract() {
     <div style={{
       maxWidth: 843,
       margin: '60px auto 32px auto',
-      background: '#f5f7fa',
+      background: theme.bg,
       borderRadius: 12,
-      boxShadow: '0 2px 16px rgba(0,82,255,0.08)',
+      boxShadow: theme.shadow,
       padding: '28px 32px',
       textAlign: 'left',
       fontFamily: 'Inter, Arial, sans-serif',
       fontWeight: 500,
       fontSize: '1.08em',
-      color: '#2563eb',
+      color: theme.primary,
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
-      <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0, marginBottom: '18px' }}>How It Works</h2>
-      <p style={{ color: '#2563eb', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
+      <h2 style={{ color: '#E2B13C', fontWeight: 700, fontSize: '1.3em', margin: 0, marginBottom: '18px' }}>How It Works</h2>
+      <p style={{ color: '#E2B13C', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
         This deployer allows you to deploy pre-compiled smart contracts to multiple blockchain networks with just a few clicks.
         <br /><br />
         <b>Steps:</b>
@@ -126,7 +126,7 @@ function HowItWorksContract() {
 }
 
 // Komponent dla My Deployments z fade-in animacją
-function MyDeploymentsContract() {
+function MyDeploymentsContract({ theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -138,21 +138,21 @@ function MyDeploymentsContract() {
     <div style={{
       maxWidth: 843,
       margin: '60px auto 32px auto',
-      background: '#f5f7fa',
+      background: theme.bg,
       borderRadius: 12,
-      boxShadow: '0 2px 16px rgba(0,82,255,0.08)',
+      boxShadow: theme.shadow,
       padding: '28px 32px',
       textAlign: 'left',
       fontFamily: 'Inter, Arial, sans-serif',
       fontWeight: 500,
       fontSize: '1.08em',
-      color: '#2563eb',
+      color: theme.primary,
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
-      <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0, marginBottom: '18px' }}>My Deployments</h2>
-      <p style={{ color: '#2563eb', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
+      <h2 style={{ color: '#E2B13C', fontWeight: 700, fontSize: '1.3em', margin: 0, marginBottom: '18px' }}>My Deployments</h2>
+      <p style={{ color: '#E2B13C', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
         Your deployment history will appear here.
         <br /><br />
         This feature is coming soon and will show all contracts you've deployed, including contract addresses, deployment dates, and network information.
@@ -162,7 +162,7 @@ function MyDeploymentsContract() {
 }
 
 // Komponent dla SimpleStorage z fade-in animacją
-function SimpleStorageContract({ isWalletConnected, connectWallet, setPopup }) {
+function SimpleStorageContract({ isWalletConnected, connectWallet, setPopup, theme }) {
   const [showContract, setShowContract] = React.useState(false);
   
   React.useEffect(() => {
@@ -174,21 +174,21 @@ function SimpleStorageContract({ isWalletConnected, connectWallet, setPopup }) {
     <div style={{ 
       maxWidth: 843, 
       margin: '60px auto 32px auto', 
-      background: '#e9eaec', 
+      background: theme.bg, 
       borderRadius: 12, 
-      boxShadow: '0 2px 12px rgba(0,0,0,0.04)', 
+      boxShadow: theme.shadow, 
       padding: '28px 32px', 
       textAlign: 'left', 
       fontFamily: 'Inter, Arial, sans-serif', 
       fontWeight: 500, 
       fontSize: '1.08em', 
-      color: '#2563eb',
+      color: theme.primary,
       opacity: showContract ? 1 : 0,
       transform: showContract ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>SimpleStorage</h2>
+        <h2 style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>SimpleStorage</h2>
         {!isWalletConnected ? (
           <button
             className="ibb-btn"
@@ -256,7 +256,7 @@ function SimpleStorageContract({ isWalletConnected, connectWallet, setPopup }) {
           >Deploy</button>
         )}
       </div>
-      <div style={{ color: '#2563eb', fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : theme.primary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
         <b>SimpleStorage is a minimal contract for storing a single integer value on the blockchain. It is perfect for learning, testing, and demonstrating how persistent storage works in smart contracts. Anyone can update the value, and anyone can read it at any time. There are no restrictions or access controls, making it ideal for public demos and tutorials.</b>
         <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: '#6b7280', fontSize: '1.04em' }}>Function:</div>
         <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
@@ -314,7 +314,7 @@ contract SimpleStorage {
 }
 
 // Komponent dla ClickCounter z fade-in animacją
-function ClickCounterContract({ isWalletConnected, connectWallet, setPopup }) {
+function ClickCounterContract({ isWalletConnected, connectWallet, setPopup, theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -340,14 +340,14 @@ function ClickCounterContract({ isWalletConnected, connectWallet, setPopup }) {
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>ClickCounter</h2>
+        <h2 style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>ClickCounter</h2>
         {!isWalletConnected ? (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={connectWallet}>Connect</button>
         ) : (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={async () => { if (!window.ethereum) { setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null }); return; } try { const provider = new ethers.BrowserProvider(window.ethereum); const signer = await provider.getSigner(); const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033"; const tx = await signer.sendTransaction({ data: bytecode }); const receipt = await tx.wait(); if (receipt.contractAddress) { setPopup({ visible: true, message: `Contract deployed successfully!`, txHash: tx.hash }); } else { setPopup({ visible: true, message: "Deployment failed: no contract address returned.", txHash: null }); } } catch (err) { if (err && err.message && (err.message.includes('user rejected') || err.message.includes('denied'))) { setPopup({ visible: true, message: "Transaction aborted by user.", txHash: null }); } else { setPopup({ visible: true, message: `Deployment failed: ${err.message}`, txHash: null }); } } }}>Deploy</button>
         )}
       </div>
-      <div style={{ color: '#2563eb', fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : '#2563eb', fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
         <b>ClickCounter is a public contract that tracks the total number of times users have interacted with it. Every call to increment increases the global counter, making it a great example for event tracking, gamification, or simple analytics on-chain. The contract is open to everyone, so the count reflects all user activity.</b>
         <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: '#6b7280', fontSize: '1.04em' }}>Function:</div>
         <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
@@ -382,7 +382,7 @@ contract ClickCounter {
 }
 
 // Komponent dla MessageBoard z fade-in animacją
-function MessageBoardContract({ isWalletConnected, connectWallet, setPopup }) {
+function MessageBoardContract({ isWalletConnected, connectWallet, setPopup, theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -394,28 +394,28 @@ function MessageBoardContract({ isWalletConnected, connectWallet, setPopup }) {
     <div style={{ 
       maxWidth: 843, 
       margin: '60px auto 32px auto', 
-      background: '#e9eaec', 
+      background: theme.bg, 
       borderRadius: 12, 
-      boxShadow: '0 2px 12px rgba(0,0,0,0.04)', 
+      boxShadow: theme.shadow, 
       padding: '28px 32px', 
       textAlign: 'left', 
       fontFamily: 'Inter, Arial, sans-serif', 
       fontWeight: 500, 
       fontSize: '1.08em', 
-      color: '#2563eb',
+      color: theme.primary,
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>MessageBoard</h2>
+        <h2 style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>MessageBoard</h2>
         {!isWalletConnected ? (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={connectWallet}>Connect</button>
         ) : (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={async () => { if (!window.ethereum) { setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null }); return; } try { const provider = new ethers.BrowserProvider(window.ethereum); const signer = await provider.getSigner(); const bytecode = "0x6080604052348015600e575f5ffd5b506103ba8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063256fec881461004357806332970710146100735780636630f88f14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61007b61009d565b60405161006a9190610149565b61009b610096366004610192565b610128565b005b5f80546100a990610245565b80601f01602080910402602001604051908101604052809291908181526020018280546100d590610245565b80156101205780601f106100f757610100808354040283529160200191610120565b820191905f5260205f20905b81548152906001019060200180831161010357829003601f168201915b505050505081565b5f61013382826102c9565b5050600180546001600160a01b03191633179055565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b600181811c9082168061025957607f821691505b60208210810361027757634e487b7160e01b5f52602260045260245ffd5b50919050565b601f8211156102c457805f5260205f20601f840160051c810160208510156102a25750805b601f840160051c820191505b818110156102c1575f81556001016102ae565b50505b505050565b815167ffffffffffffffff8111156102e3576102e361017e565b6102f7816102f18454610245565b8461027d565b6020601f821160018114610329575f83156103125750848201515b5f19600385901b1c1916600184901b1784556102c1565b5f84815260208120601f198516915b828110156103585787850151825560209485019460019092019101610338565b508482101561037557868401515f19600387901b60f8161c191681555b50505050600190811b0190555056fea264697066735822122081aa54c8ed61172532a488e962737c95dfb429d257ad3221825fb2c89316835664736f6c634300081e0033"; const tx = await signer.sendTransaction({ data: bytecode }); const receipt = await tx.wait(); if (receipt.contractAddress) { setPopup({ visible: true, message: `Contract deployed successfully!`, txHash: tx.hash }); } else { setPopup({ visible: true, message: "Deployment failed: no contract address returned.", txHash: null }); } } catch (err) { if (err && err.message && (err.message.includes('user rejected') || err.message.includes('denied'))) { setPopup({ visible: true, message: "Transaction aborted by user.", txHash: null }); } else { setPopup({ visible: true, message: `Deployment failed: ${err.message}`, txHash: null }); } } }}>Deploy</button>
         )}
       </div>
-      <div style={{ color: '#2563eb', fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : theme.primary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
         <b>MessageBoard is a simple public contract for posting and reading messages. Each new message overwrites the previous one and records the sender's address. This contract is useful for public announcements, feedback, or as a basic communication tool on-chain. All users share the same board, so only the latest message is visible.</b>
         <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: '#6b7280', fontSize: '1.04em' }}>Function:</div>
         <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
@@ -453,7 +453,7 @@ contract MessageBoard {
 }
 
 // Komponent dla SimpleVoting z fade-in animacją
-function SimpleVotingContract({ isWalletConnected, connectWallet, setPopup }) {
+function SimpleVotingContract({ isWalletConnected, connectWallet, setPopup, theme }) {
   const [show, setShow] = React.useState(false);
   
   React.useEffect(() => {
@@ -465,28 +465,28 @@ function SimpleVotingContract({ isWalletConnected, connectWallet, setPopup }) {
     <div style={{ 
       maxWidth: 843, 
       margin: '60px auto 32px auto', 
-      background: '#e9eaec', 
+      background: theme.bg, 
       borderRadius: 12, 
-      boxShadow: '0 2px 12px rgba(0,0,0,0.04)', 
+      boxShadow: theme.shadow, 
       padding: '28px 32px', 
       textAlign: 'left', 
       fontFamily: 'Inter, Arial, sans-serif', 
       fontWeight: 500, 
       fontSize: '1.08em', 
-      color: '#2563eb',
+      color: theme.primary,
       opacity: show ? 1 : 0,
       transform: show ? 'translateY(0)' : 'translateY(30px)',
       transition: 'opacity 0.6s, transform 0.6s'
     }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>SimpleVoting</h2>
+        <h2 style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : '#2563eb', fontWeight: 700, fontSize: '1.3em', margin: 0 }}>SimpleVoting</h2>
         {!isWalletConnected ? (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={connectWallet}>Connect</button>
         ) : (
           <button className="ibb-btn" style={{ minWidth: '70px', fontSize: '0.92em', padding: '0.32em 0.8em', marginLeft: '12px', background: '#2563eb', color: '#fff', border: 'none', borderRadius: '6px', fontWeight: 500, cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,82,255,0.10)', transition: 'background 0.2s' }} onMouseOver={e => e.currentTarget.style.background='#1746b1'} onMouseOut={e => e.currentTarget.style.background='#2563eb'} onClick={async () => { if (!window.ethereum) { setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null }); return; } try { const provider = new ethers.BrowserProvider(window.ethereum); const signer = await provider.getSigner(); const bytecode = "0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033"; const tx = await signer.sendTransaction({ data: bytecode }); const receipt = await tx.wait(); if (receipt.contractAddress) { setPopup({ visible: true, message: `Contract deployed successfully!`, txHash: tx.hash }); } else { setPopup({ visible: true, message: "Deployment failed: no contract address returned.", txHash: null }); } } catch (err) { if (err && err.message && (err.message.includes('user rejected') || err.message.includes('denied'))) { setPopup({ visible: true, message: "Transaction aborted by user.", txHash: null }); } else { setPopup({ visible: true, message: `Deployment failed: ${err.message}`, txHash: null }); } } }}>Deploy</button>
         )}
       </div>
-      <div style={{ color: '#2563eb', fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.primary === '#35D07F' ? '#E2B13C' : theme.primary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
         <b>SimpleVoting is a basic contract for on-chain polls. Users can vote for option A or B, and the contract keeps track of the total votes for each. This contract is ideal for learning about voting mechanisms, consensus, and transparent decision-making on blockchain. All votes are public and anyone can check the results.</b>
         <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: '#6b7280', fontSize: '1.04em' }}>Function:</div>
         <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
@@ -537,6 +537,38 @@ contract SimpleVoting {
 }
 
 function App() {
+  // Network selection state
+  const [network, setNetwork] = useState("Base");
+  // Motywy kolorów dla sieci
+  const themes = {
+    Base: {
+      primary: '#2563eb',
+      gradient: 'linear-gradient(90deg, #0052FF 0%, #3D7FFF 100%)',
+      bg: '#f5f7fa',
+      accent: '#1746b1',
+      shadow: '0 2px 8px rgba(0,82,255,0.10)',
+      codeBg: '#d3d8e8',
+      codeHeader: '#d3d4d7',
+      codeBorder: '#bcbec2',
+      codeText: '#222',
+      btnText: '#fff',
+      line: '#2563eb',
+    },
+    Celo: {
+      primary: '#35D07F', // zielony akcent dla tekstu
+      gradient: 'linear-gradient(90deg, #FBCC5C 0%, #F7E16B 100%)', // mocny do jasnego złotego
+      bg: '#F4F5F7',
+      accent: '#2D3A29',
+      shadow: '0 2px 8px rgba(53,208,127,0.10)',
+      codeBg: '#FBCC5C',
+      codeHeader: '#F4F5F7',
+      codeBorder: '#FBCC5C',
+      codeText: '#2D3A29',
+      btnText: '#2D3A29',
+      line: '#FBCC5C',
+    }
+  };
+  const theme = themes[network] || themes.Base;
   // Usunięto view, routing przez react-router-dom
   // headerWords usunięte, bo nie jest już używane
   const [showHeader, setShowHeader] = useState(false);
@@ -545,8 +577,8 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(false);
   // Popup modal state
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
-  // Network selection state
-  const [network, setNetwork] = useState("Base");
+  // Dropdown state for custom select
+  const [showDropdown, setShowDropdown] = useState(false);
   // Add Sepolia to the list
   const networks = ["Sepolia", "Celo", "Base", "Optimism"];
 
@@ -627,16 +659,16 @@ function App() {
             left: 0,
             width: '100vw',
             height: '100vh',
-            background: 'rgba(0,0,0,0.48)',
+            background: theme.primary === '#35D07F' ? 'rgba(53,208,127,0.12)' : 'rgba(0,82,255,0.12)',
             zIndex: 2000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}>
             <div style={{
-              background: '#f5f7fa',
+              background: theme.bg,
               borderRadius: 14,
-              boxShadow: '0 2px 16px rgba(0,82,255,0.12)',
+              boxShadow: theme.shadow,
               padding: '32px 38px',
               minWidth: 320,
               maxWidth: 420,
@@ -644,7 +676,8 @@ function App() {
               fontFamily: 'Inter, Arial, sans-serif',
               fontWeight: 500,
               fontSize: '1.08em',
-              color: '#2563eb',
+              color: theme.primary,
+              border: `2px solid ${theme.codeBg}`,
               position: 'relative',
             }}>
               <div style={{ marginBottom: popup.txHash ? 18 : 28 }}>
@@ -672,32 +705,72 @@ function App() {
             </div>
           </div>
         )}
-        <div className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '28px', padding: '18px 40px', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'linear-gradient(90deg, #0052FF 0%, #3D7FFF 100%)' }}>
-          <span className="header-title" style={{ color: '#fff', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 700, fontSize: '1.8em', letterSpacing: '0.01em', opacity: showHeader ? 1 : 0, transition: 'opacity 1s' }}>
+        <div className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '28px', padding: '18px 40px', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: theme.gradient }}>
+          <span className="header-title" style={{ color: network === 'Celo' ? theme.accent : (network === 'Base' ? '#fff' : theme.primary), fontFamily: 'Inter, Arial, sans-serif', fontWeight: 700, fontSize: '1.8em', letterSpacing: '0.01em', opacity: showHeader ? 1 : 0, transition: 'opacity 1s' }}>
             Contract Deployer
           </span>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ color: '#fff', fontWeight: 600, fontSize: '1.08em', marginRight: '6px' }}>Chain</span>
-            <select
-              value={network}
-              onChange={handleNetworkChange}
-              style={{
-                padding: '6px 18px',
-                borderRadius: 8,
-                border: 'none',
-                fontWeight: 600,
-                fontSize: '1.08em',
-                background: '#2563eb',
-                color: '#fff',
-                boxShadow: '0 2px 8px rgba(0,82,255,0.10)',
-                cursor: 'pointer',
-                outline: 'none',
-                appearance: 'none',
-                minWidth: 120
-              }}
-            >
-              {networks.map(n => <option key={n} value={n}>{n}</option>)}
-            </select>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px', position: 'relative' }}>
+            <span style={{ color: network === 'Celo' ? theme.accent : (network === 'Base' ? '#fff' : theme.primary), fontWeight: 600, fontSize: '1.08em', marginRight: '6px' }}>Chain</span>
+            <div style={{ position: 'relative', minWidth: 120 }}>
+              <div
+                style={{
+                  padding: '6px 18px',
+                  borderRadius: 8,
+                  border: 'none',
+                  fontWeight: 600,
+                  fontSize: '1.08em',
+                  background: network === 'Celo' ? '#E2B13C' : theme.primary,
+                  color: network === 'Celo' ? '#2D3A29' : theme.btnText,
+                  boxShadow: theme.shadow,
+                  cursor: 'pointer',
+                  outline: 'none',
+                  userSelect: 'none',
+                  minWidth: 120
+                }}
+                onClick={() => setShowDropdown(prev => !prev)}
+              >
+                {network}
+              </div>
+              {showDropdown && (
+                <div style={{
+                  position: 'absolute',
+                  top: '110%',
+                  left: 0,
+                  background: network === 'Celo' ? '#E2B13C' : theme.primary,
+                  borderRadius: 8,
+                  boxShadow: theme.shadow,
+                  zIndex: 1002,
+                  minWidth: 120,
+                  fontWeight: 600,
+                  fontSize: '1.08em',
+                  overflow: 'hidden',
+                  border: '1px solid #d3d4d7'
+                }}>
+                  {networks.map(n => (
+                    <div
+                      key={n}
+                      onClick={() => { setNetwork(n); setShowDropdown(false); handleNetworkChange({ target: { value: n } }); }}
+                      style={{
+                        padding: '8px 18px',
+                        cursor: 'pointer',
+                        color: network === 'Celo' ? '#2D3A29' : theme.btnText,
+                        background: network === 'Celo' ? '#E2B13C' : (network === 'Base' ? '#A7C7FF' : 'transparent'),
+                        transition: 'background 0.2s',
+                        fontWeight: n === network ? 700 : 600
+                      }}
+                      onMouseOver={e => {
+                        e.currentTarget.style.background = network === 'Celo' ? '#E2B13C' : (network === 'Base' ? '#A7C7FF' : 'rgba(167,199,255,0.7)');
+                      }}
+                      onMouseOut={e => {
+                        e.currentTarget.style.background = network === 'Celo' ? '#E2B13C' : (network === 'Base' ? '#A7C7FF' : 'transparent');
+                      }}
+                    >
+                      {n}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
           <div style={{
@@ -706,8 +779,8 @@ function App() {
             top: 68,
             left: 0,
             zIndex: 999,
-            background: '#f5f7fa',
-            borderBottom: '1px solid #e3eaf5',
+            background: theme.bg,
+            borderBottom: `1px solid ${theme.codeBorder}`,
             display: 'flex',
             alignItems: 'center',
             gap: '18px',
@@ -715,17 +788,17 @@ function App() {
             fontFamily: 'Inter, Arial, sans-serif',
             fontWeight: 500,
             fontSize: '0.98em',
-            color: '#2563eb',
-            boxShadow: '0 2px 8px rgba(0,82,255,0.04)',
+            color: theme.primary,
+            boxShadow: theme.shadow,
             opacity: showNav ? 1 : 0,
             transform: showNav ? 'translateY(0)' : 'translateY(30px)',
             transition: 'opacity 1s, transform 1s',
             pointerEvents: showNav ? 'auto' : 'none',
           }}>
-            <Link to="/" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Home</Link>
-            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
-            <Link to="/deploy" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Deploy</Link>
-            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+            <Link to="/" style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Home</Link>
+            <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+            <Link to="/deploy" style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Deploy</Link>
+            <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
             <div style={{ position: 'relative', display: 'inline-block' }}
               onMouseEnter={e => {
                 const menu = e.currentTarget.querySelector('.contracts-dropdown');
@@ -742,16 +815,16 @@ function App() {
                 }
               }}
             >
-              <span style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 4px 0 -8px', cursor: 'pointer' }}>Contracts</span>
-              <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+              <span style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 4px 0 -8px', cursor: 'pointer' }}>Contracts</span>
+              <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
               <div className="contracts-dropdown" style={{
                 display: 'none',
                 position: 'absolute',
                 top: '100%',
                 left: 0,
-                background: '#f5f7fa',
+                background: theme.bg,
                 minWidth: '180px',
-                boxShadow: '0 4px 16px rgba(0,82,255,0.10)',
+                boxShadow: theme.shadow,
                 borderRadius: '8px',
                 zIndex: 1001,
                 padding: '8px 0',
@@ -761,25 +834,25 @@ function App() {
                 opacity: 0,
                 transition: 'opacity 0.5s',
               }}>
-                <Link to="/contract/simple-storage" style={{ display: 'block', padding: '8px 20px', color: '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background='#c7cbe0'} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleStorage</Link>
-                <Link to="/contract/click-counter" style={{ display: 'block', padding: '8px 20px', color: '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background='#c7cbe0'} onMouseOut={e => e.currentTarget.style.background='transparent'}>ClickCounter</Link>
-                <Link to="/contract/message-board" style={{ display: 'block', padding: '8px 20px', color: '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background='#c7cbe0'} onMouseOut={e => e.currentTarget.style.background='transparent'}>MessageBoard</Link>
-                <Link to="/contract/simple-voting" style={{ display: 'block', padding: '8px 20px', color: '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background='#c7cbe0'} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleVoting</Link>
+                <Link to="/contract/simple-storage" style={{ display: 'block', padding: '8px 20px', color: network === 'Celo' ? '#E2B13C' : '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background=theme.codeBg} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleStorage</Link>
+                <Link to="/contract/click-counter" style={{ display: 'block', padding: '8px 20px', color: network === 'Celo' ? '#E2B13C' : '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background=theme.codeBg} onMouseOut={e => e.currentTarget.style.background='transparent'}>ClickCounter</Link>
+                <Link to="/contract/message-board" style={{ display: 'block', padding: '8px 20px', color: network === 'Celo' ? '#E2B13C' : '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background=theme.codeBg} onMouseOut={e => e.currentTarget.style.background='transparent'}>MessageBoard</Link>
+                <Link to="/contract/simple-voting" style={{ display: 'block', padding: '8px 20px', color: network === 'Celo' ? '#E2B13C' : '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background=theme.codeBg} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleVoting</Link>
               </div>
             </div>
-            <Link to="/abi" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>ABI</Link>
-            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
-            <Link to="/how" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>How It Works</Link>
-            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
-            <Link to="/my-deployments" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>My Deployments</Link>
-            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+            <Link to="/abi" style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>ABI</Link>
+            <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+            <Link to="/how" style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>How It Works</Link>
+            <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+            <Link to="/my-deployments" style={{ textDecoration: 'none', color: network === 'Celo' ? '#E2B13C' : theme.primary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>My Deployments</Link>
+            <span style={{ borderLeft: `2px solid ${network === 'Celo' ? '#FBCC5C' : '#2563eb'}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
           </div>
           <div style={{ padding: 40, paddingTop: 120 }}>
             <Routes>
-              <Route path="/" element={<HomeContract />} />
-              <Route path="/abi" element={<AbiContract />} />
-              <Route path="/how" element={<HowItWorksContract />} />
-              <Route path="/my-deployments" element={<MyDeploymentsContract />} />
+              <Route path="/" element={<HomeContract theme={theme} />} />
+              <Route path="/abi" element={<AbiContract theme={theme} />} />
+              <Route path="/how" element={<HowItWorksContract theme={theme} />} />
+              <Route path="/my-deployments" element={<MyDeploymentsContract theme={theme} />} />
               <Route path="/deploy" element={
                 <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 0 }}>
                   {!isWalletConnected ? (
@@ -863,6 +936,7 @@ function App() {
                   isWalletConnected={isWalletConnected}
                   connectWallet={connectWallet}
                   setPopup={setPopup}
+                  theme={theme}
                 />
               } />
               <Route path="/contract/click-counter" element={
@@ -870,6 +944,7 @@ function App() {
                   isWalletConnected={isWalletConnected}
                   connectWallet={connectWallet}
                   setPopup={setPopup}
+                  theme={theme}
                 />
               } />
               <Route path="/contract/message-board" element={
@@ -877,6 +952,7 @@ function App() {
                   isWalletConnected={isWalletConnected}
                   connectWallet={connectWallet}
                   setPopup={setPopup}
+                  theme={theme}
                 />
               } />
               <Route path="/contract/simple-voting" element={
@@ -884,6 +960,7 @@ function App() {
                   isWalletConnected={isWalletConnected}
                   connectWallet={connectWallet}
                   setPopup={setPopup}
+                  theme={theme}
                 />
               } />
             </Routes>
