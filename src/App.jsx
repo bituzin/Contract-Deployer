@@ -1,3 +1,34 @@
+// Komponent dla ABI z fade-in animacją
+function AbiContract() {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const timer = setTimeout(() => setShow(true), 500);
+    return () => clearTimeout(timer);
+  }, []);
+  return (
+    <div style={{
+      maxWidth: 843,
+      margin: '60px auto 32px auto',
+      background: '#f5f7fa',
+      borderRadius: 12,
+      boxShadow: '0 2px 16px rgba(0,82,255,0.08)',
+      padding: '28px 32px',
+      textAlign: 'left',
+      fontFamily: 'Inter, Arial, sans-serif',
+      fontWeight: 500,
+      fontSize: '1.08em',
+      color: '#2563eb',
+      opacity: show ? 1 : 0,
+      transform: show ? 'translateY(0)' : 'translateY(30px)',
+      transition: 'opacity 0.6s, transform 0.6s'
+    }}>
+      <p style={{ color: '#2563eb', fontWeight: 400, fontSize: '1em', lineHeight: '1.6' }}>
+        Wklej tutaj ABI (Application Binary Interface) swojego kontraktu, aby zobaczyć jego metody i zdarzenia.<br /><br />
+        To okno służy tylko do podglądu i analizy ABI.
+      </p>
+    </div>
+  );
+}
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { ethers } from "ethers";
@@ -641,31 +672,33 @@ function App() {
             </div>
           </div>
         )}
-        <div className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '28px', padding: '18px 40px', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'linear-gradient(90deg, #0052FF 0%, #3D7FFF 100%)' }}>
+        <div className="header" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '28px', padding: '18px 40px', position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000, background: 'linear-gradient(90deg, #0052FF 0%, #3D7FFF 100%)' }}>
           <span className="header-title" style={{ color: '#fff', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 700, fontSize: '1.8em', letterSpacing: '0.01em', opacity: showHeader ? 1 : 0, transition: 'opacity 1s' }}>
             Contract Deployer
           </span>
-          <select
-            value={network}
-            onChange={handleNetworkChange}
-            style={{
-              marginLeft: 24,
-              padding: '6px 18px',
-              borderRadius: 8,
-              border: 'none',
-              fontWeight: 600,
-              fontSize: '1.08em',
-              background: '#2563eb',
-              color: '#fff',
-              boxShadow: '0 2px 8px rgba(0,82,255,0.10)',
-              cursor: 'pointer',
-              outline: 'none',
-              appearance: 'none',
-              minWidth: 120
-            }}
-          >
-            {networks.map(n => <option key={n} value={n}>{n}</option>)}
-          </select>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <span style={{ color: '#fff', fontWeight: 600, fontSize: '1.08em', marginRight: '6px' }}>Chain</span>
+            <select
+              value={network}
+              onChange={handleNetworkChange}
+              style={{
+                padding: '6px 18px',
+                borderRadius: 8,
+                border: 'none',
+                fontWeight: 600,
+                fontSize: '1.08em',
+                background: '#2563eb',
+                color: '#fff',
+                boxShadow: '0 2px 8px rgba(0,82,255,0.10)',
+                cursor: 'pointer',
+                outline: 'none',
+                appearance: 'none',
+                minWidth: 120
+              }}
+            >
+              {networks.map(n => <option key={n} value={n}>{n}</option>)}
+            </select>
+          </div>
         </div>
           <div style={{
             width: '100%',
@@ -734,6 +767,8 @@ function App() {
                 <Link to="/contract/simple-voting" style={{ display: 'block', padding: '8px 20px', color: '#2563eb', textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background='#c7cbe0'} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleVoting</Link>
               </div>
             </div>
+            <Link to="/abi" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>ABI</Link>
+            <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
             <Link to="/how" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>How It Works</Link>
             <span style={{ borderLeft: '2px solid #2563eb', height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
             <Link to="/my-deployments" style={{ textDecoration: 'none', color: '#2563eb', padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>My Deployments</Link>
@@ -742,6 +777,7 @@ function App() {
           <div style={{ padding: 40, paddingTop: 120 }}>
             <Routes>
               <Route path="/" element={<HomeContract />} />
+              <Route path="/abi" element={<AbiContract />} />
               <Route path="/how" element={<HowItWorksContract />} />
               <Route path="/my-deployments" element={<MyDeploymentsContract />} />
               <Route path="/deploy" element={
