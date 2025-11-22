@@ -1,14 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 import { AbiContract, HomeContract, HowItWorksContract, MyDeploymentsContract, SimpleStorageContract, ClickCounterContract, MessageBoardContract, SimpleVotingContract, contractsList } from './Contracts.jsx';
 
 export default function CeloApp(props) {
-    const [hoveredIdx, setHoveredIdx] = React.useState(null);
   const {
-    theme,
-    network,
-    setNetwork,
-    showHeader = true,
     showNav = true,
     isWalletConnected,
     walletAddress,
@@ -20,8 +15,14 @@ export default function CeloApp(props) {
     networks = ['Celo','Base','Optimism','Sepolia'],
     networkParams = {},
     handleNetworkChange = () => {},
-    connectWallet = () => {}
+    connectWallet = () => {},
+    showHeader = true,
+    theme,
+    network,
+    setNetwork
   } = props;
+
+  const [hoveredIdx, setHoveredIdx] = useState(null);
 
   return (
     <div>
@@ -69,7 +70,7 @@ export default function CeloApp(props) {
         </div>
       )}
 
-      <div style={{ padding: 40, paddingTop: 120 }}>
+      <div style={{ padding: 40, paddingTop: 60 }}>
         <Routes>
           <Route path="/" element={<HomeContract theme={theme} />} />
           <Route path="/abi" element={<AbiContract theme={theme} />} />
@@ -83,11 +84,15 @@ export default function CeloApp(props) {
                   <button onClick={connectWallet} style={{ marginTop: 12 }}>Connect</button>
                 </div>
               ) : (
-                contractsList.map(contract => (
-                  <div key={contract.name} style={{ marginBottom: 12 }}>
-                    <button className="ibb-btn" onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}>{contract.name}</button>
-                  </div>
-                ))
+                <div style={{ display: 'flex', gap: 50, flexWrap: 'wrap', flexDirection: 'row', marginBottom: 12 }}>
+                  {contractsList.map(contract => (
+                    <button
+                      key={contract.name}
+                      style={{ width: 'auto', maxWidth: '100%', boxSizing: 'border-box', background: '#FFE000', color: '#2D3A29', fontWeight: 700 }}
+                      onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}
+                    >{contract.name}</button>
+                  ))}
+                </div>
               )}
             </div>
           } />

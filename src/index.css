@@ -1,19 +1,14 @@
-.header {
-  background: linear-gradient(90deg, var(--base-blue), var(--base-blue-dark));
-  color: white;
-  padding: 18px 30px;
-  border-radius: 0 0 12px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-}
-.header-title {
-  font-size: 1.2rem;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+.ibb-btn-celo {
+  background: #FFE000 !important;
+  color: #2D3A29 !important;
+  font-family: Inter, Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1.08em;
+  border: none;
+  border-radius: 8px;
+  padding: 0.7em 1.5em;
+  cursor: pointer;
+  outline: none;
 }
 .header-select {
   font-size: 16px;
@@ -27,7 +22,7 @@
   font-family: Inter, Arial, sans-serif;
 }
 /* Styl przycisków jak w IBB react */
-.ibb-btn {
+.ibb-btn-base {
   background: linear-gradient(90deg, var(--base-blue), var(--base-blue-light));
   color: #fff;
   font-family: Inter, Arial, sans-serif;
@@ -36,14 +31,13 @@
   border: none;
   border-radius: 8px;
   padding: 0.7em 1.5em;
+  box-shadow: 0 2px 8px rgba(0,82,255,0.08);
+  transition: box-shadow 0.2s, background 0.2s;
   outline: none;
+  cursor: pointer;
 }
-.ibb-btn:hover, .ibb-btn:focus {
-  background: linear-gradient(90deg, var(--base-blue-dark), var(--base-blue));
-}
-.ibb-btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
+.ibb-btn-base:hover {
+  background: #1e40af !important;
 }
 :root {
   --base-blue: #0052FF;
@@ -92,7 +86,7 @@ html, body {
 .pulse-anim:hover, .pulse-anim:focus {
   animation: pulse 0.4s;
 }
-.ibb-btn {
+.ibb-btn-base {
   background: linear-gradient(90deg, var(--base-blue), var(--base-blue-light));
   color: #fff;
   font-family: Inter, Arial, sans-serif;
@@ -104,25 +98,26 @@ html, body {
   box-shadow: 0 2px 8px rgba(0,82,255,0.08);
   transition: box-shadow 0.2s, background 0.2s;
   outline: none;
+  cursor: pointer;
 }
-.ibb-btn:hover, .ibb-btn:focus {
+.ibb-btn-base:hover, .ibb-btn-base:focus {
   background: linear-gradient(90deg, var(--base-blue-dark), var(--base-blue));
   box-shadow: 0 6px 24px 0 rgba(0,82,255,0.18), 0 0 16px 4px #3D7FFF;
   transform: translateY(-4px);
   transition: box-shadow 0.3s, background 0.2s, transform 0.3s;
 }
-.ibb-btn:active {
+.ibb-btn-base:active {
   transform: scale(0.96) translateY(1px);
   box-shadow: 0 1px 4px rgba(0,82,255,0.10);
   transition: transform 0.08s, box-shadow 0.08s;
   outline: none;
   border: none;
 }
-.ibb-btn:focus, .ibb-btn:focus-visible {
+.ibb-btn-base:focus, .ibb-btn-base:focus-visible {
   outline: none;
   border: none;
 }
-.ibb-btn:disabled {
+.ibb-btn-base:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }

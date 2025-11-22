@@ -68,11 +68,16 @@ export default function BaseApp(props) {
                   <button onClick={connectWallet} style={{ marginTop: 12 }}>Connect</button>
                 </div>
               ) : (
-                contractsList.map(contract => (
-                  <div key={contract.name} style={{ marginBottom: 12 }}>
-                    <button className="ibb-btn" onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}>{contract.name}</button>
-                  </div>
-                ))
+                <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', flexDirection: 'row', marginBottom: 12 }}>
+                  {contractsList.map(contract => (
+                    <button
+                      key={contract.name}
+                      className="ibb-btn"
+                      style={{ width: 'auto', maxWidth: '100%', boxSizing: 'border-box' }}
+                      onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}
+                    >{contract.name}</button>
+                  ))}
+                </div>
               )}
             </div>
           } />

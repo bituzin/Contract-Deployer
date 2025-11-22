@@ -54,25 +54,39 @@ export default function CeloApp(props) {
         </div>
       )}
 
-      <div style={{ padding: 40, paddingTop: 120 }}>
+      <div style={{ padding: 40, paddingTop: 60 }}>
         <Routes>
           <Route path="/" element={<HomeContract theme={theme} />} />
           <Route path="/abi" element={<AbiContract theme={theme} />} />
           <Route path="/how" element={<HowItWorksContract theme={theme} />} />
           <Route path="/my-deployments" element={<MyDeploymentsContract theme={theme} />} />
           <Route path="/deploy" element={
-            <div>
+                <div>
               {!isWalletConnected ? (
                 <div style={{ textAlign: 'center' }}>
                   <div style={{ fontWeight:600, color: '#2563eb' }}>Connect Your Wallet First</div>
                   <button onClick={connectWallet} style={{ marginTop: 12 }}>Connect</button>
                 </div>
               ) : (
-                contractsList.map(contract => (
-                  <div key={contract.name} style={{ marginBottom: 12 }}>
-                    <button className="ibb-btn" onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}>{contract.name}</button>
-                  </div>
-                ))
+                <div style={{ display: 'flex', gap: 50, flexWrap: 'wrap', flexDirection: 'row', marginBottom: 12 }}>
+                  {contractsList.map(contract => (
+                    <button
+                      key={contract.name}
+                      className="ibb-btn"
+                      style={{
+                        background: '#FFE000 !important',
+                        color: '#2D3A29 !important',
+                        fontWeight: 700,
+                        fontFamily: 'Inter, Arial, sans-serif',
+                        width: 'auto',
+                        maxWidth: '100%',
+                        boxSizing: 'border-box',
+                        marginTop: 0
+                      }}
+                      onClick={() => setPopup && setPopup({ visible:true, message: `Deploy ${contract.name} not implemented in this demo`, txHash: null })}
+                    >{contract.name}</button>
+                  ))}
+                </div>
               )}
             </div>
           } />
