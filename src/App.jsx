@@ -275,7 +275,19 @@ function App() {
             } />
             
             <Route path="/how" element={
-              <div style={{ color: theme.textPrimary }}>How It Works page - to be implemented</div>
+              <div style={{ color: theme.textPrimary, maxWidth: 600, margin: '40px auto', fontSize: '1.08em', lineHeight: 1.7 }}>
+                <h2 style={{ fontWeight: 700, marginBottom: 18 }}>How It Works</h2>
+                <ol style={{ paddingLeft: 24 }}>
+                  <li><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</li>
+                  <li><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</li>
+                  <li><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</li>
+                  <li><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</li>
+                  <li><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</li>
+                </ol>
+                <p style={{ fontSize: '0.95em', color: theme.textSecondary, marginTop: 18 }}>
+                  For more details, see the documentation or contact support.
+                </p>
+              </div>
             } />
             
             <Route path="/my-deployments" element={
