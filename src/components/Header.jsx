@@ -54,7 +54,16 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
               minWidth: 120
             }}
           >
-            {networks.map(n => <option key={n} value={n}>{n}</option>)}
+            {networks.map(n => (
+              <option 
+                key={n} 
+                value={n}
+                style={{
+                  background: theme.cardBg,
+                  color: theme.textPrimary
+                }}
+              >{n}</option>
+            ))}
           </select>
         </div>
       </div>
@@ -83,9 +92,37 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           pointerEvents: showNav ? 'auto' : 'none',
         }}
       >
-        <Link to="/" style={{ textDecoration: 'none', color: theme.textPrimary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Home</Link>
+        <Link 
+          to="/" 
+          style={{ 
+            textDecoration: 'none', 
+            color: theme.textPrimary, 
+            padding: '4px 20px', 
+            borderRadius: 6, 
+            transition: 'background 0.2s', 
+            margin: '0 14px' 
+          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.highlight}
+          onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+        >
+          Home
+        </Link>
         <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
-        <Link to="/deploy" style={{ textDecoration: 'none', color: theme.textPrimary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>Deploy</Link>
+        <Link 
+          to="/deploy" 
+          style={{ 
+            textDecoration: 'none', 
+            color: theme.textPrimary, 
+            padding: '4px 20px', 
+            borderRadius: 6, 
+            transition: 'background 0.2s', 
+            margin: '0 14px' 
+          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.highlight}
+          onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+        >
+          Deploy
+        </Link>
         <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
         <div 
           style={{ position: 'relative', display: 'inline-block' }}
@@ -104,7 +141,19 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             }
           }}
         >
-          <span style={{ textDecoration: 'none', color: theme.textPrimary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 4px 0 -8px', cursor: 'pointer' }}>Contracts</span>
+          <span 
+            style={{ 
+              textDecoration: 'none', 
+              color: theme.textPrimary, 
+              padding: '4px 20px', 
+              borderRadius: 6, 
+              transition: 'background 0.2s', 
+              margin: '0 4px 0 -8px', 
+              cursor: 'pointer' 
+            }}
+          >
+            Contracts
+          </span>
           <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
           <div 
             className="contracts-dropdown" 
@@ -132,9 +181,53 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             <Link to="/contract/simple-voting" style={{ display: 'block', padding: '8px 20px', color: theme.textPrimary, textDecoration: 'none', borderRadius: 0, transition: 'background 0.2s', cursor: 'pointer' }} onMouseOver={e => e.currentTarget.style.background=theme.highlight} onMouseOut={e => e.currentTarget.style.background='transparent'}>SimpleVoting</Link>
           </div>
         </div>
-        <Link to="/how" style={{ textDecoration: 'none', color: theme.textPrimary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>How It Works</Link>
+        <Link 
+          to="/abi" 
+          style={{ 
+            textDecoration: 'none', 
+            color: theme.textPrimary, 
+            padding: '4px 20px', 
+            borderRadius: 6, 
+            transition: 'background 0.2s', 
+            margin: '0 14px' 
+          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.highlight}
+          onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+        >
+          ABI
+        </Link>
         <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
-        <Link to="/my-deployments" style={{ textDecoration: 'none', color: theme.textPrimary, padding: '4px 20px', borderRadius: 6, transition: 'background 0.2s', margin: '0 14px' }}>My Deployments</Link>
+        <Link 
+          to="/how" 
+          style={{ 
+            textDecoration: 'none', 
+            color: theme.textPrimary, 
+            padding: '4px 20px', 
+            borderRadius: 6, 
+            transition: 'background 0.2s', 
+            margin: '0 14px' 
+          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.highlight}
+          onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+        >
+          How It Works
+        </Link>
+        <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
+        <Link 
+          to="/my-deployments" 
+          style={{ 
+            textDecoration: 'none', 
+            color: theme.textPrimary, 
+            padding: '4px 20px', 
+            borderRadius: 6, 
+            transition: 'background 0.2s', 
+            margin: '0 14px' 
+          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.highlight}
+          onMouseOut={e => e.currentTarget.style.background = 'transparent'}
+        >
+          My Deployments
+        </Link>
         <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
       </div>
     </>

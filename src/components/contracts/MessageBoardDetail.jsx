@@ -46,9 +46,9 @@ contract MessageBoard {
   };
 
   return (
-    <div style={{ maxWidth: 843, margin: '60px auto 32px auto', background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '1.08em', color: theme.textPrimary }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.3em', margin: 0 }}>MessageBoard</h2>
+    <div style={{ maxWidth: 720, margin: '60px auto 32px auto', background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>MessageBoard</h2>
         {!isWalletConnected ? (
           <button
             style={{
@@ -91,18 +91,18 @@ contract MessageBoard {
           >Deploy</button>
         )}
       </div>
-      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '0.96em', marginBottom: '16px', maxWidth: '720px' }}>
         <b>MessageBoard is a simple public contract for posting and reading messages. Each new message overwrites the previous one and records the sender's address. This contract is useful for public announcements, feedback, or as a basic communication tool on-chain. All users share the same board, so only the latest message is visible.</b>
-        <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '1.04em' }}>Function:</div>
-        <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>setMessage(string message)</span>&nbsp;&ndash;&nbsp;saves a new message and the sender's address. the previous message is replaced. great for simple chat or notifications.<div style={{ height: '32px' }}></div>
+        <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
+        <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>setMessage(string message)</span>&nbsp;&ndash;&nbsp;saves a new message and the sender's address. the previous message is replaced. great for simple chat or notifications.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>getMessage()</span>&nbsp;&ndash;&nbsp;returns the latest message posted to the board.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getMessage()</span>&nbsp;&ndash;&nbsp;returns the latest message posted to the board.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>getSender()</span>&nbsp;&ndash;&nbsp;returns the address of the user who posted the last message.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getSender()</span>&nbsp;&ndash;&nbsp;returns the address of the user who posted the last message.<div style={{ height: '24px' }}></div>
           </li>
         </ul>
       </div>
@@ -129,7 +129,7 @@ contract MessageBoard {
             </button>
           </div>
         </div>
-        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '1em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '20px 18px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '180px' }}>
+        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.9em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '160px' }}>
           {sourceCode}
         </pre>
       </div>

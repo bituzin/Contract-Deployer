@@ -58,9 +58,9 @@ contract SimpleVoting {
   };
 
   return (
-    <div style={{ maxWidth: 843, margin: '60px auto 32px auto', background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '1.08em', color: theme.textPrimary }}>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '18px' }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.3em', margin: 0 }}>SimpleVoting</h2>
+    <div style={{ maxWidth: 720, margin: '60px auto 32px auto', background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>SimpleVoting</h2>
         {!isWalletConnected ? (
           <button
             style={{
@@ -103,21 +103,21 @@ contract SimpleVoting {
           >Deploy</button>
         )}
       </div>
-      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
+      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '0.96em', marginBottom: '16px', maxWidth: '720px' }}>
         <b>SimpleVoting is a basic contract for on-chain polls. Users can vote for option A or B, and the contract keeps track of the total votes for each. This contract is ideal for learning about voting mechanisms, consensus, and transparent decision-making on blockchain. All votes are public and anyone can check the results.</b>
-        <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '1.04em' }}>Function:</div>
-        <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>voteA()</span>&nbsp;&ndash;&nbsp;casts a vote for option a. each user can vote only once.<div style={{ height: '32px' }}></div>
+        <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
+        <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>voteA()</span>&nbsp;&ndash;&nbsp;casts a vote for option a. each user can vote only once.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>voteB()</span>&nbsp;&ndash;&nbsp;casts a vote for option b. each user can vote only once.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>voteB()</span>&nbsp;&ndash;&nbsp;casts a vote for option b. each user can vote only once.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>getVotesA()</span>&nbsp;&ndash;&nbsp;returns the total number of votes for option a.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getVotesA()</span>&nbsp;&ndash;&nbsp;returns the total number of votes for option a.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>getVotesB()</span>&nbsp;&ndash;&nbsp;returns the total number of votes for option b.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getVotesB()</span>&nbsp;&ndash;&nbsp;returns the total number of votes for option b.<div style={{ height: '24px' }}></div>
           </li>
         </ul>
       </div>
@@ -144,7 +144,7 @@ contract SimpleVoting {
             </button>
           </div>
         </div>
-        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '1em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '20px 18px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '180px' }}>
+        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.9em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '160px' }}>
           {sourceCode}
         </pre>
       </div>

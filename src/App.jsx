@@ -169,18 +169,17 @@ function App() {
             } />
             
             <Route path="/deploy" element={
-              <div style={{ marginTop: 20, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginLeft: 0 }}>
+              <div style={{ marginTop: 20, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start', maxWidth: '800px' }}>
                 {!isWalletConnected ? (
-                  <>
-                    <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary, textAlign: 'center' }}>
+                  <div style={{ width: '100%', textAlign: 'left' }}>
+                    <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary }}>
                       Connect Your Wallet First
                     </div>
                     <button
                       style={{ 
                         minWidth: '120px', 
-                        fontSize: '0.98em', 
-                        padding: '0.5em 1.1em', 
-                        marginTop: '18px',
+                        fontSize: '0.92em', 
+                        padding: '0.45em 1em', 
                         background: theme.gradient,
                         color: '#fff',
                         border: 'none',
@@ -196,34 +195,29 @@ function App() {
                     >
                       Connect
                     </button>
-                  </>
+                  </div>
                 ) : (
                   contracts.map((contract) => (
-                    <div key={contract.name} style={{ display: 'flex', alignItems: 'center', marginBottom: 18 }}>
-                      <button
-                        style={{
-                          marginRight: '18px',
-                          minWidth: '170px',
-                          fontSize: '0.98em',
-                          padding: '0.5em 1.1em',
-                          textAlign: 'center',
-                          display: 'inline-block',
-                          background: theme.gradient,
-                          color: '#fff',
-                          border: 'none',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                          boxShadow: `0 2px 8px ${theme.shadow}`,
-                          transition: 'background 0.2s'
-                        }}
-                        onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                        onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-                        onClick={() => deployContract(contract.name, contract.bytecode)}
-                      >
-                        {contract.name}
-                      </button>
-                    </div>
+                    <button
+                      key={contract.name}
+                      style={{
+                        fontSize: '0.88em',
+                        padding: '0.5em 1.2em',
+                        background: theme.gradient,
+                        color: '#fff',
+                        border: 'none',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        boxShadow: `0 2px 8px ${theme.shadow}`,
+                        transition: 'background 0.2s'
+                      }}
+                      onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                      onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                      onClick={() => deployContract(contract.name, contract.bytecode)}
+                    >
+                      {contract.name}
+                    </button>
                   ))
                 )}
               </div>
@@ -263,6 +257,10 @@ function App() {
                 connectWallet={connectWallet}
                 setPopup={setPopup}
               />
+            } />
+            
+            <Route path="/abi" element={
+              <div style={{ color: theme.textPrimary }}>ABI page - to be implemented</div>
             } />
             
             <Route path="/how" element={
