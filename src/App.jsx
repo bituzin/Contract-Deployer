@@ -156,14 +156,25 @@ function App() {
                   <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
                     Deploy Your Contract – Fast & Secure!
                   </span>
-                  Welcome to panel for deploying smart contracts on Celo, Base and Optimism blockchain.<br />
+                  Welcome to panel for deploying smart contracts on 
+                  <span style={{ color: '#627EEA', fontWeight: 700 }}> Sepolia</span>, 
+                     <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700 }}> Celo</span>, 
+                  <span style={{ color: '#0052FF', fontWeight: 700 }}> Base</span> and 
+                  <span style={{ color: '#FF0420', fontWeight: 700 }}> Optimism</span> blockchain.<br />
                   <br />
-                  Click "Deploy", connect wallet, choose a network, and deploy ready-to-use contracts with a single click!<br />
+                  Simple to use:
                   <br />
-                  Deploy your own contracts in seconds!
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '16px 0' }}>
+                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>1. Connect wallet</span>
+                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>2. Deploy on testnet</span>
+                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>3. Deploy on mainnet</span>
+                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>4. Check Your deployment</span>
+                  </div>
+                  <br />
+                  Deploy your own contract in seconds!
                 </span>
                 <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 28, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
-                  Currently 4 contracts available. More coming soon.
+                  *currently 4 contracts available, more coming soon.
                 </span>
               </div>
             } />
