@@ -1,16 +1,38 @@
-# React + Vite
+# Contract-Deployer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Deploy smart contracts to multiple EVM networks with one click.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Supports Sepolia, Celo, Base, Optimism
+- One-click deployment from browser
+- View contract source code and bytecode
+- Track deployed contract addresses and transaction hashes
+- Modern, responsive UI with theme support
+- Easy wallet connection (MetaMask & compatible)
 
-## React Compiler
+## 🛠 How It Works
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Connect your wallet (MetaMask or other EVM wallet)
+2. Choose your target network
+3. Check contract details (source code, bytecode)
+4. Select a contract to deploy
+5. Confirm transaction in your wallet
+6. Interact with your deployed contract directly from the app
 
-## Expanding the ESLint configuration
+## 📂 Structure
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- `src/` – React frontend
+- `src/components/contracts/` – Contract details and deployment logic
+- `src/config/themes.js` – Theme and color configuration
+
+## 💡 Why Contract-Deployer?
+
+- No coding required to deploy contracts
+- Transparent contract details
+- Multi-network support
+- Fast and intuitive for developers and non-devs
+
+## 📝 License
+
+MIT
