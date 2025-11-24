@@ -182,7 +182,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           </div>
         </div>
         <Link 
-          to="/abi" 
+          to="/bytecodes" 
           style={{ 
             textDecoration: 'none', 
             color: theme.textPrimary, 

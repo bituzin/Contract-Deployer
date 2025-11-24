@@ -111,6 +111,34 @@ function App() {
     }
   }
 
+  // Lista kontraktów i bytecodes
+  const contractBytecodes = [
+    {
+      name: 'SimpleStorage',
+      bytecode: '0x6080604052348015600e575f5ffd5b5060ba80601a5f395ff3fe6080604052348015600e575f5ffd5b5060043610603a575f3560e01c806309ce9ccb14603e5780633fb5c1cb146057578063f2c9ecd8146068575b5f5ffd5b60455f5481565b60405190815260200160405180910390f35b60666062366004606e565b5f55565b005b5f546045565b5f60208284031215607d575f5ffd5b503591905056fea26469706673582212200cf668aaa1a8919f982a5eb6458914b17b8d63ca0f5c3aac933d33cc0699e59264736f6c634300081e0033'
+    },
+    {
+      name: 'ClickCounter',
+      bytecode: '0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033'
+    },
+    {
+      name: 'MessageBoard',
+      bytecode: '0x6080604052348015600e575f5ffd5b506103ba8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063256fec881461004357806332970710146100735780636630f88f14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61007b61009d565b60405161006a9190610149565b61009b610096366004610192565b610128565b005b5f80546100a990610245565b80601f01602080910402602001604051908101604052809291908181526020018280546100d590610245565b80156101205780601f106100f757610100808354040283529160200191610120565b820191905f5260205f20905b81548152906001019060200180831161010357829003601f168201915b505050505081565b5f61013382826102c9565b5050600180546001600160a01b03191633179055565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b634e487b7160e01b5f52604160045260245ffd5b5f602082840312156101a2575f5ffd5b813567ffffffffffffffff8111156101b8575f5ffd5b8201601f810184136101c8575f5ffd5b803567ffffffffffffffff8111156101e2576101e261017e565b604051601f8201601f19908116603f0116810167ffffffffffffffff811182821017156102115761021161017e565b604052818152828201602001861015610228575f5ffd5b816020840160208301375f91810160200191909152949350505050565b600181811c9082168061025957607f821691505b60208210810361027757634e487b7160e01b5f52602260045260245ffd5b50919050565b601f8211156102c457805f5260205f20601f840160051c810160208510156102a25750805b601f840160051c820191505b818110156102c1575f81556001016102ae565b50505b505050565b815167ffffffffffffffff8111156102e3576102e361017e565b6102f7816102f18454610245565b8461027d565b6020601f821160018114610329575f83156103125750848201515b5f19600385901b1c1916600184901b1784556102c1565b5f84815260208120601f198516915b828110156103585787850151825560209485019460019092019101610338565b508482101561037557868401515f19600387901b60f8161c191681555b50505050600190811b0190555056fea264697066735822122081aa54c8ed61172532a488e962737c95dfb429d257ad3221825fb2c89316835664736f6c634300081e0033'
+    },
+    {
+      name: 'SimpleVoting',
+      bytecode: '0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033'
+    }
+  ];
+
+  // Stan do obsługi ptaszka po kopiowaniu
+  const [pressedIndex, setPressedIndex] = useState(null);
+  const handleCopy = (bytecode, idx) => {
+    navigator.clipboard.writeText(bytecode);
+    setPressedIndex(idx);
+    setTimeout(() => setPressedIndex(null), 180);
+  };
+
   return (
     <Router basename="/">
       <div className="App" style={{ minHeight: '100vh', background: theme.background, transition: 'background 0.3s' }}>
@@ -121,7 +149,6 @@ function App() {
           onClose={() => setPopup({ visible: false, message: "", txHash: null })}
           theme={theme}
         />
-        
         <Header 
           theme={theme}
           showHeader={showHeader}
@@ -130,7 +157,6 @@ function App() {
           networks={networks}
           onNetworkChange={handleNetworkChange}
         />
-
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
             <Route path="/" element={
@@ -270,8 +296,49 @@ function App() {
               />
             } />
             
-            <Route path="/abi" element={
-              <div style={{ color: theme.textPrimary }}>ABI page - to be implemented</div>
+            <Route path="/bytecodes" element={
+              <div style={{ color: theme.textPrimary, maxWidth: 800, margin: '40px auto', fontSize: '1.08em', lineHeight: 1.7 }}>
+                <h2 style={{ fontWeight: 700, marginBottom: 18 }}>Bytecodes</h2>
+                <p style={{ marginBottom: 24 }}>
+                  Contract Deployer uses bytecodes to deploy your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30, optimization 200 runs, with the following bytecodes:
+                </p>
+                {contractBytecodes.map(({ name, bytecode }, idx) => (
+                  <div key={name} style={{ marginBottom: 32 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                      <b style={{ flex: 1 }}>{name}</b>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'center' }}>
+                      <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '12px', borderRadius: '8px', overflowX: 'auto', marginRight: 12, flex: 10, marginBottom: 0 }}>
+                        {bytecode}
+                      </pre>
+                      <button
+                        style={{
+                          marginLeft: 0,
+                          padding: '2px 10px',
+                          fontSize: '0.88em',
+                          background: pressedIndex === idx ? theme.gradientHover : theme.gradient,
+                          color: '#fff',
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          boxShadow: `0 2px 8px ${theme.shadow}`,
+                          transition: 'background 0.15s',
+                          display: 'flex',
+                          alignItems: 'center',
+                          minWidth: 48,
+                          justifyContent: 'center'
+                        }}
+                        onClick={() => handleCopy(bytecode, idx)}
+                      >
+                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, minWidth: 48 }}>
+                          Copy
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
             } />
             
             <Route path="/how" element={
