@@ -186,15 +186,15 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           style={{ 
             textDecoration: 'none', 
             color: theme.textPrimary, 
-            padding: '4px 20px', 
+            padding: '4px 14px', // skrócony padding
             borderRadius: 6, 
             transition: 'background 0.2s', 
-            margin: '0 14px' 
+            margin: '0 10px' // skrócony margines
           }}
           onMouseOver={e => e.currentTarget.style.background = theme.highlight}
           onMouseOut={e => e.currentTarget.style.background = 'transparent'}
         >
-          ABI
+          Bytecodes
         </Link>
         <span style={{ borderLeft: `2px solid ${theme.textPrimary}`, height: 28, margin: '0 18px', display: 'inline-block', verticalAlign: 'middle' }}></span>
         <Link 
