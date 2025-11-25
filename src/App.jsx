@@ -206,57 +206,62 @@ function App() {
             } />
             
             <Route path="/deploy" element={
-              <div style={{ marginTop: 20, display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start', maxWidth: '800px' }}>
-                {!isWalletConnected ? (
-                  <div style={{ width: '100%', textAlign: 'left' }}>
-                    <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary }}>
-                      Connect Your Wallet First
-                    </div>
-                    <button
-                      style={{ 
-                        minWidth: '120px', 
-                        fontSize: '0.92em', 
-                        padding: '0.45em 1em', 
-                        background: theme.gradient,
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        boxShadow: `0 2px 8px ${theme.shadow}`,
-                        transition: 'background 0.2s'
-                      }}
-                      onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                      onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-                      onClick={connectWallet}
-                    >
-                      Connect
-                    </button>
+              <div style={{ maxWidth: 800, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', minHeight: 180 }}>
+                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
+                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
+                    {!isWalletConnected ? (
+                      <div style={{ width: '100%', textAlign: 'left' }}>
+                        <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary }}>
+                          Connect Your Wallet First
+                        </div>
+                        <button
+                          style={{ 
+                            minWidth: '120px', 
+                            fontSize: '0.92em', 
+                            padding: '0.45em 1em', 
+                            background: theme.gradient,
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            boxShadow: `0 2px 8px ${theme.shadow}`,
+                            transition: 'background 0.2s'
+                          }}
+                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                          onClick={connectWallet}
+                        >
+                          Connect
+                        </button>
+                      </div>
+                    ) : (
+                      contracts.map((contract) => (
+                        <button
+                          key={contract.name}
+                          style={{
+                            fontSize: '0.88em',
+                            padding: '0.5em 1.2em',
+                            background: theme.gradient,
+                            color: '#fff',
+                            border: 'none',
+                            borderRadius: '6px',
+                            fontWeight: 600,
+                            cursor: 'pointer',
+                            boxShadow: `0 2px 8px ${theme.shadow}`,
+                            transition: 'background 0.2s'
+                          }}
+                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                          onClick={() => deployContract(contract.name, contract.bytecode)}
+                        >
+                          {contract.name}
+                        </button>
+                      ))
+                    )}
                   </div>
-                ) : (
-                  contracts.map((contract) => (
-                    <button
-                      key={contract.name}
-                      style={{
-                        fontSize: '0.88em',
-                        padding: '0.5em 1.2em',
-                        background: theme.gradient,
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '6px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        boxShadow: `0 2px 8px ${theme.shadow}`,
-                        transition: 'background 0.2s'
-                      }}
-                      onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                      onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-                      onClick={() => deployContract(contract.name, contract.bytecode)}
-                    >
-                      {contract.name}
-                    </button>
-                  ))
-                )}
+                </div>
               </div>
             } />
             
@@ -297,53 +302,53 @@ function App() {
             } />
             
             <Route path="/bytecodes" element={
-              <div style={{ color: theme.textPrimary, maxWidth: 800, margin: '40px auto', fontSize: '1.08em', lineHeight: 1.7 }}>
-                <h2 style={{ fontWeight: 700, marginBottom: 18 }}>Bytecodes</h2>
-                <p style={{ marginBottom: 24 }}>
-                  Contract Deployer uses bytecodes to deploy your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30, optimization 200 runs, with the following bytecodes:
-                </p>
-                {contractBytecodes.map(({ name, bytecode }, idx) => (
-                  <div key={name} style={{ marginBottom: 32 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
-                      <b style={{ flex: 1 }}>{name}</b>
+              <div style={{ maxWidth: 800, margin: '40px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, marginTop: '100px' }}>
+                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Bytecodes</h2>
+                  <p style={{ marginBottom: 24 }}>
+                    Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
+                  </p>
+                  {contractBytecodes.map(({ name, bytecode }, idx) => (
+                    <div key={name} style={{ marginBottom: 32 }}>
+                      <div style={{ marginTop: '8px', borderRadius: '10px', background: theme.codeBg, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: theme.codeBg, padding: '8px 18px 8px 18px', borderTopLeftRadius: '10px', borderTopRightRadius: '10px', borderBottom: `1px solid ${theme.highlight}` }}>
+                          <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>{name} bytecode</span>
+                          <button
+                            style={{
+                              background: pressedIndex === idx ? theme.gradientHover : theme.gradient,
+                              color: '#fff',
+                              border: 'none',
+                              fontWeight: 600,
+                              fontSize: '0.88em',
+                              cursor: 'pointer',
+                              marginLeft: '10px',
+                              padding: '2px 10px',
+                              borderRadius: '6px',
+                              boxShadow: `0 2px 8px ${theme.shadow}`,
+                              transition: 'background 0.15s',
+                              minWidth: 48,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center'
+                            }}
+                            onClick={() => handleCopy(bytecode, idx)}
+                          >
+                            Copy
+                          </button>
+                        </div>
+                        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '120px' }}>
+                          {bytecode}
+                        </pre>
+                      </div>
                     </div>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '12px', borderRadius: '8px', overflowX: 'auto', marginRight: 12, flex: 10, marginBottom: 0 }}>
-                        {bytecode}
-                      </pre>
-                      <button
-                        style={{
-                          marginLeft: 0,
-                          padding: '2px 10px',
-                          fontSize: '0.88em',
-                          background: pressedIndex === idx ? theme.gradientHover : theme.gradient,
-                          color: '#fff',
-                          border: 'none',
-                          borderRadius: '6px',
-                          fontWeight: 600,
-                          cursor: 'pointer',
-                          boxShadow: `0 2px 8px ${theme.shadow}`,
-                          transition: 'background 0.15s',
-                          display: 'flex',
-                          alignItems: 'center',
-                          minWidth: 48,
-                          justifyContent: 'center'
-                        }}
-                        onClick={() => handleCopy(bytecode, idx)}
-                      >
-                        <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 48, minWidth: 48 }}>
-                          Copy
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             } />
             
             <Route path="/how" element={
-              <div style={{ color: theme.textPrimary, maxWidth: 600, margin: '40px auto', fontSize: '1.08em', lineHeight: 1.7 }}>
-                <h2 style={{ fontWeight: 700, marginBottom: 18 }}>How It Works</h2>
+              <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', maxWidth: 720, margin: '100px auto 40px auto', lineHeight: 1.7 }}>
+                <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
                 <ol style={{ paddingLeft: 24 }}>
                   <li><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</li>
                   <li><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</li>
@@ -358,7 +363,12 @@ function App() {
             } />
             
             <Route path="/my-deployments" element={
-              <div style={{ color: theme.textPrimary }}>My Deployments page - to be implemented</div>
+              <div style={{ maxWidth: 800, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', minHeight: 180, color: theme.textPrimary, fontSize: '1.08em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500 }}>
+                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
+                  <div>My Deployments page - to be implemented</div>
+                </div>
+              </div>
             } />
           </Routes>
         </div>
