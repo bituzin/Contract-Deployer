@@ -1,5 +1,11 @@
 # Contract-Deployer
 
+## 🌐 Online Demo
+
+[➡️ Contract Deployer App](https://contract-deployer-iota.vercel.app)
+
+Deploy and manage smart contracts directly in your browser.
+
 Deploy smart contracts to multiple EVM networks with one click.
 
 ## 🚀 Features
