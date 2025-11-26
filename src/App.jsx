@@ -159,7 +159,7 @@ function App() {
         />
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
-            <Route path="/" element={
+            <Route path="/" element={(
               <div
                 style={{
                   maxWidth: 540,
@@ -203,11 +203,11 @@ function App() {
                   *currently 4 contracts available, more coming soon.
                 </span>
               </div>
-            } />
+            )} />
             
-            <Route path="/deploy" element={
-              <div style={{ maxWidth: 800, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', minHeight: 180 }}>
+            <Route path="/deploy" element={(
+              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
                     {!isWalletConnected ? (
@@ -263,47 +263,47 @@ function App() {
                   </div>
                 </div>
               </div>
-            } />
+            )} />
             
-            <Route path="/contract/simple-storage" element={
+            <Route path="/contract/simple-storage" element={(
               <SimpleStorageDetail 
                 theme={theme}
                 isWalletConnected={isWalletConnected}
                 connectWallet={connectWallet}
                 setPopup={setPopup}
               />
-            } />
+            )} />
             
-            <Route path="/contract/click-counter" element={
+            <Route path="/contract/click-counter" element={(
               <ClickCounterDetail 
                 theme={theme}
                 isWalletConnected={isWalletConnected}
                 connectWallet={connectWallet}
                 setPopup={setPopup}
               />
-            } />
+            )} />
             
-            <Route path="/contract/message-board" element={
+            <Route path="/contract/message-board" element={(
               <MessageBoardDetail 
                 theme={theme}
                 isWalletConnected={isWalletConnected}
                 connectWallet={connectWallet}
                 setPopup={setPopup}
               />
-            } />
+            )} />
             
-            <Route path="/contract/simple-voting" element={
+            <Route path="/contract/simple-voting" element={(
               <SimpleVotingDetail 
                 theme={theme}
                 isWalletConnected={isWalletConnected}
                 connectWallet={connectWallet}
                 setPopup={setPopup}
               />
-            } />
+            )} />
             
-            <Route path="/bytecodes" element={
-              <div style={{ maxWidth: 800, margin: '40px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, marginTop: '100px' }}>
+            <Route path="/bytecodes" element={(
+              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Bytecodes</h2>
                   <p style={{ marginBottom: 24 }}>
                     Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
@@ -344,10 +344,11 @@ function App() {
                   ))}
                 </div>
               </div>
-            } />
+            )} />
             
-            <Route path="/how" element={
-              <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', maxWidth: 720, margin: '100px auto 40px auto', lineHeight: 1.7 }}>
+            <Route path="/how" element={(
+              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
                 <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
                 <ol style={{ paddingLeft: 24 }}>
                   <li><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</li>
@@ -360,16 +361,17 @@ function App() {
                   For more details, see the documentation or contact support.
                 </p>
               </div>
-            } />
+              </div>
+            )} />
             
-            <Route path="/my-deployments" element={
-              <div style={{ maxWidth: 800, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', minHeight: 180, color: theme.textPrimary, fontSize: '1.08em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500 }}>
+            <Route path="/my-deployments" element={(
+              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
                   <div>My Deployments page - to be implemented</div>
                 </div>
               </div>
-            } />
+            )} />
           </Routes>
         </div>
       </div>

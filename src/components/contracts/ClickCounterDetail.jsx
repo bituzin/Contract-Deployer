@@ -89,15 +89,15 @@ contract ClickCounter {
           >Deploy</button>
         )}
       </div>
-      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '1.08em', marginBottom: '18px', maxWidth: '843px' }}>
-        <b>ClickCounter is a public contract that tracks the total number of times users have interacted with it. Every call to increment increases the global counter, making it a great example for event tracking, gamification, or simple analytics on-chain. The contract is open to everyone, so the count reflects all user activity.</b>
-        <div style={{ marginTop: 18, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '1.04em' }}>Function:</div>
-        <ul style={{ marginTop: 16, marginBottom: 0, paddingLeft: 18 }}>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>increment()</span>&nbsp;&ndash;&nbsp;increases the counter by one. anyone can call this function, and each call is recorded in the total count.<div style={{ height: '32px' }}></div>
+      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '0.96em', marginBottom: '16px', maxWidth: '720px', lineHeight: 1.7 }}>
+        ClickCounter is a public contract that tracks the total number of times users have interacted with it. Every call to click increases the global counter, making it a great example for event tracking, gamification, or simple analytics on-chain. The contract is open to everyone, so the count reflects all user activity.
+        <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
+        <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>click()</span>&nbsp;&ndash;&nbsp;increases the counter by one. Anyone can call this function, and each call is recorded in the total count.<div style={{ height: '24px' }}></div>
           </li>
-          <li style={{ color: theme.textSecondary, fontSize: '1.04em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '1.04em', padding: '3px 14px', marginRight: 8, display: 'inline-block' }}>getCount()</span>&nbsp;&ndash;&nbsp;returns the current value of the counter. this lets anyone see how many times the contract has been used.<div style={{ height: '32px' }}></div>
+          <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getCount()</span>&nbsp;&ndash;&nbsp;returns the current value of the counter. This lets anyone see how many times the contract has been used.<div style={{ height: '24px' }}></div>
           </li>
         </ul>
       </div>
