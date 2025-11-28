@@ -20,5 +20,5 @@ export const networkParams = {
 };
 
 export const getNetworkParam = (network) => {
-  return networkParams[network] || networkParams.Base;
+  return networkParams[network] || networkParams.Celo;
 };

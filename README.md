@@ -1,8 +1,9 @@
 # Contract-Deployer
 
+
 ## 🌐 Online Demo
 
-[➡️ Contract Deployer App](https://contract-deployer-iota.vercel.app)
+[➡️ Contract Deployer App](https://contract-deployer-fawn.vercel.app)
 
 Deploy and manage smart contracts directly in your browser.
 

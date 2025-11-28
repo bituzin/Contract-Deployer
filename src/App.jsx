@@ -17,7 +17,12 @@ function App() {
   const [walletAddress, setWalletAddress] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
-  const [network, setNetwork] = useState("Base");
+  const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
+
+  // Zapamiętaj wybraną sieć w localStorage
+  React.useEffect(() => {
+    localStorage.setItem("network", network);
+  }, [network]);
   const [showNav, setShowNav] = useState(false);
 
   // Użyj hooka do obsługi motywu
