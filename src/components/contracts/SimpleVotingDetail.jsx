@@ -2,6 +2,7 @@ import React from 'react';
 import { ethers } from 'ethers';
 
 export const SimpleVotingDetail = ({ theme, isWalletConnected, connectWallet, setPopup }) => {
+    const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033";
 
   const sourceCode = `// SPDX-License-Identifier: MIT
@@ -139,9 +140,16 @@ contract SimpleVoting {
                 borderRadius: '4px',
                 transition: 'background 0.2s'
               }}
-            >
-              Copy
-            </button>
+            onClick={() => {
+              navigator.clipboard.writeText(sourceCode);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1000);
+            }}
+          >
+            {copied ? (
+              <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center', display: 'inline-block' }}>✔</span>
+            ) : <span style={{ width: 32, textAlign: 'center', display: 'inline-block' }}>Copy</span>}
+          </button>
           </div>
         </div>
         <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.9em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '160px' }}>

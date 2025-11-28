@@ -2,6 +2,7 @@ import React from 'react';
 import { ethers } from 'ethers';
 
 export const SimpleStorageDetail = ({ theme, isWalletConnected, connectWallet, setPopup }) => {
+    const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060ba80601a5f395ff3fe6080604052348015600e575f5ffd5b5060043610603a575f3560e01c806309ce9ccb14603e5780633fb5c1cb146057578063f2c9ecd8146068575b5f5ffd5b60455f5481565b60405190815260200160405180910390f35b60666062366004606e565b5f55565b005b5f546045565b5f60208284031215607d575f5ffd5b503591905056fea26469706673582212200cf668aaa1a8919f982a5eb6458914b17b8d63ca0f5c3aac933d33cc0699e59264736f6c634300081e0033";
   
   const sourceCode = `// SPDX-License-Identifier: MIT
@@ -119,9 +120,16 @@ contract SimpleStorage {
                 borderRadius: '4px',
                 transition: 'background 0.2s'
               }}
-            >
-              Copy
-            </button>
+            onClick={() => {
+              navigator.clipboard.writeText(sourceCode);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1000);
+            }}
+          >
+            {copied ? (
+              <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center', display: 'inline-block' }}>✔</span>
+            ) : <span style={{ width: 32, textAlign: 'center', display: 'inline-block' }}>Copy</span>}
+          </button>
           </div>
         </div>
         <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.9em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '200px' }}>

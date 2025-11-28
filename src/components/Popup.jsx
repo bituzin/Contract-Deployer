@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Popup = ({ visible, message, txHash, onClose, theme }) => {
+export const Popup = ({ visible, message, txHash, network, onClose, theme }) => {
   if (!visible) return null;
 
   return (
@@ -40,10 +40,20 @@ export const Popup = ({ visible, message, txHash, onClose, theme }) => {
         {txHash && (
           <div style={{ marginBottom: 18 }}>
             <a
-              href={`https://basescan.org/tx/${txHash}`}
+              href={
+                network === "Base" ? `https://basescan.org/tx/${txHash}` :
+                network === "Sepolia" ? `https://sepolia.etherscan.io/tx/${txHash}` :
+                network === "Celo" ? `https://celoscan.io/tx/${txHash}` :
+                network === "Optimism" ? `https://optimistic.etherscan.io/tx/${txHash}` :
+                `#`
+              }
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: theme.primary, textDecoration: 'underline', fontSize: '0.98em' }}
+              style={{ 
+                color: network === "Celo" ? theme.textPrimary : theme.primary,
+                textDecoration: 'underline', 
+                fontSize: '0.98em' 
+              }}
             >
               View transaction on explorer
             </a>

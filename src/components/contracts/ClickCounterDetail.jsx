@@ -2,6 +2,7 @@ import React from 'react';
 import { ethers } from 'ethers';
 
 export const ClickCounterDetail = ({ theme, isWalletConnected, connectWallet, setPopup }) => {
+    const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033";
 
   const sourceCode = `// SPDX-License-Identifier: MIT
@@ -119,9 +120,16 @@ contract ClickCounter {
                 borderRadius: '4px',
                 transition: 'background 0.2s'
               }}
-            >
-              Copy
-            </button>
+            onClick={() => {
+              navigator.clipboard.writeText(sourceCode);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 1000);
+            }}
+          >
+            {copied ? (
+              <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center', display: 'inline-block' }}>✔</span>
+            ) : <span style={{ width: 32, textAlign: 'center', display: 'inline-block' }}>Copy</span>}
+          </button>
           </div>
         </div>
         <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '1em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '20px 18px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '180px' }}>

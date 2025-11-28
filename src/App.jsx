@@ -136,16 +136,21 @@ function App() {
   const handleCopy = (bytecode, idx) => {
     navigator.clipboard.writeText(bytecode);
     setPressedIndex(idx);
-    setTimeout(() => setPressedIndex(null), 180);
+    setTimeout(() => setPressedIndex(null), 1000);
   };
 
   return (
     <Router basename="/">
-      <div className="App" style={{ minHeight: '100vh', background: theme.background, transition: 'background 0.3s' }}>
+      <div className="App" style={{
+        minHeight: '100vh',
+        background: theme.background,
+        transition: 'background 0.3s'
+      }}>
         <Popup 
           visible={popup.visible} 
           message={popup.message} 
           txHash={popup.txHash}
+          network={network}
           onClose={() => setPopup({ visible: false, message: "", txHash: null })}
           theme={theme}
         />
@@ -313,28 +318,32 @@ function App() {
                       <div style={{ marginTop: '8px', borderRadius: '10px', background: theme.codeBg, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: theme.codeBg, padding: '8px 18px 8px 18px', borderTopLeftRadius: '10px', borderTopRightRadius: '10px', borderBottom: `1px solid ${theme.highlight}` }}>
                           <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>{name} bytecode</span>
-                          <button
-                            style={{
-                              background: pressedIndex === idx ? theme.gradientHover : theme.gradient,
-                              color: '#fff',
-                              border: 'none',
-                              fontWeight: 600,
-                              fontSize: '0.88em',
-                              cursor: 'pointer',
-                              marginLeft: '10px',
-                              padding: '2px 10px',
-                              borderRadius: '6px',
-                              boxShadow: `0 2px 8px ${theme.shadow}`,
-                              transition: 'background 0.15s',
-                              minWidth: 48,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center'
-                            }}
-                            onClick={() => handleCopy(bytecode, idx)}
-                          >
-                            Copy
-                          </button>
+                          <div>
+                            <button
+                              onClick={() => handleCopy(bytecode, idx)}
+                              style={{
+                                background: theme.highlight,
+                                color: '#444',
+                                border: 'none',
+                                fontWeight: 500,
+                                fontSize: '0.86em',
+                                cursor: 'pointer',
+                                marginRight: '10px',
+                                padding: '2px 10px',
+                                borderRadius: '4px',
+                                transition: 'background 0.2s',
+                                position: 'relative',
+                                minWidth: 48,
+                                display: 'inline-flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                              }}
+                            >
+                              {pressedIndex === idx ? (
+                                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
+                              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
+                            </button>
+                          </div>
                         </div>
                         <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '120px' }}>
                           {bytecode}
