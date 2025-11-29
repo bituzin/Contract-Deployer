@@ -146,11 +146,24 @@ function App() {
 
   return (
     <Router basename="/">
-      <div className="App" style={{
-        minHeight: '100vh',
-        background: theme.background,
-        transition: 'background 0.3s'
-      }}>
+      <div style={{ position: 'fixed', inset: 0, zIndex: -2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
+        <img
+          src={'/03.jpg'}
+          alt="background"
+          style={{
+            width: '100vw',
+            height: '100vh',
+            objectFit: 'cover',
+            position: 'absolute',
+            inset: 0,
+            zIndex: -2
+          }}
+        />
+      </div>
+        <div className="App" style={{
+          minHeight: '100vh',
+          transition: 'background 0.3s'
+        }}>
         <Popup 
           visible={popup.visible} 
           message={popup.message} 
