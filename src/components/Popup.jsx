@@ -20,7 +20,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
     >
       <div 
         style={{
-          background: theme.cardBg,
+          background: theme.cardBg + 'E6', // hex + alpha (90% opacity)
           borderRadius: 14,
           boxShadow: `0 2px 16px ${theme.shadow}`,
           padding: '32px 38px',

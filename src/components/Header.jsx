@@ -17,7 +17,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           left: 0, 
           width: '100%', 
           zIndex: 1000, 
-          background: theme.gradient 
+          background: theme.gradient,
+          opacity: 0.9
         }}
       >
         <span 
@@ -86,7 +87,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           fontSize: '0.98em',
           color: theme.textPrimary,
           boxShadow: `0 2px 8px ${theme.shadow}`,
-          opacity: showNav ? 1 : 0,
+          opacity: showNav ? 0.9 : 0,
           transform: showNav ? 'translateY(0)' : 'translateY(30px)',
           transition: 'opacity 1s, transform 1s',
           pointerEvents: showNav ? 'auto' : 'none',

@@ -156,7 +156,13 @@ function App() {
     <Router basename="/">
       <div style={{ position: 'fixed', inset: 0, zIndex: -2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
         <img
-          src={'/03.jpg'}
+          src={
+            network === 'Base' ? '/base.jpg'
+            : network === 'Celo' ? '/celo ciem.jpg'
+            : network === 'Sepolia' ? '/sepolia.jpg'
+            : network === 'Optimism' ? '/op ciem.jpg'
+            : '/03.jpg'
+          }
           alt="background"
           style={{
             width: '100vw',

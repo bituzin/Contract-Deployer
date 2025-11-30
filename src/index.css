@@ -17,8 +17,8 @@
 html, body {
   height: 100%;
   margin: 0;
-  background: url('/03.jpg') no-repeat center center fixed;
-  background-size: cover;
+  /* background: url('/czarny.png') no-repeat center center fixed;
+  background-size: cover; */
   color: #0b1720;
 }
 
