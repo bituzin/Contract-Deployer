@@ -26,7 +26,15 @@ function App() {
   const [showNav, setShowNav] = useState(false);
 
   // Użyj hooka do obsługi motywu
-  const theme = useTheme(network);
+  let theme = useTheme(network);
+  if (network === 'Celo') {
+    theme = {
+      ...theme,
+      gradient: 'linear-gradient(90deg, #e6d72a 0%, #e6d74a 100%)',
+      gradientHover: 'linear-gradient(90deg, #e6d74a 0%, #e6d72a 100%)',
+      highlight: '#e6d72a',
+    };
+  }
 
   // Animacje przy starcie
   React.useEffect(() => {
@@ -244,7 +252,7 @@ function App() {
                             fontSize: '0.92em', 
                             padding: '0.45em 1em', 
                             background: theme.gradient,
-                            color: '#fff',
+                            color: network === 'Celo' ? '#222' : '#fff',
                             border: 'none',
                             borderRadius: '6px',
                             fontWeight: 600,
@@ -267,7 +275,7 @@ function App() {
                             fontSize: '0.88em',
                             padding: '0.5em 1.2em',
                             background: theme.gradient,
-                            color: '#fff',
+                            color: network === 'Celo' ? '#222' : '#fff',
                             border: 'none',
                             borderRadius: '6px',
                             fontWeight: 600,
