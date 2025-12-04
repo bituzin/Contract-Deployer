@@ -18,6 +18,77 @@ function App() {
   const [showWelcome, setShowWelcome] = useState(false);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
+  const [priceCache, setPriceCache] = useState({});
+
+  // Szacowanie fee za deploy kontraktu w dolarach
+  async function showDeployFee(bytecode, contractName) {
+    if (!window.ethereum) {
+      setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      return;
+    }
+    
+    setPopup({ visible: true, message: "Calculating fee...", txHash: null });
+    
+    try {
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      const tx = { data: bytecode };
+      const gasEstimate = await signer.estimateGas(tx);
+      const feeData = await provider.getFeeData();
+      const gasPrice = feeData.gasPrice;
+      const feeWei = gasEstimate * gasPrice;
+      const feeEth = parseFloat(ethers.formatEther(feeWei));
+      
+      // Pobierz aktualny kurs kryptowaluty w USD
+      let coinId = 'ethereum'; // domyślnie ETH
+      let coinSymbol = 'ETH';
+      if (network === 'Celo') {
+        coinId = 'celo';
+        coinSymbol = 'CELO';
+      }
+      
+      let usdPrice = null;
+      
+      // Sprawdź cache (5 minut ważności)
+      const now = Date.now();
+      if (priceCache[coinId] && (now - priceCache[coinId].timestamp < 5 * 60 * 1000)) {
+        usdPrice = priceCache[coinId].price;
+      } else {
+        // Pobierz nową cenę
+        try {
+          const priceResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`);
+          if (priceResponse.ok) {
+            const priceData = await priceResponse.json();
+            usdPrice = priceData[coinId]?.usd;
+            if (usdPrice) {
+              setPriceCache({...priceCache, [coinId]: { price: usdPrice, timestamp: now }});
+            }
+          }
+        } catch (fetchErr) {
+          console.error("Failed to fetch price:", fetchErr);
+        }
+      }
+      
+      if (!usdPrice || usdPrice === 0) {
+        setPopup({
+          visible: true,
+          message: `Estimated deployment fee for ${contractName}: ${feeEth.toFixed(6)} ${coinSymbol}`,
+          txHash: null
+        });
+        return;
+      }
+      
+      const feeUsd = (feeEth * usdPrice).toFixed(2);
+      
+      setPopup({
+        visible: true,
+        message: `Estimated deployment fee for ${contractName}: $${feeUsd} USD (${feeEth.toFixed(6)} ${coinSymbol})`,
+        txHash: null
+      });
+    } catch (err) {
+      setPopup({ visible: true, message: "Could not estimate fee: " + err.message, txHash: null });
+    }
+  }
 
   // Zapamiętaj wybraną sieć w localStorage
   React.useEffect(() => {
@@ -243,8 +314,8 @@ function App() {
             )} />
             
             <Route path="/deploy" element={(
-              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
+              <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
                     {!isWalletConnected ? (
@@ -276,7 +347,7 @@ function App() {
                     ) : (
                       contracts.map((contract) => (
                         <div key={contract.name} style={{
-                          background: theme.cardBg + 'FA',
+                          background: `rgba(${theme.primaryRgb},0.10)`,
                           borderRadius: 10,
                           boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
                           border: `2px solid ${theme.primary}`,
@@ -328,7 +399,9 @@ function App() {
                                 transition: 'background 0.2s'
                               }}
                               title="Show deployment fee"
-                              onClick={() => setPopup({ visible: true, message: `Fee for deploying ${contract.name} depends on network and current gas price.`, txHash: null })}
+                              onMouseOver={e => e.currentTarget.style.background = theme.primary}
+                              onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
+                              onClick={() => showDeployFee(contract.bytecode, contract.name)}
                             >Fee</button>
                           </div>
                         </div>
