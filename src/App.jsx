@@ -276,9 +276,10 @@ function App() {
                     ) : (
                       contracts.map((contract) => (
                         <div key={contract.name} style={{
-                          background: `linear-gradient(120deg, ${theme.primaryDark} 60%, ${theme.cardBg} 100%)`,
+                          background: theme.cardBg + 'FA',
                           borderRadius: 10,
-                          boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
+                          boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                          border: `2px solid ${theme.primary}`,
                           padding: '22px 28px',
                           minWidth: 270,
                           maxWidth: 340,
@@ -300,7 +301,7 @@ function App() {
                               style={{
                                 fontSize: '0.96em',
                                 padding: '0.48em 1.32em',
-                                background: theme.gradient,
+                                background: theme.primary,
                                 color: network === 'Celo' ? '#222' : '#fff',
                                 border: 'none',
                                 borderRadius: '6px',
@@ -309,8 +310,8 @@ function App() {
                                 boxShadow: `0 2px 8px ${theme.shadow}`,
                                 transition: 'background 0.2s'
                               }}
-                              onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                              onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                              onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                              onMouseOut={e => e.currentTarget.style.background = theme.primary}
                               onClick={() => deployContract(contract.name, contract.bytecode)}
                             >Deploy</button>
                             <button
