@@ -244,7 +244,7 @@ function App() {
             
             <Route path="/deploy" element={(
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
+                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
                     {!isWalletConnected ? (
@@ -275,26 +275,62 @@ function App() {
                       </div>
                     ) : (
                       contracts.map((contract) => (
-                        <button
-                          key={contract.name}
-                          style={{
-                            fontSize: '0.88em',
-                            padding: '0.5em 1.2em',
-                            background: theme.gradient,
-                            color: network === 'Celo' ? '#222' : '#fff',
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            boxShadow: `0 2px 8px ${theme.shadow}`,
-                            transition: 'background 0.2s'
-                          }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-                          onClick={() => deployContract(contract.name, contract.bytecode)}
-                        >
-                          {contract.name}
-                        </button>
+                        <div key={contract.name} style={{
+                          background: `linear-gradient(120deg, ${theme.primaryDark} 60%, ${theme.cardBg} 100%)`,
+                          borderRadius: 10,
+                          boxShadow: '0 4px 16px rgba(0,0,0,0.10)',
+                          padding: '22px 28px',
+                          minWidth: 270,
+                          maxWidth: 340,
+                          marginBottom: 12,
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'center',
+                          justifyContent: 'space-between',
+                        }}>
+                          <div style={{
+                            fontWeight: 700,
+                            fontSize: '1.08em',
+                            color: theme.textPrimary,
+                            marginBottom: 12,
+                            textAlign: 'center',
+                          }}>{contract.name}</div>
+                          <div style={{ display: 'flex', flexDirection: 'row', gap: 14, width: '100%', justifyContent: 'center', marginTop: 8 }}>
+                            <button
+                              style={{
+                                fontSize: '0.96em',
+                                padding: '0.48em 1.32em',
+                                background: theme.gradient,
+                                color: network === 'Celo' ? '#222' : '#fff',
+                                border: 'none',
+                                borderRadius: '6px',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                boxShadow: `0 2px 8px ${theme.shadow}`,
+                                transition: 'background 0.2s'
+                              }}
+                              onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                              onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                              onClick={() => deployContract(contract.name, contract.bytecode)}
+                            >Deploy</button>
+                            <button
+                              style={{
+                                fontSize: '0.96em',
+                                padding: '0.48em 1.32em',
+                                background: theme.primaryDark,
+                                color: '#fff',
+                                border: 'none',
+                                borderRadius: '6px',
+                                fontWeight: 600,
+                                cursor: 'pointer',
+                                boxShadow: `0 2px 8px ${theme.shadow}`,
+                                transition: 'background 0.2s'
+                              }}
+                              title="Show deployment fee"
+                              onClick={() => setPopup({ visible: true, message: `Fee for deploying ${contract.name} depends on network and current gas price.`, txHash: null })}
+                            >Fee</button>
+                          </div>
+                        </div>
                       ))
                     )}
                   </div>
