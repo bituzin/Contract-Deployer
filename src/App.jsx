@@ -315,10 +315,11 @@ function App() {
               <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
-                  <div style={{ marginBottom: 24, background: theme.cardBgDark, borderRadius: 8, boxShadow: '0 2px 8px rgba(0,0,0,0.04)', padding: '18px 22px', fontSize: '0.98em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500 }}>
-                    Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button,<br />
-                    if you want to check the estimated network cost, click <b>Fee</b>.
+                  <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
+                    Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button.<br />
+                    If you want to check the estimated network cost, click <b>Fee</b>.
                   </div>
+                  <div style={{ height: 18 }} />
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
                     {!isWalletConnected ? (
                       <div style={{ width: '100%', textAlign: 'left' }}>
@@ -331,7 +332,7 @@ function App() {
                             fontSize: '0.92em', 
                             padding: '0.45em 1em', 
                             background: theme.primary,
-                            color: network === 'Celo' ? '#222' : '#fff',
+                            color: network === 'Celo' ? '#444' : '#fff',
                             border: 'none',
                             borderRadius: '6px',
                             fontWeight: 600,
@@ -375,7 +376,7 @@ function App() {
                                 fontSize: '0.96em',
                                 padding: '0.48em 1.32em',
                                 background: theme.primary,
-                                color: network === 'Celo' ? '#222' : '#fff',
+                                color: network === 'Celo' ? '#444' : '#fff',
                                 border: 'none',
                                 borderRadius: '6px',
                                 fontWeight: 600,
@@ -392,7 +393,7 @@ function App() {
                                 fontSize: '0.96em',
                                 padding: '0.48em 1.32em',
                                 background: theme.primaryDark,
-                                color: '#fff',
+                                color: network === 'Celo' ? '#444' : '#fff',
                                 border: 'none',
                                 borderRadius: '6px',
                                 fontWeight: 600,

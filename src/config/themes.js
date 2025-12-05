@@ -74,5 +74,6 @@ export const networkThemes = {
 };
 
 export const getTheme = (network) => {
-  return networkThemes[network] || networkThemes.Base;
+  const theme = networkThemes[network] || networkThemes.Base;
+  return { ...theme, network: network.toLowerCase() };
 };

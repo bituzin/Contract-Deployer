@@ -56,7 +56,7 @@ contract SimpleStorage {
               padding: '0.32em 0.8em',
               marginLeft: '12px',
               background: theme.gradient,
-              color: '#fff',
+              color: theme.network === 'celo' ? '#444' : '#fff',
               border: 'none',
               borderRadius: '6px',
               fontWeight: 500,
@@ -76,7 +76,7 @@ contract SimpleStorage {
               padding: '0.32em 0.8em',
               marginLeft: '12px',
               background: theme.gradient,
-              color: '#fff',
+              color: theme.network === 'celo' ? '#444' : '#fff',
               border: 'none',
               borderRadius: '6px',
               fontWeight: 500,
@@ -107,7 +107,6 @@ contract SimpleStorage {
           <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>solidity</span>
           <div>
             <button
-              onClick={() => navigator.clipboard.writeText(sourceCode)}
               style={{
                 background: theme.highlight,
                 color: '#444',

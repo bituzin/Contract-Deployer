@@ -66,7 +66,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
             padding: '0.38em 0.8em', 
             marginTop: '6px',
             background: network === 'Celo' ? theme.primary : theme.primary,
-            color: network === 'Celo' ? '#222' : '#fff',
+            color: network === 'Celo' ? '#444' : '#fff',
             border: 'none',
             borderRadius: '6px',
             fontWeight: 600,
