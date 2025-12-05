@@ -69,22 +69,22 @@ function App() {
         }
       }
       
-      if (!usdPrice || usdPrice === 0) {
+        if (!usdPrice || usdPrice === 0) {
+          setPopup({
+            visible: true,
+            message: `Estimated deployment fee for ${contractName}: USD price unavailable.`,
+            txHash: null
+          });
+          return;
+        }
+
+        const feeUsd = (feeEth * usdPrice).toFixed(8);
+
         setPopup({
           visible: true,
-          message: `Estimated deployment fee for ${contractName}: ${feeEth.toFixed(6)} ${coinSymbol}`,
+          message: `Estimated deployment fee for ${contractName}: $${feeUsd} USD`,
           txHash: null
         });
-        return;
-      }
-      
-      const feeUsd = (feeEth * usdPrice).toFixed(2);
-      
-      setPopup({
-        visible: true,
-        message: `Estimated deployment fee for ${contractName}: $${feeUsd} USD (${feeEth.toFixed(6)} ${coinSymbol})`,
-        txHash: null
-      });
     } catch (err) {
       setPopup({ visible: true, message: "Could not estimate fee: " + err.message, txHash: null });
     }
@@ -101,8 +101,6 @@ function App() {
   if (network === 'Celo') {
     theme = {
       ...theme,
-      gradient: 'linear-gradient(90deg, #e6d72a 0%, #e6d74a 100%)',
-      gradientHover: 'linear-gradient(90deg, #e6d74a 0%, #e6d72a 100%)',
       highlight: '#e6d72a',
     };
   }
@@ -180,7 +178,7 @@ function App() {
       if (receipt.contractAddress) {
         setPopup({
           visible: true,
-          message: `Contract ${contractName} deployed successfully!`,
+          message: `Contract <b>${contractName}</b> deployed successfully!`,
           txHash: tx.hash
         });
       } else {
@@ -328,7 +326,7 @@ function App() {
                             minWidth: '120px', 
                             fontSize: '0.92em', 
                             padding: '0.45em 1em', 
-                            background: theme.gradient,
+                            background: theme.primary,
                             color: network === 'Celo' ? '#222' : '#fff',
                             border: 'none',
                             borderRadius: '6px',
@@ -337,8 +335,8 @@ function App() {
                             boxShadow: `0 2px 8px ${theme.shadow}`,
                             transition: 'background 0.2s'
                           }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                          onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                          onMouseOut={e => e.currentTarget.style.background = theme.primary}
                           onClick={connectWallet}
                         >
                           Connect
@@ -367,7 +365,7 @@ function App() {
                             marginBottom: 12,
                             textAlign: 'center',
                           }}>{contract.name}</div>
-                          <div style={{ display: 'flex', flexDirection: 'row', gap: 14, width: '100%', justifyContent: 'center', marginTop: 8 }}>
+                          <div style={{ display: 'flex', flexDirection: 'row', gap: 32, width: '100%', justifyContent: 'center', marginTop: 8 }}>
                             <button
                               style={{
                                 fontSize: '0.96em',

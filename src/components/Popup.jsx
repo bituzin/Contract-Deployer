@@ -21,24 +21,24 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
       <div 
         style={{
           background: theme.cardBg + 'E6', // hex + alpha (90% opacity)
-          borderRadius: 14,
-          boxShadow: `0 2px 16px ${theme.shadow}`,
-          padding: '32px 38px',
-          minWidth: 320,
-          maxWidth: 420,
+          borderRadius: 12,
+          boxShadow: `0 2px 12px ${theme.shadow}`,
+          padding: '20px 22px',
+          minWidth: 220,
+          maxWidth: 320,
           textAlign: 'center',
           fontFamily: 'Inter, Arial, sans-serif',
           fontWeight: 500,
-          fontSize: '1.08em',
+          fontSize: '0.96em',
           color: theme.textPrimary,
           position: 'relative',
         }}
       >
-        <div style={{ marginBottom: txHash ? 18 : 28 }}>
-          {message}
+        <div style={{ marginBottom: txHash ? 12 : 18, fontSize: '0.95em' }}>
+          <span dangerouslySetInnerHTML={{ __html: message }} />
         </div>
         {txHash && (
-          <div style={{ marginBottom: 18 }}>
+          <div style={{ marginBottom: 12 }}>
             <a
               href={
                 network === "Base" ? `https://basescan.org/tx/${txHash}` :
@@ -52,7 +52,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
               style={{ 
                 color: network === "Celo" ? theme.textPrimary : theme.primary,
                 textDecoration: 'underline', 
-                fontSize: '0.98em' 
+                fontSize: '0.92em' 
               }}
             >
               View transaction on explorer
@@ -61,12 +61,12 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
         )}
         <button
           style={{ 
-            minWidth: '120px', 
-            fontSize: '0.98em', 
-            padding: '0.5em 1.1em', 
-            marginTop: '8px',
-            background: theme.gradient,
-            color: '#fff',
+            minWidth: '90px', 
+            fontSize: '0.92em', 
+            padding: '0.38em 0.8em', 
+            marginTop: '6px',
+            background: network === 'Celo' ? '#e6d72a' : theme.primary,
+            color: network === 'Celo' ? '#222' : '#fff',
             border: 'none',
             borderRadius: '6px',
             fontWeight: 600,
@@ -74,8 +74,20 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
             boxShadow: `0 2px 8px ${theme.shadow}`,
             transition: 'background 0.2s'
           }}
-          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+          onMouseOver={e => {
+            if (network === 'Celo') {
+              e.currentTarget.style.background = '#e6d72a';
+            } else {
+              e.currentTarget.style.background = theme.primaryDark;
+            }
+          }}
+          onMouseOut={e => {
+            if (network === 'Celo') {
+              e.currentTarget.style.background = '#e6d72a';
+            } else {
+              e.currentTarget.style.background = theme.primary;
+            }
+          }}
           onClick={onClose}
         >
           OK
