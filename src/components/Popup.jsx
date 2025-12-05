@@ -65,7 +65,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
             fontSize: '0.92em', 
             padding: '0.38em 0.8em', 
             marginTop: '6px',
-            background: network === 'Celo' ? '#e6d72a' : theme.primary,
+            background: network === 'Celo' ? theme.primary : theme.primary,
             color: network === 'Celo' ? '#222' : '#fff',
             border: 'none',
             borderRadius: '6px',
@@ -76,14 +76,14 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
           }}
           onMouseOver={e => {
             if (network === 'Celo') {
-              e.currentTarget.style.background = '#e6d72a';
+              e.currentTarget.style.background = theme.primaryDark;
             } else {
               e.currentTarget.style.background = theme.primaryDark;
             }
           }}
           onMouseOut={e => {
             if (network === 'Celo') {
-              e.currentTarget.style.background = '#e6d72a';
+              e.currentTarget.style.background = theme.primary;
             } else {
               e.currentTarget.style.background = theme.primary;
             }
