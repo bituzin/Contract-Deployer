@@ -3,7 +3,7 @@ import { mainnet, polygon, arbitrum, base, optimism } from '@reown/appkit/networ
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // Get projectId from https://cloud.walletconnect.com
-const projectId = 'YOUR_PROJECT_ID_HERE'
+const projectId = 'adf5dc824747880d3774621d97e778a9'
 
 // Configure networks
 const networks = [mainnet, polygon, arbitrum, base, optimism]

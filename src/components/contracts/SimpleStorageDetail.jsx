@@ -1,7 +1,7 @@
 import React from 'react';
 import { ethers } from 'ethers';
 
-export const SimpleStorageDetail = ({ theme, isWalletConnected, connectWallet, setPopup }) => {
+export const SimpleStorageDetail = ({ theme, setPopup }) => {
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060ba80601a5f395ff3fe6080604052348015600e575f5ffd5b5060043610603a575f3560e01c806309ce9ccb14603e5780633fb5c1cb146057578063f2c9ecd8146068575b5f5ffd5b60455f5481565b60405190815260200160405180910390f35b60666062366004606e565b5f55565b005b5f546045565b5f60208284031215607d575f5ffd5b503591905056fea26469706673582212200cf668aaa1a8919f982a5eb6458914b17b8d63ca0f5c3aac933d33cc0699e59264736f6c634300081e0033";
   
@@ -47,28 +47,9 @@ contract SimpleStorage {
   return (
     <div style={{ maxWidth: 720, margin: '60px auto 32px auto', background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>SimpleStorage</h2>
-        {!isWalletConnected ? (
-          <button
-            style={{
-              minWidth: '70px',
-              fontSize: '0.92em',
-              padding: '0.32em 0.8em',
-              marginLeft: '12px',
-              background: theme.gradient,
-              color: theme.network === 'celo' ? '#444' : '#fff',
-              border: 'none',
-              borderRadius: '6px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-            onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-            onClick={connectWallet}
-          >Connect</button>
-        ) : (
+        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
+          SimpleStorage
+        </h2>
           <button
             style={{
               minWidth: '70px',

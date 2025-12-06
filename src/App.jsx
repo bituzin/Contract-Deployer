@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import { useAppKit } from '@reown/appkit/react';
 import { useTheme } from "./hooks/useTheme";
 import { Header } from "./components/Header";
 import { Popup } from "./components/Popup";
@@ -12,9 +14,9 @@ import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
 function App() {
+  const { isConnected } = useAccount();
+  const { open } = useAppKit();
   const [showHeader, setShowHeader] = useState(false);
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
@@ -22,8 +24,15 @@ function App() {
 
   // Szacowanie fee za deploy kontraktu w dolarach
   async function showDeployFee(bytecode, contractName) {
+    // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
+    if (!isConnected) {
+      // Wywołaj modal WalletConnect
+      open();
+      setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      return;
+    }
     if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
       return;
     }
     
@@ -41,10 +50,8 @@ function App() {
       
       // Pobierz aktualny kurs kryptowaluty w USD
       let coinId = 'ethereum'; // domyślnie ETH
-      let coinSymbol = 'ETH';
       if (network === 'Celo') {
         coinId = 'celo';
-        coinSymbol = 'CELO';
       }
       
       let usdPrice = null;
@@ -142,32 +149,17 @@ function App() {
     }
   }
 
-  // Połącz portfel
-  async function connectWallet() {
-    if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask required", txHash: null });
-      return;
-    }
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      if (accounts && accounts.length > 0) {
-        setIsWalletConnected(true);
-        setWalletAddress(accounts[0]);
-      } else {
-        setIsWalletConnected(false);
-        setWalletAddress("");
-      }
-    } catch (error) {
-      setPopup({ visible: true, message: "Failed to connect wallet: " + error.message, txHash: null });
-      setIsWalletConnected(false);
-      setWalletAddress("");
-    }
-  }
-
   // Deploy contract
   async function deployContract(contractName, bytecode) {
+    // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
+    if (!isConnected) {
+      // Wywołaj modal WalletConnect
+      open();
+      setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      return;
+    }
     if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
       return;
     }
     try {
@@ -243,6 +235,10 @@ function App() {
           }}
         />
       </div>
+        {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
+        <div style={{ display: 'none' }}>
+          <appkit-button />
+        </div>
         <div className="App" style={{
           minHeight: '100vh',
           transition: 'background 0.3s'
@@ -321,34 +317,7 @@ function App() {
                   </div>
                   <div style={{ height: 18 }} />
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
-                    {!isWalletConnected ? (
-                      <div style={{ width: '100%', textAlign: 'left' }}>
-                        <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary }}>
-                          Connect Your Wallet First
-                        </div>
-                        <button
-                          style={{ 
-                            minWidth: '120px', 
-                            fontSize: '0.92em', 
-                            padding: '0.45em 1em', 
-                            background: theme.primary,
-                            color: network === 'Celo' ? '#444' : '#fff',
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            boxShadow: `0 2px 8px ${theme.shadow}`,
-                            transition: 'background 0.2s'
-                          }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-                          onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                          onClick={connectWallet}
-                        >
-                          Connect
-                        </button>
-                      </div>
-                    ) : (
-                      contracts.map((contract) => (
+                    {contracts.map((contract) => (
                         <div key={contract.name} style={{
                           background: `rgba(${theme.primaryRgb},0.10)`,
                           borderRadius: 10,
@@ -408,8 +377,7 @@ function App() {
                             >Fee</button>
                           </div>
                         </div>
-                      ))
-                    )}
+                      ))}
                   </div>
                 </div>
               </div>
@@ -418,8 +386,6 @@ function App() {
             <Route path="/contract/simple-storage" element={(
               <SimpleStorageDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
               />
             )} />
@@ -427,8 +393,6 @@ function App() {
             <Route path="/contract/click-counter" element={(
               <ClickCounterDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
               />
             )} />
@@ -436,8 +400,6 @@ function App() {
             <Route path="/contract/message-board" element={(
               <MessageBoardDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
               />
             )} />
@@ -445,8 +407,6 @@ function App() {
             <Route path="/contract/simple-voting" element={(
               <SimpleVotingDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
               />
             )} />
