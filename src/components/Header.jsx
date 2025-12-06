@@ -36,6 +36,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           Contract Deployer
         </span>
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <appkit-button />
           <span style={{ color: '#fff', fontWeight: 600, fontSize: '1.08em' }}>Chain</span>
           <select
             value={network}
