@@ -340,41 +340,63 @@ function App() {
                             textAlign: 'center',
                           }}>{contract.name}</div>
                           <div style={{ display: 'flex', flexDirection: 'row', gap: 32, width: '100%', justifyContent: 'center', marginTop: 8 }}>
-                            <button
-                              style={{
-                                fontSize: '0.96em',
-                                padding: '0.48em 1.32em',
-                                background: theme.primary,
-                                color: network === 'Celo' ? '#444' : '#fff',
-                                border: 'none',
-                                borderRadius: '6px',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: `0 2px 8px ${theme.shadow}`,
-                                transition: 'background 0.2s'
-                              }}
-                              onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-                              onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                              onClick={() => deployContract(contract.name, contract.bytecode)}
-                            >Deploy</button>
-                            <button
-                              style={{
-                                fontSize: '0.96em',
-                                padding: '0.48em 1.32em',
-                                background: theme.primaryDark,
-                                color: network === 'Celo' ? '#444' : '#fff',
-                                border: 'none',
-                                borderRadius: '6px',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: `0 2px 8px ${theme.shadow}`,
-                                transition: 'background 0.2s'
-                              }}
-                              title="Show deployment fee"
-                              onMouseOver={e => e.currentTarget.style.background = theme.primary}
-                              onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
-                              onClick={() => showDeployFee(contract.bytecode, contract.name)}
-                            >Fee</button>
+                            {!isConnected ? (
+                              <button
+                                style={{
+                                  fontSize: '0.96em',
+                                  padding: '0.48em 1.32em',
+                                  background: theme.primary,
+                                  color: network === 'Celo' ? '#444' : '#fff',
+                                  border: 'none',
+                                  borderRadius: '6px',
+                                  fontWeight: 600,
+                                  cursor: 'pointer',
+                                  boxShadow: `0 2px 8px ${theme.shadow}`,
+                                  transition: 'background 0.2s'
+                                }}
+                                onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                                onMouseOut={e => e.currentTarget.style.background = theme.primary}
+                                onClick={() => open()}
+                              >Connect</button>
+                            ) : (
+                              <>
+                                <button
+                                  style={{
+                                    fontSize: '0.96em',
+                                    padding: '0.48em 1.32em',
+                                    background: theme.primary,
+                                    color: network === 'Celo' ? '#444' : '#fff',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                    boxShadow: `0 2px 8px ${theme.shadow}`,
+                                    transition: 'background 0.2s'
+                                  }}
+                                  onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                                  onMouseOut={e => e.currentTarget.style.background = theme.primary}
+                                  onClick={() => deployContract(contract.name, contract.bytecode)}
+                                >Deploy</button>
+                                <button
+                                  style={{
+                                    fontSize: '0.96em',
+                                    padding: '0.48em 1.32em',
+                                    background: theme.primaryDark,
+                                    color: network === 'Celo' ? '#444' : '#fff',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                    boxShadow: `0 2px 8px ${theme.shadow}`,
+                                    transition: 'background 0.2s'
+                                  }}
+                                  title="Show deployment fee"
+                                  onMouseOver={e => e.currentTarget.style.background = theme.primary}
+                                  onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
+                                  onClick={() => showDeployFee(contract.bytecode, contract.name)}
+                                >Fee</button>
+                              </>
+                            )}
                           </div>
                         </div>
                       ))}
@@ -387,6 +409,8 @@ function App() {
               <SimpleStorageDetail 
                 theme={theme}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
@@ -394,6 +418,8 @@ function App() {
               <ClickCounterDetail 
                 theme={theme}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
@@ -401,6 +427,8 @@ function App() {
               <MessageBoardDetail 
                 theme={theme}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
@@ -408,6 +436,8 @@ function App() {
               <SimpleVotingDetail 
                 theme={theme}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             

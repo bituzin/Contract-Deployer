@@ -1,12 +1,12 @@
 import { createAppKit } from '@reown/appkit/react'
-import { mainnet, polygon, arbitrum, base, optimism } from '@reown/appkit/networks'
+import { sepolia, celo, base, optimism } from '@reown/appkit/networks'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
 
 // Get projectId from https://cloud.walletconnect.com
 const projectId = 'adf5dc824747880d3774621d97e778a9'
 
-// Configure networks
-const networks = [mainnet, polygon, arbitrum, base, optimism]
+// Configure networks - dopasowane do sieci w aplikacji
+const networks = [sepolia, celo, base, optimism]
 
 // Create Wagmi Adapter
 export const wagmiAdapter = new WagmiAdapter({

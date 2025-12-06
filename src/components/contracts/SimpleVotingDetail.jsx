@@ -1,7 +1,7 @@
 import React from 'react';
 import { ethers } from 'ethers';
 
-export const SimpleVotingDetail = ({ theme, setPopup }) => {
+export const SimpleVotingDetail = ({ theme, setPopup, isConnected, openModal }) => {
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033";
 
@@ -64,6 +64,27 @@ contract SimpleVoting {
         <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
           SimpleVoting
         </h2>
+        {!isConnected ? (
+          <button
+            style={{
+              minWidth: '70px',
+              fontSize: '0.92em',
+              padding: '0.32em 0.8em',
+              marginLeft: '12px',
+              background: theme.gradient,
+              color: theme.network === 'celo' ? '#444' : '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 2px 8px ${theme.shadow}`,
+              transition: 'background 0.2s'
+            }}
+            onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+            onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+            onClick={openModal}
+          >Connect</button>
+        ) : (
           <button
             style={{
               minWidth: '70px',

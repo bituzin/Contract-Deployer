@@ -1,7 +1,7 @@
 import React from 'react';
 import { ethers } from 'ethers';
 
-export const ClickCounterDetail = ({ theme, setPopup }) => {
+export const ClickCounterDetail = ({ theme, setPopup, isConnected, openModal }) => {
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033";
 
@@ -50,6 +50,27 @@ contract ClickCounter {
         <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
           ClickCounter
         </h2>
+        {!isConnected ? (
+          <button
+            style={{
+              minWidth: '70px',
+              fontSize: '0.92em',
+              padding: '0.32em 0.8em',
+              marginLeft: '12px',
+              background: theme.gradient,
+              color: theme.network === 'celo' ? '#444' : '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 2px 8px ${theme.shadow}`,
+              transition: 'background 0.2s'
+            }}
+            onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+            onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+            onClick={openModal}
+          >Connect</button>
+        ) : (
           <button
             style={{
               minWidth: '70px',
@@ -69,6 +90,7 @@ contract ClickCounter {
             onMouseOut={e => e.currentTarget.style.background = theme.gradient}
             onClick={handleDeploy}
           >Deploy</button>
+        )}
       </div>
       <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '0.96em', marginBottom: '16px', maxWidth: '720px', lineHeight: 1.7 }}>
         ClickCounter is a public contract that tracks the total number of times users have interacted with it. Every call to click increases the global counter, making it a great example for event tracking, gamification, or simple analytics on-chain. The contract is open to everyone, so the count reflects all user activity.
