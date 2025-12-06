@@ -132,19 +132,38 @@ function App() {
     }
   }, [showHeader]);
 
+  // Automatyczne przełączanie sieci w portfelu po podłączeniu
+  React.useEffect(() => {
+    if (isConnected) {
+      const networkParam = getNetworkParam(network);
+      if (window.ethereum && networkParam) {
+        window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: networkParam.chainId }]
+        }).catch(err => {
+          console.log("Network switch error:", err);
+        });
+      }
+    }
+  }, [isConnected, network]);
+
   // Przełączanie sieci
   async function handleNetworkChange(e) {
     const selected = e.target.value;
     setNetwork(selected);
-    const networkParam = getNetworkParam(selected);
-    if (window.ethereum && networkParam) {
-      try {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: networkParam.chainId }]
-        });
-      } catch (err) {
-        setPopup({ visible: true, message: `Failed to switch network: ${err.message}`, txHash: null });
+    
+    // Przełącz sieć w portfelu tylko jeśli portfel jest podłączony
+    if (isConnected) {
+      const networkParam = getNetworkParam(selected);
+      if (window.ethereum && networkParam) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: networkParam.chainId }]
+          });
+        } catch (err) {
+          setPopup({ visible: true, message: `Failed to switch network: ${err.message}`, txHash: null });
+        }
       }
     }
   }
@@ -313,7 +332,8 @@ function App() {
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
                   <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
                     Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button.<br />
-                    If you want to check the estimated network cost, click <b>Fee</b>.
+                    If you want to check the estimated network cost, click <b>Fee</b>.<br />
+                    <b>Wallet connection required.</b>
                   </div>
                   <div style={{ height: 18 }} />
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
