@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
+import { useAccount } from "wagmi";
+import { useAppKit } from '@reown/appkit/react';
 import { useTheme } from "./hooks/useTheme";
 import { Header } from "./components/Header";
 import { Popup } from "./components/Popup";
@@ -12,9 +14,9 @@ import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
 function App() {
+  const { isConnected } = useAccount();
+  const { open } = useAppKit();
   const [showHeader, setShowHeader] = useState(false);
-  const [isWalletConnected, setIsWalletConnected] = useState(false);
-  const [walletAddress, setWalletAddress] = useState("");
   const [showWelcome, setShowWelcome] = useState(false);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
@@ -22,8 +24,15 @@ function App() {
 
   // Szacowanie fee za deploy kontraktu w dolarach
   async function showDeployFee(bytecode, contractName) {
+    // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
+    if (!isConnected) {
+      // Wywołaj modal WalletConnect
+      open();
+      setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      return;
+    }
     if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
       return;
     }
     
@@ -41,10 +50,8 @@ function App() {
       
       // Pobierz aktualny kurs kryptowaluty w USD
       let coinId = 'ethereum'; // domyślnie ETH
-      let coinSymbol = 'ETH';
       if (network === 'Celo') {
         coinId = 'celo';
-        coinSymbol = 'CELO';
       }
       
       let usdPrice = null;
@@ -125,49 +132,53 @@ function App() {
     }
   }, [showHeader]);
 
+  // Automatyczne przełączanie sieci w portfelu po podłączeniu
+  React.useEffect(() => {
+    if (isConnected) {
+      const networkParam = getNetworkParam(network);
+      if (window.ethereum && networkParam) {
+        window.ethereum.request({
+          method: "wallet_switchEthereumChain",
+          params: [{ chainId: networkParam.chainId }]
+        }).catch(err => {
+          console.log("Network switch error:", err);
+        });
+      }
+    }
+  }, [isConnected, network]);
+
   // Przełączanie sieci
   async function handleNetworkChange(e) {
     const selected = e.target.value;
     setNetwork(selected);
-    const networkParam = getNetworkParam(selected);
-    if (window.ethereum && networkParam) {
-      try {
-        await window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: networkParam.chainId }]
-        });
-      } catch (err) {
-        setPopup({ visible: true, message: `Failed to switch network: ${err.message}`, txHash: null });
+    
+    // Przełącz sieć w portfelu tylko jeśli portfel jest podłączony
+    if (isConnected) {
+      const networkParam = getNetworkParam(selected);
+      if (window.ethereum && networkParam) {
+        try {
+          await window.ethereum.request({
+            method: "wallet_switchEthereumChain",
+            params: [{ chainId: networkParam.chainId }]
+          });
+        } catch (err) {
+          setPopup({ visible: true, message: `Failed to switch network: ${err.message}`, txHash: null });
+        }
       }
-    }
-  }
-
-  // Połącz portfel
-  async function connectWallet() {
-    if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask required", txHash: null });
-      return;
-    }
-    try {
-      const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-      if (accounts && accounts.length > 0) {
-        setIsWalletConnected(true);
-        setWalletAddress(accounts[0]);
-      } else {
-        setIsWalletConnected(false);
-        setWalletAddress("");
-      }
-    } catch (error) {
-      setPopup({ visible: true, message: "Failed to connect wallet: " + error.message, txHash: null });
-      setIsWalletConnected(false);
-      setWalletAddress("");
     }
   }
 
   // Deploy contract
   async function deployContract(contractName, bytecode) {
+    // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
+    if (!isConnected) {
+      // Wywołaj modal WalletConnect
+      open();
+      setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      return;
+    }
     if (!window.ethereum) {
-      setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
       return;
     }
     try {
@@ -205,7 +216,7 @@ function App() {
     },
     {
       name: 'MessageBoard',
-      bytecode: '0x6080604052348015600e575f5ffd5b506103ba8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063256fec881461004357806332970710146100735780636630f88f14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61007b61009d565b60405161006a9190610149565b61009b610096366004610192565b610128565b005b5f80546100a990610245565b80601f01602080910402602001604051908101604052809291908181526020018280546100d590610245565b80156101205780601f106100f757610100808354040283529160200191610120565b820191905f5260205f20905b81548152906001019060200180831161010357829003601f168201915b505050505081565b5f61013382826102c9565b5050600180546001600160a01b03191633179055565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b634e487b7160e01b5f52604160045260245ffd5b5f602082840312156101a2575f5ffd5b813567ffffffffffffffff8111156101b8575f5ffd5b8201601f810184136101c8575f5ffd5b803567ffffffffffffffff8111156101e2576101e261017e565b604051601f8201601f19908116603f0116810167ffffffffffffffff811182821017156102115761021161017e565b604052818152828201602001861015610228575f5ffd5b816020840160208301375f91810160200191909152949350505050565b600181811c9082168061025957607f821691505b60208210810361027757634e487b7160e01b5f52602260045260245ffd5b50919050565b601f8211156102c457805f5260205f20601f840160051c810160208510156102a25750805b601f840160051c820191505b818110156102c1575f81556001016102ae565b50505b505050565b815167ffffffffffffffff8111156102e3576102e361017e565b6102f7816102f18454610245565b8461027d565b6020601f821160018114610329575f83156103125750848201515b5f19600385901b1c1916600184901b1784556102c1565b5f84815260208120601f198516915b828110156103585787850151825560209485019460019092019101610338565b508482101561037557868401515f19600387901b60f8161c191681555b50505050600190811b0190555056fea264697066735822122081aa54c8ed61172532a488e962737c95dfb429d257ad3221825fb2c89316835664736f6c634300081e0033'
+      bytecode: '0x6080604052348015600e575f5ffd5b506103ba8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063256fec881461004357806332970710146100735780636630f88f14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61007b61009d565b60405161006a9190610149565b61009b610096366004610192565b610128565b005b5f80546100a990610245565b80601f01602080910402602001604051908101604052809291908181526020018280546100d590610245565b80156101205780601f106100f757610100808354040283529160200191610120565b820191905f5260205f20905b81548152906001019060200180831161010357829003601f168201915b505050505081565b5f61013382826102c9565b5050600180546001600160a01b03191633179055565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b634e487b7160e01b5f52604160045260245ffd5b5f602082840312156101a2575f5ffd5b813567ffffffffffffffff8111156101b8575f5ffd5b8201601f810184136101c8575f5ffd5b803567ffffffffffffffff8111156101e2576101e261017e565b604051601f8201601f19908116603f0116810167ffffffffffffffff811182821017156102115761021161017e565b604052818152828201602001861015610228575f5ffd5b816020840160208301375f91810160200191909152949350505050565b600181811c9082168061025957607f821691505b60208210810361027757634e487b7160e01b5f52601160045260245ffd5b50919050565b601f8211156102c457805f5260205f20601f840160051c810160208510156102a25750805b601f840160051c820191505b818110156102c1575f81556001016102ae565b50505b505050565b815167ffffffffffffffff8111156102e3576102e361017e565b6102f7816102f18454610245565b8461027d565b6020601f821160018114610329575f83156103125750848201515b5f19600385901b1c1916600184901b1784556102c1565b5f84815260208120601f198516915b828110156103585787850151825560209485019460019092019101610338565b508482101561037557868401515f19600387901b60f8161c191681555b50505050600190811b0190555056fea264697066735822122081aa54c8ed61172532a488e962737c95dfb429d257ad3221825fb2c89316835664736f6c634300081e0033'
     },
     {
       name: 'SimpleVoting',
@@ -243,6 +254,10 @@ function App() {
           }}
         />
       </div>
+        {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
+        <div style={{ display: 'none' }}>
+          <appkit-button />
+        </div>
         <div className="App" style={{
           minHeight: '100vh',
           transition: 'background 0.3s'
@@ -317,38 +332,12 @@ function App() {
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
                   <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
                     Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button.<br />
-                    If you want to check the estimated network cost, click <b>Fee</b>.
+                    If you want to check the estimated network cost, click <b>Fee</b>.<br />
+                    <b>Wallet connection required.</b>
                   </div>
                   <div style={{ height: 18 }} />
                   <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
-                    {!isWalletConnected ? (
-                      <div style={{ width: '100%', textAlign: 'left' }}>
-                        <div style={{ fontWeight: 600, fontSize: '1.08em', marginBottom: 18, color: theme.textPrimary }}>
-                          Connect Your Wallet First
-                        </div>
-                        <button
-                          style={{ 
-                            minWidth: '120px', 
-                            fontSize: '0.92em', 
-                            padding: '0.45em 1em', 
-                            background: theme.primary,
-                            color: network === 'Celo' ? '#444' : '#fff',
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            boxShadow: `0 2px 8px ${theme.shadow}`,
-                            transition: 'background 0.2s'
-                          }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-                          onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                          onClick={connectWallet}
-                        >
-                          Connect
-                        </button>
-                      </div>
-                    ) : (
-                      contracts.map((contract) => (
+                    {contracts.map((contract) => (
                         <div key={contract.name} style={{
                           background: `rgba(${theme.primaryRgb},0.10)`,
                           borderRadius: 10,
@@ -371,45 +360,66 @@ function App() {
                             textAlign: 'center',
                           }}>{contract.name}</div>
                           <div style={{ display: 'flex', flexDirection: 'row', gap: 32, width: '100%', justifyContent: 'center', marginTop: 8 }}>
-                            <button
-                              style={{
-                                fontSize: '0.96em',
-                                padding: '0.48em 1.32em',
-                                background: theme.primary,
-                                color: network === 'Celo' ? '#444' : '#fff',
-                                border: 'none',
-                                borderRadius: '6px',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: `0 2px 8px ${theme.shadow}`,
-                                transition: 'background 0.2s'
-                              }}
-                              onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-                              onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                              onClick={() => deployContract(contract.name, contract.bytecode)}
-                            >Deploy</button>
-                            <button
-                              style={{
-                                fontSize: '0.96em',
-                                padding: '0.48em 1.32em',
-                                background: theme.primaryDark,
-                                color: network === 'Celo' ? '#444' : '#fff',
-                                border: 'none',
-                                borderRadius: '6px',
-                                fontWeight: 600,
-                                cursor: 'pointer',
-                                boxShadow: `0 2px 8px ${theme.shadow}`,
-                                transition: 'background 0.2s'
-                              }}
-                              title="Show deployment fee"
-                              onMouseOver={e => e.currentTarget.style.background = theme.primary}
-                              onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
-                              onClick={() => showDeployFee(contract.bytecode, contract.name)}
-                            >Fee</button>
+                            {!isConnected ? (
+                              <button
+                                style={{
+                                  fontSize: '0.96em',
+                                  padding: '0.48em 1.32em',
+                                  background: theme.primary,
+                                  color: network === 'Celo' ? '#444' : '#fff',
+                                  border: 'none',
+                                  borderRadius: '6px',
+                                  fontWeight: 600,
+                                  cursor: 'pointer',
+                                  boxShadow: `0 2px 8px ${theme.shadow}`,
+                                  transition: 'background 0.2s'
+                                }}
+                                onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                                onMouseOut={e => e.currentTarget.style.background = theme.primary}
+                                onClick={() => open()}
+                              >Connect</button>
+                            ) : (
+                              <>
+                                <button
+                                  style={{
+                                    fontSize: '0.96em',
+                                    padding: '0.48em 1.32em',
+                                    background: theme.primary,
+                                    color: network === 'Celo' ? '#444' : '#fff',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                    boxShadow: `0 2px 8px ${theme.shadow}`,
+                                    transition: 'background 0.2s'
+                                  }}
+                                  onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                                  onMouseOut={e => e.currentTarget.style.background = theme.primary}
+                                  onClick={() => deployContract(contract.name, contract.bytecode)}
+                                >Deploy</button>
+                                <button
+                                  style={{
+                                    fontSize: '0.96em',
+                                    padding: '0.48em 1.32em',
+                                    background: theme.primaryDark,
+                                    color: network === 'Celo' ? '#444' : '#fff',
+                                    border: 'none',
+                                    borderRadius: '6px',
+                                    fontWeight: 600,
+                                    cursor: 'pointer',
+                                    boxShadow: `0 2px 8px ${theme.shadow}`,
+                                    transition: 'background 0.2s'
+                                  }}
+                                  title="Show deployment fee"
+                                  onMouseOver={e => e.currentTarget.style.background = theme.primary}
+                                  onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
+                                  onClick={() => showDeployFee(contract.bytecode, contract.name)}
+                                >Fee</button>
+                              </>
+                            )}
                           </div>
                         </div>
-                      ))
-                    )}
+                      ))}
                   </div>
                 </div>
               </div>
@@ -418,36 +428,36 @@ function App() {
             <Route path="/contract/simple-storage" element={(
               <SimpleStorageDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
             <Route path="/contract/click-counter" element={(
               <ClickCounterDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
             <Route path="/contract/message-board" element={(
               <MessageBoardDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
             <Route path="/contract/simple-voting" element={(
               <SimpleVotingDetail 
                 theme={theme}
-                isWalletConnected={isWalletConnected}
-                connectWallet={connectWallet}
                 setPopup={setPopup}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
             
@@ -504,16 +514,13 @@ function App() {
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
                 <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
-                <ol style={{ paddingLeft: 24 }}>
+                <ol>
                   <li><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</li>
                   <li><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</li>
                   <li><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</li>
                   <li><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</li>
                   <li><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</li>
                 </ol>
-                <p style={{ fontSize: '0.95em', color: theme.textSecondary, marginTop: 18 }}>
-                  For more details, see the documentation or contact support.
-                </p>
               </div>
               </div>
             )} />
