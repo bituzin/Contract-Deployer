@@ -12,6 +12,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           justifyContent: 'space-between', 
           gap: '28px', 
           padding: '18px 40px', 
+          height: 72, 
+          boxSizing: 'border-box',
           position: 'fixed', 
           top: 0, 
           left: 0, 
@@ -73,7 +75,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         style={{
           width: '100%',
           position: 'fixed',
-          top: 68,
+          top: 72,
           left: 0,
           zIndex: 999,
           background: theme.cardBg,

@@ -92,7 +92,7 @@ contract SimpleStorage {
           >Deploy</button>
         )}
       </div>
-      <div style={{ color: theme.textPrimary, fontWeight: 400, fontSize: '0.96em', marginBottom: '16px', maxWidth: '720px', lineHeight: 1.7 }}>
+      <div style={{ color: theme.textPrimary, fontWeight: 500, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', marginBottom: '14px', maxWidth: '720px', lineHeight: 1.7, textAlign: 'left' }}>
         SimpleStorage is a minimal contract for storing a single integer value on the blockchain. It is perfect for learning, testing, and demonstrating how persistent storage works in smart contracts. Anyone can update the value, and anyone can read it at any time. There are no restrictions or access controls, making it ideal for public demos and tutorials.
         <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
         <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>

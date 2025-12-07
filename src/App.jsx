@@ -514,13 +514,13 @@ function App() {
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
                 <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
-                <ol>
-                  <li><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</li>
-                  <li><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</li>
-                  <li><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</li>
-                  <li><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</li>
-                  <li><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</li>
-                </ol>
+                <div>
+                  <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
+                  <div style={{ marginBottom: 14 }}><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</div>
+                  <div style={{ marginBottom: 14 }}><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</div>
+                  <div style={{ marginBottom: 14 }}><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</div>
+                  <div style={{ marginBottom: 0 }}><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</div>
+                </div>
               </div>
               </div>
             )} />
