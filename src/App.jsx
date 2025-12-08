@@ -280,12 +280,12 @@ function App() {
         />
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
-            <Route path="/" element={(
+            <Route path="/" element={( 
               <div
                 style={{
                   maxWidth: 540,
                   margin: '60px auto 32px auto',
-                  background: theme.cardBg,
+                  background: theme.cardBg + 'E6',
                   borderRadius: 12,
                   boxShadow: `0 2px 16px ${theme.shadow}`,
                   padding: '28px 32px',
@@ -463,7 +463,7 @@ function App() {
             
             <Route path="/bytecodes" element={(
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
+                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Bytecodes</h2>
                   <p style={{ marginBottom: 24 }}>
                     Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
@@ -512,7 +512,7 @@ function App() {
             
             <Route path="/how" element={(
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
+                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
                 <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
                 <div>
                   <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
@@ -527,7 +527,7 @@ function App() {
             
             <Route path="/my-deployments" element={(
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg, borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
+                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
                   <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
                   <div>My Deployments page - to be implemented</div>
                 </div>
