@@ -1,26 +1,30 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from '@reown/appkit/react';
 import { useTheme } from "./hooks/useTheme";
+import { useDeployments } from "./hooks/useDeployments";
 import { Header } from "./components/Header";
 import { Popup } from "./components/Popup";
 import { SimpleStorageDetail } from "./components/contracts/SimpleStorageDetail";
 import { ClickCounterDetail } from "./components/contracts/ClickCounterDetail";
 import { MessageBoardDetail } from "./components/contracts/MessageBoardDetail";
 import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
+import { MyDeployments } from "./components/MyDeployments";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
 function App() {
-  const { isConnected } = useAccount();
+  const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
   const { open } = useAppKit();
   const [showHeader, setShowHeader] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
+  const { deployments, addDeployment } = useDeployments(address);
 
   // Szacowanie fee za deploy kontraktu w dolarach
   async function showDeployFee(bytecode, contractName) {
@@ -187,6 +191,7 @@ function App() {
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
       if (receipt.contractAddress) {
+        addDeployment(contractName, receipt.contractAddress, network, tx.hash);
         setPopup({
           visible: true,
           message: `Contract <b>${contractName}</b> deployed successfully!`,
@@ -277,6 +282,10 @@ function App() {
           network={network}
           networks={networks}
           onNetworkChange={handleNetworkChange}
+          isConnected={isConnected}
+          address={address}
+          onConnect={open}
+          onDisconnect={disconnect}
         />
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
@@ -431,6 +440,7 @@ function App() {
                 setPopup={setPopup}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
             
@@ -440,6 +450,7 @@ function App() {
                 setPopup={setPopup}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
             
@@ -449,6 +460,7 @@ function App() {
                 setPopup={setPopup}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
             
@@ -458,6 +470,7 @@ function App() {
                 setPopup={setPopup}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
             
@@ -526,12 +539,13 @@ function App() {
             )} />
             
             <Route path="/my-deployments" element={(
-              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
-                  <div>My Deployments page - to be implemented</div>
-                </div>
-              </div>
+              <MyDeployments 
+                theme={theme}
+                deployments={deployments}
+                isConnected={isConnected}
+                openModal={open}
+                network={network}
+              />
             )} />
           </Routes>
         </div>
