@@ -1,7 +1,11 @@
 import React from 'react';
 import { ethers } from 'ethers';
+import { useAccount } from 'wagmi';
+import { useDeployments } from '../../hooks/useDeployments';
 
-export const ClickCounterDetail = ({ theme, setPopup, isConnected, openModal }) => {
+export const ClickCounterDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
+  const { address } = useAccount();
+  const { addDeployment } = useDeployments(address);
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033";
 
@@ -31,6 +35,7 @@ contract ClickCounter {
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
       if (receipt.contractAddress) {
+        addDeployment('ClickCounter', receipt.contractAddress, network, tx.hash);
         setPopup({ visible: true, message: `Contract ClickCounter deployed successfully!`, txHash: tx.hash });
       } else {
         setPopup({ visible: true, message: "Could not get deployed contract address.", txHash: null });

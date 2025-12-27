@@ -1,7 +1,11 @@
 import React from 'react';
 import { ethers } from 'ethers';
+import { useAccount } from 'wagmi';
+import { useDeployments } from '../../hooks/useDeployments';
 
-export const SimpleStorageDetail = ({ theme, setPopup, isConnected, openModal }) => {
+export const SimpleStorageDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
+  const { address } = useAccount();
+  const { addDeployment } = useDeployments(address);
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060ba80601a5f395ff3fe6080604052348015600e575f5ffd5b5060043610603a575f3560e01c806309ce9ccb14603e5780633fb5c1cb146057578063f2c9ecd8146068575b5f5ffd5b60455f5481565b60405190815260200160405180910390f35b60666062366004606e565b5f55565b005b5f546045565b5f60208284031215607d575f5ffd5b503591905056fea26469706673582212200cf668aaa1a8919f982a5eb6458914b17b8d63ca0f5c3aac933d33cc0699e59264736f6c634300081e0033";
   
@@ -31,6 +35,7 @@ contract SimpleStorage {
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
       if (receipt.contractAddress) {
+        addDeployment('SimpleStorage', receipt.contractAddress, network, tx.hash);
         setPopup({ visible: true, message: `Contract SimpleStorage deployed successfully!`, txHash: tx.hash });
       } else {
         setPopup({ visible: true, message: "Could not get deployed contract address.", txHash: null });

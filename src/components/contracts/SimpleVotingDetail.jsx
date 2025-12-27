@@ -1,7 +1,11 @@
 import React from 'react';
 import { ethers } from 'ethers';
+import { useAccount } from 'wagmi';
+import { useDeployments } from '../../hooks/useDeployments';
 
-export const SimpleVotingDetail = ({ theme, setPopup, isConnected, openModal }) => {
+export const SimpleVotingDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
+  const { address } = useAccount();
+  const { addDeployment } = useDeployments(address);
     const [copied, setCopied] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033";
 
@@ -45,6 +49,7 @@ contract SimpleVoting {
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
       if (receipt.contractAddress) {
+        addDeployment('SimpleVoting', receipt.contractAddress, network, tx.hash);
         setPopup({ visible: true, message: `Contract SimpleVoting deployed successfully!`, txHash: tx.hash });
       } else {
         setPopup({ visible: true, message: "Could not get deployed contract address.", txHash: null });
