@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
 import { getExplorerUrl } from '../config/explorers';
 
-export const MyDeployments = ({ theme, deployments, isConnected, openModal }) => {
-  const [copiedId, setCopiedId] = useState(null);
-
-  const handleCopyAddress = (address, id) => {
-    navigator.clipboard.writeText(address);
-    setCopiedId(id);
-    setTimeout(() => setCopiedId(null), 1000);
-  };
-
+export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
   const formatDate = (timestamp) => {
-    const date = new Date(timestamp);
+    const date = timestamp ? new Date(timestamp) : new Date();
     return date.toLocaleString();
   };
+
+  const filteredDeployments = network ? deployments.filter((deployment) => deployment.network === network) : deployments;
 
   if (!isConnected) {
     return (
@@ -55,15 +48,22 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal }) =>
             <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments yet</p>
             <p style={{ fontSize: '0.92em' }}>Deploy your first contract to see it here!</p>
           </div>
+        ) : filteredDeployments.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
+            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments on {network}</p>
+            <p style={{ fontSize: '0.92em' }}>Switch networks to view other deployments.</p>
+          </div>
         ) : (
           <div>
             <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-              Total deployments: <b>{deployments.length}</b>
+              Showing {network} deployments: <b>{filteredDeployments.length}</b>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-              {deployments.map((deployment) => {
+              {filteredDeployments.map((deployment) => {
                 const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network);
                 const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
+                const shortAddress = `${deployment.contractAddress.slice(0, 10)}...${deployment.contractAddress.slice(-8)}`;
+                const shortTx = `${deployment.txHash.slice(0, 10)}...${deployment.txHash.slice(-8)}`;
                 
                 return (
                   <div
@@ -95,89 +95,39 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal }) =>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                       <div>
                         <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Contract Address</div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
-                          <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>
-                            {deployment.contractAddress.slice(0, 10)}...{deployment.contractAddress.slice(-8)}
-                          </span>
-                          <button
-                            onClick={() => handleCopyAddress(deployment.contractAddress, deployment.id)}
-                            style={{
-                              background: 'none',
-                              border: 'none',
-                              cursor: 'pointer',
-                              color: theme.primary,
-                              fontWeight: 600,
-                              padding: '0 4px',
-                              fontSize: '0.9em',
-                              minWidth: '32px',
-                              textAlign: 'center'
-                            }}
-                            title="Copy address"
-                          >
-                            {copiedId === deployment.id ? '✔' : 'Copy'}
-                          </button>
+                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
+                          {explorerUrl ? (
+                            <a
+                              href={explorerUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                            >
+                              {shortAddress}
+                            </a>
+                          ) : (
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
+                          )}
                         </div>
                       </div>
 
                       <div>
                         <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Transaction Hash</div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
-                          <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>
-                            {deployment.txHash.slice(0, 10)}...{deployment.txHash.slice(-8)}
-                          </span>
+                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
+                          {txUrl ? (
+                            <a
+                              href={txUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                            >
+                              {shortTx}
+                            </a>
+                          ) : (
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortTx}</span>
+                          )}
                         </div>
                       </div>
-                    </div>
-
-                    <div style={{ display: 'flex', gap: '12px', justifyContent: 'flex-end' }}>
-                      {explorerUrl && (
-                        <a
-                          href={explorerUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            fontSize: '0.9em',
-                            padding: '6px 16px',
-                            background: theme.primary,
-                            color: theme.textPrimary,
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            textDecoration: 'none',
-                            display: 'inline-block',
-                            transition: 'background 0.2s'
-                          }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-                          onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                        >
-                          View Contract
-                        </a>
-                      )}
-                      {txUrl && (
-                        <a
-                          href={txUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          style={{
-                            fontSize: '0.9em',
-                            padding: '6px 16px',
-                            background: theme.primaryDark,
-                            color: theme.textPrimary,
-                            border: 'none',
-                            borderRadius: '6px',
-                            fontWeight: 600,
-                            cursor: 'pointer',
-                            textDecoration: 'none',
-                            display: 'inline-block',
-                            transition: 'background 0.2s'
-                          }}
-                          onMouseOver={e => e.currentTarget.style.background = theme.primary}
-                          onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
-                        >
-                          View TX
-                        </a>
-                      )}
                     </div>
                   </div>
                 );

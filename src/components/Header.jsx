@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange }) => {
+export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange, isConnected, address, onConnect, onDisconnect }) => {
+  const [copied, setCopied] = useState(false);
+
+  const displayAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
+
+  const handleCopy = () => {
+    if (!address) return;
+    navigator.clipboard.writeText(address);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1000);
+  };
+
   return (
     <>
       <div 
@@ -68,6 +79,62 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
               >{n}</option>
             ))}
           </select>
+          {!isConnected ? (
+            <button
+              style={{
+                fontSize: '0.96em',
+                padding: '0.48em 1.32em',
+                background: theme.primary,
+                color: network === 'Celo' ? '#444' : '#fff',
+                border: 'none',
+                borderRadius: '6px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                boxShadow: `0 2px 8px ${theme.shadow}`,
+                transition: 'background 0.2s'
+              }}
+              onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+              onMouseOut={e => e.currentTarget.style.background = theme.primary}
+              onClick={onConnect}
+            >Connect</button>
+          ) : (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+              <button
+                onClick={handleCopy}
+                style={{
+                  padding: '0.4em 1.1em',
+                  background: 'rgba(255,255,255,0.15)',
+                  border: `1px solid rgba(255,255,255,0.4)`,
+                  borderRadius: 24,
+                  color: '#fff',
+                  fontWeight: 600,
+                  fontSize: '0.92em',
+                  cursor: 'pointer',
+                  minWidth: 120
+                }}
+                title="Copy address"
+              >
+                {copied ? 'Copied' : displayAddress}
+              </button>
+              <button
+                style={{
+                  fontSize: '0.9em',
+                  padding: '0.4em 1em',
+                  background: theme.primaryDark,
+                  color: '#fff',
+                  border: 'none',
+                  borderRadius: '6px',
+                  fontWeight: 600,
+                  cursor: 'pointer',
+                  boxShadow: `0 2px 8px ${theme.shadow}`,
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={e => e.currentTarget.style.background = theme.primary}
+                onMouseOut={e => e.currentTarget.style.background = theme.primaryDark}
+                onClick={onDisconnect}
+              >Disconnect</button>
+            </div>
+          )}
         </div>
       </div>
 

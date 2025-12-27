@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ethers } from "ethers";
-import { useAccount } from "wagmi";
+import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from '@reown/appkit/react';
 import { useTheme } from "./hooks/useTheme";
 import { useDeployments } from "./hooks/useDeployments";
@@ -17,6 +17,7 @@ import { networks, getNetworkParam } from "./config/networks";
 
 function App() {
   const { isConnected, address } = useAccount();
+  const { disconnect } = useDisconnect();
   const { open } = useAppKit();
   const [showHeader, setShowHeader] = useState(false);
   const [showWelcome, setShowWelcome] = useState(false);
@@ -281,6 +282,10 @@ function App() {
           network={network}
           networks={networks}
           onNetworkChange={handleNetworkChange}
+          isConnected={isConnected}
+          address={address}
+          onConnect={open}
+          onDisconnect={disconnect}
         />
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
@@ -539,6 +544,7 @@ function App() {
                 deployments={deployments}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
           </Routes>
