@@ -13,12 +13,12 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   const lastDeploymentDate = lastDeployment ? formatDate(lastDeployment.timestamp) : '—';
   const lastDeploymentName = lastDeployment ? lastDeployment.contractName : '—';
   const contractAggregates = deployments.reduce((acc, deployment) => {
-    const name = deployment.contractName || 'Nieznany kontrakt';
+    const name = deployment.contractName || 'Unknown contract';
     if (!acc[name]) {
       acc[name] = { total: 0, perNetwork: {} };
     }
     acc[name].total += 1;
-    const networkKey = deployment.network || 'Inna sieć';
+    const networkKey = deployment.network || 'Other network';
     acc[name].perNetwork[networkKey] = (acc[name].perNetwork[networkKey] || 0) + 1;
     return acc;
   }, {});
@@ -29,7 +29,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
       currentNetworkCount: network ? (data.perNetwork[network] || 0) : data.total
     }))
     .sort((a, b) => b.total - a.total);
-  const currentNetworkLabel = network ? `Sieć ${network}` : 'Wszystkie sieci';
+  const currentNetworkLabel = network ? `Network ${network}` : 'All networks';
 
   if (!isConnected) {
     return (
@@ -68,10 +68,10 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
         
         {totalDeployments > 0 && (
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Statystyki wdrożeń</div>
+            <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
               <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Wszystkie kontrakty</span>
+                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>All contracts</span>
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalDeployments}</span>
               </div>
               <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -79,22 +79,22 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalFilteredDeployments}</span>
               </div>
               <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Kiedy ostatni</span>
+                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last deployment date</span>
                 <span style={{ fontSize: '1em', fontWeight: 600, color: theme.textPrimary }}>{lastDeploymentDate}</span>
               </div>
               <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Jaki ostatni</span>
+                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last contract</span>
                 <span style={{ fontSize: '1em', fontWeight: 700, color: theme.textPrimary }}>{lastDeploymentName}</span>
               </div>
             </div>
             {contractStats.length > 0 && (
               <div style={{ marginTop: 24 }}>
-                <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Kontrakty indywidualnie</div>
+                <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Individual contracts</div>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px' }}>
                   {contractStats.map((stat) => (
                     <div key={stat.name} style={{ border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '12px 14px', background: `rgba(${theme.primaryRgb},0.08)`, display: 'flex', flexDirection: 'column', gap: 6 }}>
                       <div style={{ fontWeight: 600, color: theme.textPrimary }}>{stat.name}</div>
-                      <div style={{ fontSize: '0.82em', color: theme.textSecondary }}>Wszystkie: <b style={{ color: theme.textPrimary }}>{stat.total}</b></div>
+                      <div style={{ fontSize: '0.82em', color: theme.textSecondary }}>All: <b style={{ color: theme.textPrimary }}>{stat.total}</b></div>
                       <div style={{ fontSize: '0.82em', color: theme.textSecondary }}>{`${currentNetworkLabel}: `}<b style={{ color: theme.textPrimary }}>{stat.currentNetworkCount}</b></div>
                     </div>
                   ))}
