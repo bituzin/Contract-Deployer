@@ -12,6 +12,7 @@ import { ClickCounterDetail } from "./components/contracts/ClickCounterDetail";
 import { MessageBoardDetail } from "./components/contracts/MessageBoardDetail";
 import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
 import { MyDeployments } from "./components/MyDeployments";
+import { Interact } from "./components/Interact";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
@@ -546,6 +547,9 @@ function App() {
                 openModal={open}
                 network={network}
               />
+            )} />
+            <Route path="/interact" element={(
+              <Interact theme={theme} />
             )} />
           </Routes>
         </div>
