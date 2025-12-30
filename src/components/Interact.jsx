@@ -71,7 +71,7 @@ export const Interact = ({ theme, address, isConnected, openModal, network, depl
         <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Interact</h2>
           <div style={{ marginBottom: 24 }}>
-            Połącz portfel, aby zobaczyć swoje zdeplojowane kontrakty.
+            Connect your wallet to view your deployed contracts.
           </div>
           <button
             style={{
@@ -102,18 +102,18 @@ export const Interact = ({ theme, address, isConnected, openModal, network, depl
 
         {deployments.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
-            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>Brak wdrożeń</p>
-            <p style={{ fontSize: '0.92em' }}>Wdróż pierwszy kontrakt, aby zobaczyć go tutaj.</p>
+            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments</p>
+            <p style={{ fontSize: '0.92em' }}>Deploy your first contract to see it here.</p>
           </div>
         ) : filteredDeployments.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
-            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>Brak wdrożeń w sieci {network}</p>
-            <p style={{ fontSize: '0.92em' }}>Przełącz sieć, aby zobaczyć inne wdrożenia.</p>
+            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments on {network}</p>
+            <p style={{ fontSize: '0.92em' }}>Switch networks to view other deployments.</p>
           </div>
         ) : (
           <div>
             <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-              Wdrożenia w sieci {network || 'wszystkie'}: <b>{filteredDeployments.length}</b>
+              Deployments on {network || 'all networks'}: <b>{filteredDeployments.length}</b>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {filteredDeployments.map(renderDeploymentCard)}
