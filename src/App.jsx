@@ -272,10 +272,12 @@ function App() {
           visible={popup.visible} 
           message={popup.message} 
           txHash={popup.txHash}
-          network={network}
-          onClose={() => setPopup({ visible: false, message: "", txHash: null })}
+          network={popup.network || network}
+          onClose={() => setPopup({ visible: false, message: "", txHash: null, content: null })}
           theme={theme}
-        />
+        >
+          {popup.content}
+        </Popup>
         <Header 
           theme={theme}
           showHeader={showHeader}
@@ -549,7 +551,15 @@ function App() {
               />
             )} />
             <Route path="/interact" element={(
-              <Interact theme={theme} />
+              <Interact 
+                theme={theme} 
+                address={address} 
+                isConnected={isConnected} 
+                openModal={open} 
+                setPopup={setPopup}
+                network={network} 
+                deployments={deployments}
+              />
             )} />
           </Routes>
         </div>
