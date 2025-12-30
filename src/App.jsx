@@ -549,7 +549,14 @@ function App() {
               />
             )} />
             <Route path="/interact" element={(
-              <Interact theme={theme} />
+              <Interact 
+                theme={theme} 
+                address={address} 
+                isConnected={isConnected} 
+                openModal={open} 
+                network={network} 
+                deployments={deployments}
+              />
             )} />
           </Routes>
         </div>
