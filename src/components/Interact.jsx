@@ -113,17 +113,10 @@ export const Interact = ({ theme, address, isConnected, openModal, network, depl
         ) : (
           <div>
             <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-              Wdrożenia w sieci {network}: <b>{filteredDeployments.length}</b>
+              Wdrożenia w sieci {network || 'wszystkie'}: <b>{filteredDeployments.length}</b>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: 32 }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {filteredDeployments.map(renderDeploymentCard)}
-            </div>
-
-            <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 12 }}>
-              Wszystkie wdrozone kontrakty (wszystkie sieci): <b>{deployments.length}</b>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              {deployments.map(renderDeploymentCard)}
             </div>
           </div>
         )}
