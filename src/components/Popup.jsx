@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const Popup = ({ visible, message, txHash, network, onClose, theme }) => {
+export const Popup = ({ visible, message, txHash, network, onClose, theme, children }) => {
   if (!visible) return null;
 
   return (
@@ -20,12 +20,12 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
     >
       <div 
         style={{
-          background: theme.cardBg + 'E6', // hex + alpha (90% opacity)
+          background: theme.cardBg + 'E6',
           borderRadius: 12,
           boxShadow: `0 2px 12px ${theme.shadow}`,
           padding: '20px 22px',
           minWidth: 220,
-          maxWidth: 320,
+          maxWidth: 420,
           textAlign: 'center',
           fontFamily: 'Inter, Arial, sans-serif',
           fontWeight: 500,
@@ -34,9 +34,14 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
           position: 'relative',
         }}
       >
-        <div style={{ marginBottom: txHash ? 12 : 18, fontSize: '0.95em' }}>
-          <span dangerouslySetInnerHTML={{ __html: message }} />
-        </div>
+        {children ? (
+          <div style={{ marginBottom: 12 }}>{children}</div>
+        ) : (
+          <div style={{ marginBottom: txHash ? 12 : 18, fontSize: '0.95em' }}>
+            <span dangerouslySetInnerHTML={{ __html: message }} />
+          </div>
+        )}
+
         {txHash && (
           <div style={{ marginBottom: 12 }}>
             <a
@@ -59,6 +64,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
             </a>
           </div>
         )}
+
         <button
           style={{ 
             minWidth: '90px', 
@@ -74,20 +80,8 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme }) => 
             boxShadow: `0 2px 8px ${theme.shadow}`,
             transition: 'background 0.2s'
           }}
-          onMouseOver={e => {
-            if (network === 'Celo') {
-              e.currentTarget.style.background = theme.primaryDark;
-            } else {
-              e.currentTarget.style.background = theme.primaryDark;
-            }
-          }}
-          onMouseOut={e => {
-            if (network === 'Celo') {
-              e.currentTarget.style.background = theme.primary;
-            } else {
-              e.currentTarget.style.background = theme.primary;
-            }
-          }}
+          onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+          onMouseOut={e => e.currentTarget.style.background = theme.primary}
           onClick={onClose}
         >
           OK

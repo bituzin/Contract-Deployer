@@ -2,13 +2,44 @@ import React from 'react';
 import { useDeployments } from '../hooks/useDeployments';
 import { getExplorerUrl } from '../config/explorers';
 
-export const Interact = ({ theme, address, isConnected, openModal, network, deployments: propDeployments }) => {
+export const Interact = ({ theme, address, isConnected, openModal, setPopup, network, deployments: propDeployments }) => {
   const { deployments: hookDeployments } = useDeployments(address);
   const deployments = propDeployments && Array.isArray(propDeployments) ? propDeployments : hookDeployments;
 
   const formatDate = (timestamp) => {
     const date = timestamp ? new Date(timestamp) : new Date();
     return date.toLocaleString();
+  };
+
+  const handleOpenContract = (deployment) => {
+    if (!setPopup) return;
+
+    const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network) || '#';
+    const routeMap = {
+      'SimpleStorage': '/contract/simple-storage',
+      'ClickCounter': '/contract/click-counter',
+      'MessageBoard': '/contract/message-board',
+      'SimpleVoting': '/contract/simple-voting'
+    };
+
+    const contractRoute = routeMap[deployment.contractName] || '#';
+
+    const content = (
+      <div>
+        <div style={{ fontWeight: 700, marginBottom: 8 }}>{deployment.contractName}</div>
+        <div style={{ fontSize: '0.9em', color: theme.textSecondary, marginBottom: 12 }}>{formatDate(deployment.timestamp)}</div>
+        <div style={{ marginBottom: 12 }}>
+          <div style={{ fontSize: '0.82em', color: theme.textSecondary, marginBottom: 6 }}>Contract address</div>
+          <div style={{ fontFamily: 'monospace', background: theme.cardBgDark, padding: '8px 10px', borderRadius: 6 }}>{deployment.contractAddress}</div>
+        </div>
+        <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+          <a href={contractRoute} style={{ padding: '8px 12px', background: theme.primary, color: '#fff', borderRadius: 8, textDecoration: 'none', fontWeight: 600 }} onClick={() => setPopup({ visible: false, message: '', txHash: null, content: null })}>Open contract page</a>
+          <a href={explorerUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '8px 12px', background: theme.cardBgDark, color: theme.textPrimary, borderRadius: 8, textDecoration: 'none', fontWeight: 600 }}>Open in explorer</a>
+        </div>
+      </div>
+    );
+
+    setPopup({ visible: true, message: '', txHash: null, network: deployment.network, content });
   };
 
   const filteredDeployments = network ? deployments.filter((deployment) => deployment.network === network) : deployments;
@@ -32,7 +63,10 @@ export const Interact = ({ theme, address, isConnected, openModal, network, depl
       >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div>
-            <div style={{ fontWeight: 700, fontSize: '1.04em', color: theme.textPrimary, marginBottom: 4 }}>
+            <div 
+              style={{ fontWeight: 700, fontSize: '1.04em', color: theme.textPrimary, marginBottom: 4, cursor: 'pointer', textDecoration: 'underline' }}
+              onClick={() => handleOpenContract(deployment)}
+            >
               {deployment.contractName}
             </div>
             <div style={{ fontSize: '0.88em', color: theme.textSecondary }}>
