@@ -4,7 +4,7 @@
 ## 🌐 Online Demo
 
 [➡️ Contract Deployer App](https://contract-deployer-fawn.vercel.app)
-
+completed: 60%
 Deploy and manage smart contracts directly in your browser.
 
 Deploy smart contracts to multiple EVM networks with one click.
