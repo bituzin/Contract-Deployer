@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange, isConnected, address, onConnect, onDisconnect }) => {
@@ -94,6 +95,40 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
     e.currentTarget.style.background = isHover ? theme.highlight : 'transparent';
     e.currentTarget.style.color = isHover ? '#222' : theme.textPrimary;
   };
+
+  const [showContracts, setShowContracts] = useState(false);
+  const triggerRef = useRef(null);
+  const closeTimeoutRef = useRef(null);
+  const [contractPos, setContractPos] = useState({ top: 0, left: 0, width: 0 });
+
+  const openContracts = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setContractPos({ top: rect.bottom, left: rect.left, width: rect.width });
+    }
+    setShowContracts(true);
+  };
+
+  const closeContractsDelayed = () => {
+    closeTimeoutRef.current = setTimeout(() => setShowContracts(false), 150);
+  };
+
+  const cancelClose = () => {
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    };
+  }, []);
 
   return (
     <>
@@ -225,7 +260,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           position: 'fixed',
           top: 68,
           left: 0,
-          zIndex: 999,
+          zIndex: 1100,
           background: theme.cardBg,
           borderBottom: `1px solid ${theme.highlight}`,
           display: 'flex',
@@ -264,92 +299,21 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           Deploy
         </Link>
         <span style={getCurrentDividerStyle()}></span>
-        <div
-          style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}
-          onMouseEnter={(e) => {
-            const menu = e.currentTarget.querySelector('.contracts-dropdown');
-            if (menu) {
-              menu.style.display = 'block';
-              setTimeout(() => {
-                menu.style.opacity = 1;
-              }, 10);
-            }
-          }}
-          onMouseLeave={(e) => {
-            const menu = e.currentTarget.querySelector('.contracts-dropdown');
-            if (menu) {
-              menu.style.opacity = 0;
-              setTimeout(() => {
-                menu.style.display = 'none';
-              }, 400);
-            }
-          }}
-        >
+        <div className="nav-dropdown">
           <span
+            ref={triggerRef}
             style={{
               ...navLinkStyle,
-              margin: '0 10px',
               cursor: 'pointer'
             }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
+            onMouseEnter={openContracts}
+            onMouseLeave={closeContractsDelayed}
+            onClick={() => setShowContracts((s) => !s)}
           >
             Contracts
           </span>
-          <span style={getCurrentDividerStyle()}></span>
-          <div
-            className="contracts-dropdown"
-            style={{
-              display: 'none',
-              position: 'absolute',
-              top: '100%',
-              left: 0,
-              background: theme.cardBg,
-              minWidth: 190,
-              boxShadow: `0 4px 16px ${theme.shadow}`,
-              borderRadius: 10,
-              zIndex: 1001,
-              padding: '8px 0',
-              fontFamily: 'Inter, Arial, sans-serif',
-              fontWeight: 500,
-              opacity: 0,
-              transition: 'opacity 0.4s'
-            }}
-          >
-            <Link
-              to="/contract/simple-storage"
-              style={{ ...dropdownLinkStyle }}
-              onMouseOver={(e) => handleHover(e, true)}
-              onMouseOut={(e) => handleHover(e, false)}
-            >
-              Simple Storage
-            </Link>
-            <Link
-              to="/contract/click-counter"
-              style={{ ...dropdownLinkStyle }}
-              onMouseOver={(e) => handleHover(e, true)}
-              onMouseOut={(e) => handleHover(e, false)}
-            >
-              Click Counter
-            </Link>
-            <Link
-              to="/contract/message-board"
-              style={{ ...dropdownLinkStyle }}
-              onMouseOver={(e) => handleHover(e, true)}
-              onMouseOut={(e) => handleHover(e, false)}
-            >
-              Message Board
-            </Link>
-            <Link
-              to="/contract/simple-voting"
-              style={{ ...dropdownLinkStyle }}
-              onMouseOver={(e) => handleHover(e, true)}
-              onMouseOut={(e) => handleHover(e, false)}
-            >
-              Simple Voting
-            </Link>
-          </div>
         </div>
+        <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/bytecodes"
           style={{ ...navLinkStyle }}
@@ -386,6 +350,60 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           Interact
         </Link>
       </div>
+      {showContracts && createPortal(
+        <div
+          onMouseEnter={cancelClose}
+          onMouseLeave={closeContractsDelayed}
+          style={{
+            position: 'fixed',
+            top: contractPos.top,
+            left: contractPos.left,
+            minWidth: 200,
+            width: Math.max(contractPos.width || 220, 220),
+            background: theme.cardBg,
+            borderRadius: 10,
+            boxShadow: `0 4px 16px ${theme.shadow}`,
+            padding: '8px 0',
+            fontFamily: 'Inter, Arial, sans-serif',
+            fontWeight: 500,
+            zIndex: 99999
+          }}
+        >
+          <Link
+            to="/contract/simple-storage"
+            style={{ ...dropdownLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Simple Storage
+          </Link>
+          <Link
+            to="/contract/click-counter"
+            style={{ ...dropdownLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Click Counter
+          </Link>
+          <Link
+            to="/contract/message-board"
+            style={{ ...dropdownLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Message Board
+          </Link>
+          <Link
+            to="/contract/simple-voting"
+            style={{ ...dropdownLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Simple Voting
+          </Link>
+        </div>,
+        document.body
+      )}
     </>
   );
 };

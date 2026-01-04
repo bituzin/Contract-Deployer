@@ -21,3 +21,16 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Hardhat and local secrets
+hardhat.config.ts
+hardhat.config.js
+.env
+.env.local
+.env.*.local
+# Build/artifacts/cache
+artifacts/
+cache/
+
+# OS
+Thumbs.db
