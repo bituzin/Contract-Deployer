@@ -70,19 +70,19 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           <div style={{ marginBottom: 32 }}>
             <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
-              <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>All contracts</span>
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalDeployments}</span>
               </div>
-              <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>{currentNetworkLabel}</span>
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalFilteredDeployments}</span>
               </div>
-              <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last deployment date</span>
                 <span style={{ fontSize: '1em', fontWeight: 600, color: theme.textPrimary }}>{lastDeploymentDate}</span>
               </div>
-              <div style={{ background: theme.cardBgDark, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last contract</span>
                 <span style={{ fontSize: '1em', fontWeight: 700, color: theme.textPrimary }}>{lastDeploymentName}</span>
               </div>
