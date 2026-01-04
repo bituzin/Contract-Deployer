@@ -516,7 +516,7 @@ function App() {
                             </button>
                           </div>
                         </div>
-                        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '120px' }}>
+                        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflowWrap: 'anywhere', minHeight: '120px' }}>
                           {bytecode}
                         </pre>
                       </div>
