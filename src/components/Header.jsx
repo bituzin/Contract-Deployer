@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange, isConnected, address, onConnect, onDisconnect }) => {
   const [copied, setCopied] = useState(false);
@@ -20,11 +20,56 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
   };
 
   const dividerStyle = {
-    borderLeft: `1px solid ${theme.textSecondary}`,
     height: 26,
     margin: '0 12px',
     display: 'inline-block'
   };
+
+  const hexToRgb = (hex) => {
+    if (!hex) return null;
+    const clean = hex.replace('#', '');
+    const bigint = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
+    const r = (bigint >> 16) & 255;
+    const g = (bigint >> 8) & 255;
+    const b = bigint & 255;
+    return { r, g, b };
+  };
+
+  const luminance = (r, g, b) => {
+    const a = [r, g, b].map((v) => {
+      v /= 255;
+      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+    });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  };
+
+  // choose a subtle divider color depending on card background luminance
+  const cardRgb = hexToRgb(theme.cardBg);
+  const dividerColor = cardRgb && luminance(cardRgb.r, cardRgb.g, cardRgb.b) > 0.6 ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
+
+  const location = useLocation();
+
+  const mapRouteToColor = (route) => {
+    if (!route) return null;
+    if (route === '/' ) return theme.textPrimary;
+    if (route === '/deploy') return theme.primary;
+    if (route.startsWith('/contract')) return theme.primaryLight;
+    if (route === '/bytecodes') return theme.primaryDark;
+    if (route === '/how') return theme.highlight;
+    if (route === '/my-deployments') return theme.primary;
+    if (route === '/interact') return theme.textSecondary;
+    return null;
+  };
+
+  const getDividerStyle = (targetRoute) => {
+    const rc = mapRouteToColor(targetRoute);
+    const color = rc || dividerColor;
+    return { ...dividerStyle, borderLeft: `1px solid ${color}` };
+  };
+
+  // use current route color for all dividers
+  const currentDividerColor = mapRouteToColor(location.pathname) || dividerColor;
+  const getCurrentDividerStyle = () => ({ ...dividerStyle, borderLeft: `1px solid ${currentDividerColor}` });
 
   const dropdownLinkStyle = {
     display: 'block',
@@ -206,7 +251,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Home
         </Link>
-        <span style={dividerStyle}></span>
+        <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/deploy"
           style={{ ...navLinkStyle }}
@@ -215,9 +260,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Deploy
         </Link>
-        <span style={dividerStyle}></span>
+        <span style={getCurrentDividerStyle()}></span>
         <div
-          style={{ position: 'relative', display: 'inline-block' }}
+          style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}
           onMouseEnter={(e) => {
             const menu = e.currentTarget.querySelector('.contracts-dropdown');
             if (menu) {
@@ -240,7 +285,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           <span
             style={{
               ...navLinkStyle,
-              margin: '0 4px 0 -8px',
+              margin: '0 10px',
               cursor: 'pointer'
             }}
             onMouseOver={(e) => handleHover(e, true)}
@@ -248,7 +293,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           >
             Contracts
           </span>
-          <span style={dividerStyle}></span>
+          <span style={getCurrentDividerStyle()}></span>
           <div
             className="contracts-dropdown"
             style={{
@@ -310,7 +355,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Bytecodes
         </Link>
-        <span style={dividerStyle}></span>
+        <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/how"
           style={{ ...navLinkStyle }}
@@ -319,7 +364,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           How It Works
         </Link>
-        <span style={dividerStyle}></span>
+        <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/my-deployments"
           style={{ ...navLinkStyle }}
@@ -328,6 +373,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           My Deployments
         </Link>
+        <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/interact"
           style={{ ...navLinkStyle }}
