@@ -31,6 +31,9 @@ hardhat.config.js
 # Build/artifacts/cache
 artifacts/
 cache/
+dist/
+src/artifacts/
+build/
 
 # OS
 Thumbs.db

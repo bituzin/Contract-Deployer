@@ -66,3 +66,22 @@ button:focus-visible {
     color: #747bff;
   }
 }
+
+.nav-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.nav-dropdown-content {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1001;
+  min-width: 190px;
+  margin-top: 0;
+}
+
+.nav-dropdown:hover .nav-dropdown-content {
+  display: block;
+}
