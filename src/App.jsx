@@ -5,6 +5,7 @@ import { useAccount, useDisconnect } from "wagmi";
 import { useAppKit } from '@reown/appkit/react';
 import { useTheme } from "./hooks/useTheme";
 import { useDeployments } from "./hooks/useDeployments";
+import { useSigner } from "./hooks/useSigner";
 import { Header } from "./components/Header";
 import { Popup } from "./components/Popup";
 import { SimpleStorageDetail } from "./components/contracts/SimpleStorageDetail";
@@ -25,7 +26,12 @@ function App() {
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
-  const { deployments, addDeployment } = useDeployments(address);
+  
+  // Get signer for on-chain operations
+  const signer = useSigner(isConnected);
+  
+  // Pass signer to useDeployments for on-chain registry support
+  const { deployments, addDeployment } = useDeployments(address, network, signer);
 
   // Szacowanie fee za deploy kontraktu w dolarach
   async function showDeployFee(bytecode, contractName) {
