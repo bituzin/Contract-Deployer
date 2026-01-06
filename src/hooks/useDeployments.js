@@ -1,7 +1,9 @@
 import { useState, useCallback, useEffect } from 'react';
 import { ethers } from 'ethers';
+import { useDeploymentRegistry } from './useDeploymentRegistry';
 
 const DEPLOYMENTS_STORAGE_KEY = 'smart_contract_deployments';
+const USE_REGISTRY = true; // Set to true to use on-chain registry as primary source
 
 const NETWORK_RPC_URLS = {
   Sepolia: 'https://rpc.sepolia.org',
@@ -10,8 +12,16 @@ const NETWORK_RPC_URLS = {
   Optimism: 'https://mainnet.optimism.io'
 };
 
-export const useDeployments = (address) => {
+export const useDeployments = (address, currentNetwork, signer) => {
   const [deployments, setDeployments] = useState([]);
+  
+  // Use registry hook
+  const { 
+    deployments: registryDeployments, 
+    loading: registryLoading,
+    registerDeployment: registryRegister,
+    reload: registryReload
+  } = useDeploymentRegistry(address, currentNetwork);
 
   const fetchOnChainDeployments = useCallback(async () => {
     if (!address) return [];
@@ -68,6 +78,12 @@ export const useDeployments = (address) => {
     }
 
     try {
+      // If using registry, prioritize registry data
+      if (USE_REGISTRY && registryDeployments.length > 0) {
+        return registryDeployments;
+      }
+
+      // Fallback to localStorage and on-chain history
       const allDeployments = JSON.parse(localStorage.getItem(DEPLOYMENTS_STORAGE_KEY) || '{}');
       const userDeployments = allDeployments[address.toLowerCase()] || [];
       const onChainDeployments = await fetchOnChainDeployments();
@@ -83,7 +99,8 @@ export const useDeployments = (address) => {
           ...deployment,
           id: deployment.id || key,
           timestamp,
-          formattedDate: deployment.formattedDate || new Date(timestamp).toLocaleString()
+          formattedDate: deployment.formattedDate || new Date(timestamp).toLocaleString(),
+          source: deployment.source || 'localStorage'
         });
       });
 
@@ -92,7 +109,7 @@ export const useDeployments = (address) => {
       console.error('Error loading deployments:', err);
       return [];
     }
-  }, [address, fetchOnChainDeployments]);
+  }, [address, fetchOnChainDeployments, registryDeployments]);
 
   useEffect(() => {
     let cancelled = false;
@@ -109,17 +126,21 @@ export const useDeployments = (address) => {
       }
     };
 
-    hydrate();
-
-    return () => {
-      cancelled = true;
-    };
-  }, [address, loadDeployments]);
-
-  const addDeployment = useCallback((contractName, contractAddress, network, txHash) => {
+    hydrate();async (contractName, contractAddress, network, txHash) => {
     if (!address) return;
 
     try {
+      // If using registry, register on-chain first
+      if (USE_REGISTRY && signer) {
+        try {
+          await registryRegister(contractName, contractAddress, network, txHash, signer);
+          console.log('Deployment registered on-chain');
+        } catch (err) {
+          console.warn('Failed to register on-chain, falling back to localStorage:', err);
+        }
+      }
+
+      // Always save to localStorage as backup
       const allDeployments = JSON.parse(localStorage.getItem(DEPLOYMENTS_STORAGE_KEY) || '{}');
       const userAddr = address.toLowerCase();
       
@@ -135,7 +156,8 @@ export const useDeployments = (address) => {
         network,
         txHash,
         timestamp,
-        formattedDate: new Date(timestamp).toLocaleString()
+        formattedDate: new Date(timestamp).toLocaleString(),
+        source: USE_REGISTRY ? 'registry' : 'localStorage'
       };
 
       allDeployments[userAddr].push(newDeployment);
@@ -145,6 +167,13 @@ export const useDeployments = (address) => {
         const existing = prev.find(d => d.txHash === txHash && d.network === network);
         if (existing) {
           return prev;
+        }
+        return [newDeployment, ...prev];
+      });
+    } catch (err) {
+      console.error('Error saving deployment:', err);
+    }
+  }, [address, signer, registryRegisterurn prev;
         }
         return [newDeployment, ...prev];
       });
@@ -178,16 +207,23 @@ export const useDeployments = (address) => {
       const allDeployments = JSON.parse(localStorage.getItem(DEPLOYMENTS_STORAGE_KEY) || '{}');
       delete allDeployments[address.toLowerCase()];
       localStorage.setItem(DEPLOYMENTS_STORAGE_KEY, JSON.stringify(allDeployments));
-      setDeployments([]);
-    } catch (err) {
-      console.error('Error clearing deployments:', err);
+    // Reload from registry if using it
+    if (USE_REGISTRY) {
+      await registryReload();
     }
-  }, [address]);
 
-  const reload = useCallback(async () => {
-    if (!address) {
-      setDeployments([]);
-      return;
+    const data = await loadDeployments();
+    setDeployments(data);
+  }, [address, loadDeployments, registryReload]);
+
+  return {
+    deployments,
+    addDeployment,
+    removeDeployment,
+    clearDeployments,
+    reload,
+    loading: registryLoading,
+    useRegistry: USE_REGISTRYrn;
     }
 
     const data = await loadDeployments();
