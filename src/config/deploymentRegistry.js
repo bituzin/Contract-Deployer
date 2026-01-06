@@ -1,7 +1,7 @@
 // DeploymentRegistry contract addresses per network
 // Deploy the contract to each network and update these addresses
 export const DEPLOYMENT_REGISTRY_ADDRESSES = {
-  'Sepolia': '0x0000000000000000000000000000000000000000', // TODO: Deploy and update
+  'Sepolia': '0xD478CF44c037ea6624fEc96EcB04B19395F1CA8b',
   'Celo': '0x0000000000000000000000000000000000000000', // TODO: Deploy and update
   'Base': '0xaB74690F2c18906613222c2666BB1D2879330b06',
   'Optimism': '0x3149Bdd1fCdF5F7d48b589cDe21ABA235F46C28b',
