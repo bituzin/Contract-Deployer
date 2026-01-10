@@ -249,11 +249,11 @@ function App() {
       <div style={{ position: 'fixed', inset: 0, zIndex: -2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
         <img
           src={
-            network === 'Base' ? '/base.jpg'
-            : network === 'Celo' ? '/celo ciem.jpg'
-            : network === 'Sepolia' ? '/sepolia.jpg'
-            : network === 'Optimism' ? '/op ciem.jpg'
-            : '/03.jpg'
+            network === 'Base' ? '/base.webp'
+            : network === 'Celo' ? '/celo.webp'
+            : network === 'Sepolia' ? '/sepolia.webp'
+            : network === 'Optimism' ? '/optimism.webp'
+            : '/base.webp'
           }
           alt="background"
           style={{
