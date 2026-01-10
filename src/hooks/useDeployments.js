@@ -29,8 +29,8 @@ export const useDeployments = (address, currentNetwork, signer) => {
     let normalizedAddress;
     try {
       normalizedAddress = ethers.getAddress(address);
-    } catch (err) {
-      console.error('Invalid address for deployment history lookup:', err);
+    } catch (error) {
+      console.error('Invalid address for deployment history lookup:', error);
       return [];
     }
 
@@ -64,8 +64,8 @@ export const useDeployments = (address, currentNetwork, signer) => {
             });
           }
         }
-      } catch (err) {
-        console.error(`Error fetching deployments from ${networkName}:`, err);
+      } catch (error) {
+        console.error(`Error fetching deployments from ${networkName}:`, error);
       }
     }));
 
@@ -105,8 +105,8 @@ export const useDeployments = (address, currentNetwork, signer) => {
       });
 
       return Array.from(mergedMap.values()).sort((a, b) => b.timestamp - a.timestamp);
-    } catch (err) {
-      console.error('Error loading deployments:', err);
+    } catch (error) {
+      console.error('Error loading deployments:', error);
       return [];
     }
   }, [address, fetchOnChainDeployments, registryDeployments]);
@@ -126,7 +126,14 @@ export const useDeployments = (address, currentNetwork, signer) => {
       }
     };
 
-    hydrate();async (contractName, contractAddress, network, txHash) => {
+    hydrate();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [address, loadDeployments]);
+
+  const addDeployment = useCallback(async (contractName, contractAddress, network, txHash) => {
     if (!address) return;
 
     try {
@@ -135,8 +142,8 @@ export const useDeployments = (address, currentNetwork, signer) => {
         try {
           await registryRegister(contractName, contractAddress, network, txHash, signer);
           console.log('Deployment registered on-chain');
-        } catch (err) {
-          console.warn('Failed to register on-chain, falling back to localStorage:', err);
+        } catch (error) {
+          console.warn('Failed to register on-chain, falling back to localStorage:', error);
         }
       }
 
@@ -170,17 +177,10 @@ export const useDeployments = (address, currentNetwork, signer) => {
         }
         return [newDeployment, ...prev];
       });
-    } catch (err) {
-      console.error('Error saving deployment:', err);
+    } catch (error) {
+      console.error('Error saving deployment:', error);
     }
-  }, [address, signer, registryRegisterurn prev;
-        }
-        return [newDeployment, ...prev];
-      });
-    } catch (err) {
-      console.error('Error saving deployment:', err);
-    }
-  }, [address]);
+  }, [address, signer, registryRegister]);
 
   const removeDeployment = useCallback((deploymentId) => {
     if (!address) return;
@@ -195,8 +195,8 @@ export const useDeployments = (address, currentNetwork, signer) => {
         
         setDeployments(prev => prev.filter(d => d.id !== deploymentId));
       }
-    } catch (err) {
-      console.error('Error removing deployment:', err);
+    } catch (error) {
+      console.error('Error removing deployment:', error);
     }
   }, [address]);
 
@@ -207,6 +207,18 @@ export const useDeployments = (address, currentNetwork, signer) => {
       const allDeployments = JSON.parse(localStorage.getItem(DEPLOYMENTS_STORAGE_KEY) || '{}');
       delete allDeployments[address.toLowerCase()];
       localStorage.setItem(DEPLOYMENTS_STORAGE_KEY, JSON.stringify(allDeployments));
+      setDeployments([]);
+    } catch (error) {
+      console.error('Error clearing deployments:', error);
+    }
+  }, [address]);
+
+  const reload = useCallback(async () => {
+    if (!address) {
+      setDeployments([]);
+      return;
+    }
+
     // Reload from registry if using it
     if (USE_REGISTRY) {
       await registryReload();
@@ -223,18 +235,6 @@ export const useDeployments = (address, currentNetwork, signer) => {
     clearDeployments,
     reload,
     loading: registryLoading,
-    useRegistry: USE_REGISTRYrn;
-    }
-
-    const data = await loadDeployments();
-    setDeployments(data);
-  }, [address, loadDeployments]);
-
-  return {
-    deployments,
-    addDeployment,
-    removeDeployment,
-    clearDeployments,
-    reload
+    useRegistry: USE_REGISTRY
   };
 };
