@@ -38,23 +38,20 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
     <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
       <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
         <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>
-          {contractName}
+          Contract: {contractName}
         </h2>
         
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: '0.86em', color: theme.textSecondary, marginBottom: 6, fontWeight: 600 }}>Network</div>
-          <div style={{ background: theme.cardBgDark, padding: '10px 14px', borderRadius: 8, fontWeight: 600 }}>
-            {network}
+        <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
+          <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
+            Network: {network}
+          </div>
+          <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
+            Contract Address: {contractAddress}
+          </div>
+          <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
+            Deployment date: {new Date().toLocaleString()}
           </div>
         </div>
-
-        <div style={{ marginBottom: 20 }}>
-          <div style={{ fontSize: '0.86em', color: theme.textSecondary, marginBottom: 6, fontWeight: 600 }}>Contract Address</div>
-          <div style={{ background: theme.cardBgDark, padding: '10px 14px', borderRadius: 8, fontFamily: 'monospace', wordBreak: 'break-all' }}>
-            {contractAddress}
-          </div>
-        </div>
-
         <div style={{ marginTop: 24, padding: '20px', background: theme.cardBgDark, borderRadius: 8 }}>
           <div style={{ color: theme.textSecondary, fontSize: '0.92em', textAlign: 'center' }}>
             Contract interaction interface coming soon...
