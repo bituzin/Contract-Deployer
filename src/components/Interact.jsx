@@ -79,7 +79,7 @@ export const Interact = ({ theme, address, isConnected, openModal, setPopup, net
         </div>
 
         <div>
-          <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Adres kontraktu</div>
+          <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Contract address</div>
           <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
             {explorerUrl ? (
               <a
