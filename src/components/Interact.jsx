@@ -15,14 +15,7 @@ export const Interact = ({ theme, address, isConnected, openModal, setPopup, net
     if (!setPopup) return;
 
     const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network) || '#';
-    const routeMap = {
-      'SimpleStorage': '/contract/simple-storage',
-      'ClickCounter': '/contract/click-counter',
-      'MessageBoard': '/contract/message-board',
-      'SimpleVoting': '/contract/simple-voting'
-    };
-
-    const contractRoute = routeMap[deployment.contractName] || '#';
+    const contractRoute = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`;
 
     const content = (
       <div>

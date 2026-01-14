@@ -14,6 +14,7 @@ import { MessageBoardDetail } from "./components/contracts/MessageBoardDetail";
 import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
 import { MyDeployments } from "./components/MyDeployments";
 import { Interact } from "./components/Interact";
+import { ContractInteract } from "./components/ContractInteract";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
@@ -565,6 +566,13 @@ function App() {
                 setPopup={setPopup}
                 network={network} 
                 deployments={deployments}
+              />
+            )} />
+            <Route path="/interact/:contractName/:contractAddress/:network" element={(
+              <ContractInteract 
+                theme={theme}
+                isConnected={isConnected}
+                openModal={open}
               />
             )} />
           </Routes>
