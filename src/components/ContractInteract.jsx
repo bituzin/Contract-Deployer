@@ -145,7 +145,7 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
                     Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
                   </span>
                   {fn.inputs && fn.inputs.length > 0 && (
-                    <form style={{ marginTop: 8, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
+                    <form style={{ marginTop: 18, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
                       {fn.inputs.map((input, i) => (
                         <input
                           key={i}
@@ -156,15 +156,17 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
                           style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
                         />
                       ))}
-                      <button type="submit" disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                      <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
                         {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
                       </button>
                     </form>
                   )}
                   {(!fn.inputs || fn.inputs.length === 0) && (
-                    <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
-                      {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
-                    </button>
+                    <div style={{ marginTop: 18 }}>
+                      <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                        {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
+                      </button>
+                    </div>
                   )}
                   {results[fn.name] !== undefined && (
                     <div style={{ marginTop: 8, color: results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.textPrimary : theme.textSecondary, fontSize: '0.96em', wordBreak: 'break-word' }}>
