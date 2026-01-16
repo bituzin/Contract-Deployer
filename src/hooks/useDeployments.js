@@ -3,7 +3,7 @@ import { ethers } from 'ethers';
 import { useDeploymentRegistry } from './useDeploymentRegistry';
 
 const DEPLOYMENTS_STORAGE_KEY = 'smart_contract_deployments';
-const USE_REGISTRY = true; // Set to true to use on-chain registry as primary source
+const USE_REGISTRY = false; // Set to true to use on-chain registry as primary source
 
 const NETWORK_RPC_URLS = {
   Sepolia: 'https://rpc.sepolia.org',

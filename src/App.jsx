@@ -548,13 +548,14 @@ function App() {
               </div>
             )} />
             
-            <Route path="/my-deployments" element={(
+            <Route path="/my-deployments" element={( 
               <MyDeployments 
                 theme={theme}
                 deployments={deployments}
                 isConnected={isConnected}
                 openModal={open}
                 network={network}
+                setPopup={setPopup}
               />
             )} />
             <Route path="/interact" element={(

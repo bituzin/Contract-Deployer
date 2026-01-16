@@ -1,5 +1,7 @@
 import { getExplorerUrl } from '../config/explorers';
 
+
+
 export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
   const formatDate = (timestamp) => {
     const date = timestamp ? new Date(timestamp) : new Date();
@@ -125,7 +127,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
                 const shortAddress = `${deployment.contractAddress.slice(0, 10)}...${deployment.contractAddress.slice(-8)}`;
                 const shortTx = `${deployment.txHash.slice(0, 10)}...${deployment.txHash.slice(-8)}`;
-                
+
                 return (
                   <div
                     key={deployment.id}
@@ -190,6 +192,32 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                         </div>
                       </div>
                     </div>
+
+                    {/* Interact button only for Celo network */}
+                    {(deployment.network === 'Celo' || deployment.network === 'Sepolia' || deployment.network === 'Optimism' || deployment.network === 'Base') && (
+                      <button
+                        style={{
+                          marginTop: 8,
+                          fontSize: '0.96em',
+                          padding: '0.48em 1.32em',
+                          background: theme.primary,
+                          color: network === 'Celo' ? '#444' : '#fff',
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          boxShadow: `0 2px 8px ${theme.shadow}`,
+                          transition: 'background 0.2s',
+                          minWidth: 'fit-content',
+                          maxWidth: 180,
+                          whiteSpace: 'nowrap',
+                          letterSpacing: '0.01em'
+                        }}
+                        onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                        onMouseOut={e => e.currentTarget.style.background = theme.primary}
+                        onClick={() => window.location.href = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`}
+                      >Interact with contract</button>
+                    )}
                   </div>
                 );
               })}
