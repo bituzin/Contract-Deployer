@@ -234,7 +234,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                           transition: 'all 0.2s'
                         }}
                         onClick={() => handleOpenContract(deployment, theme, setPopup)}
-                      >Interact</button>
+                      >Interact with contract</button>
                     )}
                   </div>
                 );
