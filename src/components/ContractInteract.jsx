@@ -1,8 +1,42 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import artifactsSimpleStorage from '../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json';
+import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/ClickCounter.json';
+import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
+import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
 import { useParams } from 'react-router-dom';
 
 export const ContractInteract = ({ theme, isConnected, openModal }) => {
   const { contractName, contractAddress, network } = useParams();
+
+  const [abi, setAbi] = useState([]);
+  const [functions, setFunctions] = useState([]);
+
+  useEffect(() => {
+    let artifact;
+    switch (contractName) {
+      case 'SimpleStorage':
+        artifact = artifactsSimpleStorage;
+        break;
+      case 'ClickCounter':
+        artifact = artifactsClickCounter;
+        break;
+      case 'MessageBoard':
+        artifact = artifactsMessageBoard;
+        break;
+      case 'SimpleVoting':
+        artifact = artifactsSimpleVoting;
+        break;
+      default:
+        artifact = null;
+    }
+    if (artifact && artifact.abi) {
+      setAbi(artifact.abi);
+      setFunctions(artifact.abi.filter(f => f.type === 'function'));
+    } else {
+      setAbi([]);
+      setFunctions([]);
+    }
+  }, [contractName]);
 
   if (!isConnected) {
     return (
@@ -53,9 +87,24 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
           </div>
         </div>
         <div style={{ marginTop: 24, padding: '20px', background: theme.cardBgDark, borderRadius: 8 }}>
-          <div style={{ color: theme.textSecondary, fontSize: '0.92em', textAlign: 'center' }}>
-            Contract interaction interface coming soon...
+          <div style={{ color: theme.textSecondary, fontSize: '0.92em', textAlign: 'center', marginBottom: 12 }}>
+            Available contract functions:
           </div>
+          {functions.length > 0 ? (
+            <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
+              {functions.map((fn, idx) => (
+                <li key={idx} style={{ marginBottom: 8, background: theme.cardBg, borderRadius: 6, padding: '8px 12px' }}>
+                  <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
+                  <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
+                    Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
+                    Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <div style={{ color: theme.textSecondary }}>No ABI or functions found for this contract.</div>
+          )}
         </div>
       </div>
     </div>
