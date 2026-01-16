@@ -218,7 +218,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                     </div>
 
                     {/* Interact button only for Celo network */}
-                    {deployment.network === 'Celo' && (
+                    {(deployment.network === 'Celo' || deployment.network === 'Sepolia') && (
                       <button
                         style={{
                           marginTop: 10,
