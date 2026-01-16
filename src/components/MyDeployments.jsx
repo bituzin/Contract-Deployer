@@ -1,32 +1,8 @@
 import { getExplorerUrl } from '../config/explorers';
 
-// Popup logic copied from Interact.jsx
-function handleOpenContract(deployment, theme, setPopup) {
-  if (!setPopup) return;
-  const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network) || '#';
-  const contractRoute = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`;
-  const formatDate = (timestamp) => {
-    const date = timestamp ? new Date(timestamp) : new Date();
-    return date.toLocaleString();
-  };
-  const content = (
-    <div>
-      <div style={{ fontWeight: 700, marginBottom: 8 }}>{deployment.contractName}</div>
-      <div style={{ fontSize: '0.9em', color: theme.textSecondary, marginBottom: 12 }}>{formatDate(deployment.timestamp)}</div>
-      <div style={{ marginBottom: 12 }}>
-        <div style={{ fontSize: '0.82em', color: theme.textSecondary, marginBottom: 6 }}>Contract address</div>
-        <div style={{ fontFamily: 'monospace', background: theme.cardBgDark, padding: '8px 10px', borderRadius: 6 }}>{deployment.contractAddress}</div>
-      </div>
-      <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
-        <a href={contractRoute} style={{ padding: '8px 12px', background: theme.primary, color: '#fff', borderRadius: 8, textDecoration: 'none', fontWeight: 600 }} onClick={() => setPopup({ visible: false, message: '', txHash: null, content: null })}>Interact</a>
-        <a href={explorerUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '8px 12px', background: theme.cardBgDark, color: theme.textPrimary, borderRadius: 8, textDecoration: 'none', fontWeight: 600 }}>Open in explorer</a>
-      </div>
-    </div>
-  );
-  setPopup({ visible: true, message: '', txHash: null, network: deployment.network, content });
-}
 
-export const MyDeployments = ({ theme, deployments, isConnected, openModal, network, setPopup }) => {
+
+export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
   const formatDate = (timestamp) => {
     const date = timestamp ? new Date(timestamp) : new Date();
     return date.toLocaleString();
@@ -239,7 +215,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                         }}
                         onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
                         onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                        onClick={() => handleOpenContract(deployment, theme, setPopup)}
+                        onClick={() => window.location.href = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`}
                       >Interact with contract</button>
                     )}
                   </div>
