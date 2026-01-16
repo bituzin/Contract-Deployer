@@ -1,6 +1,32 @@
 import { getExplorerUrl } from '../config/explorers';
 
-export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
+// Popup logic copied from Interact.jsx
+function handleOpenContract(deployment, theme, setPopup) {
+  if (!setPopup) return;
+  const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network) || '#';
+  const contractRoute = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`;
+  const formatDate = (timestamp) => {
+    const date = timestamp ? new Date(timestamp) : new Date();
+    return date.toLocaleString();
+  };
+  const content = (
+    <div>
+      <div style={{ fontWeight: 700, marginBottom: 8 }}>{deployment.contractName}</div>
+      <div style={{ fontSize: '0.9em', color: theme.textSecondary, marginBottom: 12 }}>{formatDate(deployment.timestamp)}</div>
+      <div style={{ marginBottom: 12 }}>
+        <div style={{ fontSize: '0.82em', color: theme.textSecondary, marginBottom: 6 }}>Contract address</div>
+        <div style={{ fontFamily: 'monospace', background: theme.cardBgDark, padding: '8px 10px', borderRadius: 6 }}>{deployment.contractAddress}</div>
+      </div>
+      <div style={{ display: 'flex', gap: 8, justifyContent: 'center' }}>
+        <a href={contractRoute} style={{ padding: '8px 12px', background: theme.primary, color: '#fff', borderRadius: 8, textDecoration: 'none', fontWeight: 600 }} onClick={() => setPopup({ visible: false, message: '', txHash: null, content: null })}>Interact</a>
+        <a href={explorerUrl} target="_blank" rel="noopener noreferrer" style={{ padding: '8px 12px', background: theme.cardBgDark, color: theme.textPrimary, borderRadius: 8, textDecoration: 'none', fontWeight: 600 }}>Open in explorer</a>
+      </div>
+    </div>
+  );
+  setPopup({ visible: true, message: '', txHash: null, network: deployment.network, content });
+}
+
+export const MyDeployments = ({ theme, deployments, isConnected, openModal, network, setPopup }) => {
   const formatDate = (timestamp) => {
     const date = timestamp ? new Date(timestamp) : new Date();
     return date.toLocaleString();
@@ -125,7 +151,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
                 const shortAddress = `${deployment.contractAddress.slice(0, 10)}...${deployment.contractAddress.slice(-8)}`;
                 const shortTx = `${deployment.txHash.slice(0, 10)}...${deployment.txHash.slice(-8)}`;
-                
+
                 return (
                   <div
                     key={deployment.id}
@@ -190,6 +216,26 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                         </div>
                       </div>
                     </div>
+
+                    {/* Interact button only for Celo network */}
+                    {deployment.network === 'Celo' && (
+                      <button
+                        style={{
+                          marginTop: 10,
+                          fontSize: '0.96em',
+                          padding: '0.48em 1.32em',
+                          background: theme.primary,
+                          color: theme.textPrimary,
+                          border: 'none',
+                          borderRadius: '6px',
+                          fontWeight: 600,
+                          cursor: 'pointer',
+                          boxShadow: `0 2px 8px ${theme.shadow}`,
+                          transition: 'all 0.2s'
+                        }}
+                        onClick={() => handleOpenContract(deployment, theme, setPopup)}
+                      >Interact</button>
+                    )}
                   </div>
                 );
               })}
