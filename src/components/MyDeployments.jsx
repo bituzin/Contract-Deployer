@@ -221,18 +221,24 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                     {(deployment.network === 'Celo' || deployment.network === 'Sepolia' || deployment.network === 'Optimism' || deployment.network === 'Base') && (
                       <button
                         style={{
-                          marginTop: 10,
+                          marginTop: 8,
                           fontSize: '0.96em',
                           padding: '0.48em 1.32em',
                           background: theme.primary,
-                          color: theme.textPrimary,
+                          color: network === 'Celo' ? '#444' : '#fff',
                           border: 'none',
                           borderRadius: '6px',
                           fontWeight: 600,
                           cursor: 'pointer',
                           boxShadow: `0 2px 8px ${theme.shadow}`,
-                          transition: 'all 0.2s'
+                          transition: 'background 0.2s',
+                          minWidth: 'fit-content',
+                          maxWidth: 180,
+                          whiteSpace: 'nowrap',
+                          letterSpacing: '0.01em'
                         }}
+                        onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+                        onMouseOut={e => e.currentTarget.style.background = theme.primary}
                         onClick={() => handleOpenContract(deployment, theme, setPopup)}
                       >Interact with contract</button>
                     )}
