@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ethers } from 'ethers';
 import artifactsSimpleStorage from '../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json';
 import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/ClickCounter.json';
 import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
@@ -10,6 +11,50 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
 
   const [abi, setAbi] = useState([]);
   const [functions, setFunctions] = useState([]);
+  const [inputs, setInputs] = useState({});
+  const [results, setResults] = useState({});
+  const [loading, setLoading] = useState({});
+  // Handle input change for function arguments
+  const handleInputChange = (fnName, idx, value) => {
+    setInputs(prev => ({
+      ...prev,
+      [fnName]: {
+        ...(prev[fnName] || {}),
+        [idx]: value
+      }
+    }));
+  };
+
+  // Call contract function
+  const handleCallFunction = async (fn) => {
+    setLoading(prev => ({ ...prev, [fn.name]: true }));
+    setResults(prev => ({ ...prev, [fn.name]: null }));
+    try {
+      let provider;
+      let signer;
+      if (window.ethereum) {
+        provider = new ethers.BrowserProvider(window.ethereum);
+        signer = await provider.getSigner();
+      } else {
+        setResults(prev => ({ ...prev, [fn.name]: 'No wallet provider.' }));
+        setLoading(prev => ({ ...prev, [fn.name]: false }));
+        return;
+      }
+      const contract = new ethers.Contract(contractAddress, abi, signer);
+      const args = (inputs[fn.name] ? Object.values(inputs[fn.name]) : []);
+      let result;
+      if (fn.stateMutability === 'view' || fn.stateMutability === 'pure') {
+        result = await contract[fn.name](...args);
+      } else {
+        const tx = await contract[fn.name](...args);
+        result = tx.hash ? `Tx sent: ${tx.hash}` : tx;
+      }
+      setResults(prev => ({ ...prev, [fn.name]: result }));
+    } catch (err) {
+      setResults(prev => ({ ...prev, [fn.name]: err.message }));
+    }
+    setLoading(prev => ({ ...prev, [fn.name]: false }));
+  };
 
   useEffect(() => {
     let artifact;
@@ -93,12 +138,39 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
           {functions.length > 0 ? (
             <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
               {functions.map((fn, idx) => (
-                <li key={idx} style={{ marginBottom: 8, background: theme.cardBg, borderRadius: 6, padding: '8px 12px' }}>
+                <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
                   <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
                   <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
                     Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
                     Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
                   </span>
+                  {fn.inputs && fn.inputs.length > 0 && (
+                    <form style={{ marginTop: 8, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
+                      {fn.inputs.map((input, i) => (
+                        <input
+                          key={i}
+                          type="text"
+                          placeholder={input.name + ' (' + input.type + ')'}
+                          value={inputs[fn.name]?.[i] || ''}
+                          onChange={e => handleInputChange(fn.name, i, e.target.value)}
+                          style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
+                        />
+                      ))}
+                      <button type="submit" disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                        {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
+                      </button>
+                    </form>
+                  )}
+                  {(!fn.inputs || fn.inputs.length === 0) && (
+                    <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                      {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
+                    </button>
+                  )}
+                  {results[fn.name] !== undefined && (
+                    <div style={{ marginTop: 8, color: results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.textPrimary : theme.textSecondary, fontSize: '0.96em', wordBreak: 'break-word' }}>
+                      <b>Result:</b> {results[fn.name]?.toString()}
+                    </div>
+                  )}
                 </li>
               ))}
             </ul>
