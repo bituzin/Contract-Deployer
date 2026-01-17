@@ -574,6 +574,7 @@ function App() {
                 theme={theme}
                 isConnected={isConnected}
                 openModal={open}
+                network={network}
               />
             )} />
           </Routes>

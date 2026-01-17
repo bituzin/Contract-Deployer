@@ -4,10 +4,17 @@ import artifactsSimpleStorage from '../../artifacts/contracts/SimpleStorage.sol/
 import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/ClickCounter.json';
 import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
 import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export const ContractInteract = ({ theme, isConnected, openModal }) => {
+export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
   const { contractName, contractAddress, network } = useParams();
+  const navigate = useNavigate();
+  // Redirect to /my-deployments if network in URL does not match selected network
+  useEffect(() => {
+    if (selectedNetwork && network && selectedNetwork !== network) {
+      navigate('/my-deployments', { replace: true });
+    }
+  }, [selectedNetwork, network, navigate]);
 
   const [abi, setAbi] = useState([]);
   const [functions, setFunctions] = useState([]);
@@ -116,9 +123,29 @@ export const ContractInteract = ({ theme, isConnected, openModal }) => {
   return (
     <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
       <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>
-          Contract: {contractName}
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
+            Contract: {contractName}
+          </h2>
+          <button
+            style={{
+              marginLeft: 18,
+              fontSize: '0.86em',
+              padding: '3px 10px',
+              background: theme.cardBg,
+              color: theme.textPrimary,
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '5px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+            }}
+            onClick={() => window.location.href = '/my-deployments'}
+          >
+            Back to My Deployments
+          </button>
+        </div>
         
         <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
