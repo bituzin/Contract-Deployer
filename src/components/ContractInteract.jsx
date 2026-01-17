@@ -51,7 +51,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
       // Check if contract exists at address
       const code = await provider.getCode(contractAddress);
       if (code === '0x') {
-        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract found at address ${contractAddress} on ${network}. Make sure the contract is deployed on this network.` }));
+        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract deployed at ${contractAddress} on ${network}` }));
         setLoading(prev => ({ ...prev, [fn.name]: false }));
         return;
       }
@@ -67,11 +67,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
       }
       setResults(prev => ({ ...prev, [fn.name]: result }));
     } catch (err) {
-      let errorMsg = err.message;
-      if (err.code === 'CALL_EXCEPTION') {
-        errorMsg = `Transaction failed: The contract rejected the transaction. This may happen if: (1) The contract doesn't exist at this address on ${network}, (2) The function call violates a contract requirement, or (3) You're on the wrong network. Original error: ${err.message}`;
-      }
-      setResults(prev => ({ ...prev, [fn.name]: errorMsg }));
+      setResults(prev => ({ ...prev, [fn.name]: `ERROR: ${err.message}` }));
     }
     setLoading(prev => ({ ...prev, [fn.name]: false }));
   };
