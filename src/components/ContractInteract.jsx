@@ -48,25 +48,87 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
         return;
       }
 
+      // Check wallet network matches deployment network
+      const walletNetwork = await provider.getNetwork();
+      const walletChainName = walletNetwork.chainId === 42220n ? 'Celo' :
+                              walletNetwork.chainId === 11155111n ? 'Sepolia' :
+                              walletNetwork.chainId === 8453n ? 'Base' :
+                              walletNetwork.chainId === 10n ? 'Optimism' :
+                              `Chain ${walletNetwork.chainId}`;
+      
+      console.log('Wallet network:', walletChainName, 'Chain ID:', walletNetwork.chainId.toString());
+      console.log('Contract network from URL:', network);
+      
+      if (walletChainName !== network) {
+        setResults(prev => ({ ...prev, [fn.name]: `ERROR: Wallet connected to ${walletChainName}, but contract is deployed on ${network}. Please switch network in your wallet.` }));
+        setLoading(prev => ({ ...prev, [fn.name]: false }));
+        return;
+      }
+
       // Check if contract exists at address
       const code = await provider.getCode(contractAddress);
+      console.log('Contract code at address:', contractAddress);
+      console.log('Code length:', code.length, 'Code:', code.substring(0, 100) + '...');
+      
       if (code === '0x') {
-        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract deployed at ${contractAddress} on ${network}` }));
+        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract deployed at ${contractAddress} on ${network}. The address exists but has no code. Did you deploy on a different network?` }));
         setLoading(prev => ({ ...prev, [fn.name]: false }));
         return;
       }
 
       const contract = new ethers.Contract(contractAddress, abi, signer);
       const args = (inputs[fn.name] ? Object.values(inputs[fn.name]) : []);
+      
+      console.log('Calling function:', fn.name);
+      console.log('Function signature:', fn.name + '(' + (fn.inputs || []).map(i => i.type).join(',') + ')');
+      console.log('Arguments:', args);
+      console.log('ABI for this function:', JSON.stringify(fn, null, 2));
+      
+      // First, verify the contract has this function by checking the function selector
+      const iface = new ethers.Interface(abi);
+      const fragment = iface.getFunction(fn.name);
+      const selector = fragment.selector;
+      console.log('Function selector:', selector);
+      
+      // Check user balance for state-changing transactions
+      if (fn.stateMutability !== 'view' && fn.stateMutability !== 'pure') {
+        const balance = await provider.getBalance(await signer.getAddress());
+        console.log('User balance:', ethers.formatEther(balance), 'native tokens');
+        if (balance === 0n) {
+          setResults(prev => ({ ...prev, [fn.name]: 'ERROR: Insufficient balance. You need native tokens to pay for gas.' }));
+          setLoading(prev => ({ ...prev, [fn.name]: false }));
+          return;
+        }
+      }
+      
       let result;
       if (fn.stateMutability === 'view' || fn.stateMutability === 'pure') {
         result = await contract[fn.name](...args);
       } else {
+        // For state-changing functions, try to estimate gas first
+        try {
+          const gasEstimate = await contract[fn.name].estimateGas(...args);
+          console.log('Gas estimate:', gasEstimate.toString());
+        } catch (gasErr) {
+          console.error('Gas estimation failed:', gasErr);
+          
+          // Try to call as view function to see if it would work
+          try {
+            console.log('Attempting static call to see if function exists...');
+            await contract[fn.name].staticCall(...args);
+            throw new Error(`Gas estimation failed but static call succeeded. This shouldn't happen. ${gasErr.message}`);
+          } catch (staticErr) {
+            console.error('Static call also failed:', staticErr);
+            throw new Error(`Function call failed. The ABI may not match the deployed contract. Original error: ${gasErr.message}`);
+          }
+        }
+        
         const tx = await contract[fn.name](...args);
         result = tx.hash ? `Tx sent: ${tx.hash}` : tx;
       }
       setResults(prev => ({ ...prev, [fn.name]: result }));
     } catch (err) {
+      console.error('Contract call error:', err);
       setResults(prev => ({ ...prev, [fn.name]: `ERROR: ${err.message}` }));
     }
     setLoading(prev => ({ ...prev, [fn.name]: false }));
