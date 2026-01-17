@@ -2,11 +2,11 @@
 pragma solidity ^0.8.30;
 
 contract MessageBoard {
-    string public lastMessage;
-    address public lastSender;
+    string public message;
+    address public sender;
 
-    function postMessage(string memory message) public {
-        lastMessage = message;
-        lastSender = msg.sender;
+    function post(string calldata _message) external {
+        message = _message;
+        sender = msg.sender;
     }
 }
