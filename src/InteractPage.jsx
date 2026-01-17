@@ -1,6 +1,5 @@
 import React from 'react';
-import { Interact } from "./components/Interact";
+// import { Interact } from "./components/Interact";
 
-export function InteractPage({ theme }) {
-  return <Interact theme={theme} />;
+  return null; // InteractPage is deprecated
 }

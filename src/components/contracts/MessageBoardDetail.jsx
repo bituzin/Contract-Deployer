@@ -7,22 +7,18 @@ export const MessageBoardDetail = ({ theme, setPopup, isConnected, openModal, ne
   const { address } = useAccount();
   const { addDeployment } = useDeployments(address);
     const [copied, setCopied] = React.useState(false);
-  const bytecode = "0x6080604052348015600e575f5ffd5b506103ba8061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c8063256fec881461004357806332970710146100735780636630f88f14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61007b61009d565b60405161006a9190610149565b61009b610096366004610192565b610128565b005b5f80546100a990610245565b80601f01602080910402602001604051908101604052809291908181526020018280546100d590610245565b80156101205780601f106100f757610100808354040283529160200191610120565b820191905f5260205f20905b81548152906001019060200180831161010357829003601f168201915b505050505081565b5f61013382826102c9565b5050600180546001600160a01b03191633179055565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b600181811c9082168061025957607f821691505b60208210810361027757634e487b7160e01b5f52602260045260245ffd5b50919050565b601f8211156102c457805f5260205f20601f840160051c810160208510156102a25750805b601f840160051c820191505b818110156102c1575f81556001016102ae565b50505b505050565b815167ffffffffffffffff8111156102e3576102e361017e565b6102f7816102f18454610245565b8461027d565b6020601f821160018114610329575f83156103125750848201515b5f19600385901b1c1916600184901b1784556102c1565b5f84815260208120601f198516915b828110156103585787850151825560209485019460019092019101610338565b508482101561037557868401515f19600387901b60f8161c191681555b50505050600190811b0190555056fea264697066735822122081aa54c8ed61172532a488e962737c95dfb429d257ad3221825fb2c89316835664736f6c634300081e0033";
+  const bytecode = "0x6080604052348015600e575f5ffd5b506103768061001c5f395ff3fe608060405234801561000f575f5ffd5b506004361061003f575f3560e01c806367e404ce146100435780638ee93cf314610073578063e21f37ce14610088575b5f5ffd5b600154610056906001600160a01b031681565b6040516001600160a01b0390911681526020015b60405180910390f35b61008661008136600461014b565b61009d565b005b6100906100c0565b60405161006a91906101b9565b5f6100a9828483610286565b5050600180546001600160a01b0319163317905550565b5f80546100cc90610202565b80601f01602080910402602001604051908101604052809291908181526020018280546100f890610202565b80156101435780601f1061011a57610100808354040283529160200191610143565b820191905f5260205f20905b81548152906001019060200180831161012657829003601f168201915b505050505081565b5f5f6020838503121561015c575f5ffd5b823567ffffffffffffffff811115610172575f5ffd5b8301601f81018513610182575f5ffd5b803567ffffffffffffffff811115610198575f5ffd5b8560208284010111156101a9575f5ffd5b6020919091019590945092505050565b602081525f82518060208401528060208501604085015e5f604082850101526040601f19601f83011684010191505092915050565b634e487b7160e01b5f52604160045260245ffd5b600181811c9082168061021657607f821691505b60208210810361023457634e487b7160e01b5f52602260045260245ffd5b50919050565b601f82111561028157805f5260205f20601f840160051c8101602085101561025f5750805b601f840160051c820191505b8181101561027e575f815560010161026b565b50505b505050565b67ffffffffffffffff83111561029e5761029e6101ee565b6102b2836102ac8354610202565b8361023a565b5f601f8411600181146102e3575f85156102cc5750838201355b5f19600387901b1c1916600186901b17835561027e565b5f83815260208120601f198516915b8281101561031257868501358255602094850194600190920191016102f2565b508682101561032e575f1960f88860031b161c19848701351681555b505060018560011b018355505050505056fea2646970667358221220369ab01a8ce8b8fae58c1f79d97601fbb8379c718b452681b24bf355af80a20b64736f6c634300081e0033";
 
   const sourceCode = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.30;
 
 contract MessageBoard {
-    string private lastMessage;
-    address private lastSender;
+    string public message;
+    address public sender;
 
-    function sendMessage(string calldata message) public {
-        lastMessage = message;
-        lastSender = msg.sender;
-    }
-
-    function getLastMessage() public view returns (string memory, address) {
-        return (lastMessage, lastSender);
+    function post(string calldata _message) external {
+        message = _message;
+        sender = msg.sender;
     }
 }`;
 
@@ -101,16 +97,16 @@ contract MessageBoard {
       </div>
       <div style={{ color: theme.textPrimary, fontWeight: 500, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', marginBottom: '14px', maxWidth: '720px', lineHeight: 1.7, textAlign: 'left' }}>
         MessageBoard is a simple public contract for posting and reading messages. Each new message overwrites the previous one and records the sender's address. This contract is useful for public announcements, feedback, or as a basic communication tool on-chain. All users share the same board, so only the latest message is visible.
-        <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
+        <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Functions:</div>
         <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>
           <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>setMessage(string message)</span>&nbsp;&ndash;&nbsp;saves a new message and the sender's address. the previous message is replaced. great for simple chat or notifications.<div style={{ height: '24px' }}></div>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>post(string _message)</span>&nbsp;&ndash;&nbsp;posts a new message to the board and records your address as the sender.<div style={{ height: '24px' }}></div>
           </li>
           <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getMessage()</span>&nbsp;&ndash;&nbsp;returns the latest message posted to the board.<div style={{ height: '24px' }}></div>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>message()</span>&nbsp;&ndash;&nbsp;returns the latest message posted to the board.<div style={{ height: '24px' }}></div>
           </li>
           <li style={{ color: theme.textSecondary, fontSize: '0.96em', fontWeight: 500 }}>
-            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>getSender()</span>&nbsp;&ndash;&nbsp;returns the address of the user who posted the last message.<div style={{ height: '24px' }}></div>
+            <span style={{ background: theme.highlight, color: '#23272e', borderRadius: '8px', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', fontSize: '0.96em', padding: '3px 12px', marginRight: 8, display: 'inline-block' }}>sender()</span>&nbsp;&ndash;&nbsp;returns the address of the user who posted the last message.<div style={{ height: '24px' }}></div>
           </li>
         </ul>
       </div>
