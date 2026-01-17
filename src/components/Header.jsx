@@ -58,7 +58,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
     if (route === '/bytecodes') return theme.primaryDark;
     if (route === '/how') return theme.highlight;
     if (route === '/my-deployments') return theme.primary;
-    if (route === '/interact') return theme.textSecondary;
+    // if (route === '/interact') return theme.textSecondary; // Interact tab removed
     return null;
   };
 
@@ -341,14 +341,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           My Deployments
         </Link>
         <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/interact"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          Interact
-        </Link>
+        {/* Interact tab removed */}
       </div>
       {showContracts && createPortal(
         <div
