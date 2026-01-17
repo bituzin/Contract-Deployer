@@ -47,6 +47,15 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
         setLoading(prev => ({ ...prev, [fn.name]: false }));
         return;
       }
+
+      // Check if contract exists at address
+      const code = await provider.getCode(contractAddress);
+      if (code === '0x') {
+        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract found at address ${contractAddress} on ${network}. Make sure the contract is deployed on this network.` }));
+        setLoading(prev => ({ ...prev, [fn.name]: false }));
+        return;
+      }
+
       const contract = new ethers.Contract(contractAddress, abi, signer);
       const args = (inputs[fn.name] ? Object.values(inputs[fn.name]) : []);
       let result;
@@ -58,7 +67,11 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
       }
       setResults(prev => ({ ...prev, [fn.name]: result }));
     } catch (err) {
-      setResults(prev => ({ ...prev, [fn.name]: err.message }));
+      let errorMsg = err.message;
+      if (err.code === 'CALL_EXCEPTION') {
+        errorMsg = `Transaction failed: The contract rejected the transaction. This may happen if: (1) The contract doesn't exist at this address on ${network}, (2) The function call violates a contract requirement, or (3) You're on the wrong network. Original error: ${err.message}`;
+      }
+      setResults(prev => ({ ...prev, [fn.name]: errorMsg }));
     }
     setLoading(prev => ({ ...prev, [fn.name]: false }));
   };
@@ -196,7 +209,17 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                     </div>
                   )}
                   {results[fn.name] !== undefined && (
-                    <div style={{ marginTop: 8, color: results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.textPrimary : theme.textSecondary, fontSize: '0.96em', wordBreak: 'break-word' }}>
+                    <div style={{ 
+                      marginTop: 8, 
+                      color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : 
+                             results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : 
+                             theme.textSecondary, 
+                      fontSize: '0.96em', 
+                      wordBreak: 'break-word',
+                      padding: '8px',
+                      background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
+                      borderRadius: 4
+                    }}>
                       <b>Result:</b> {results[fn.name]?.toString()}
                     </div>
                   )}
