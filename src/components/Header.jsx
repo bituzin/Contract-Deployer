@@ -291,12 +291,12 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         </Link>
         <span style={getCurrentDividerStyle()}></span>
         <Link
-          to="/deploy"
+          to="/how"
           style={{ ...navLinkStyle }}
           onMouseOver={(e) => handleHover(e, true)}
           onMouseOut={(e) => handleHover(e, false)}
         >
-          Deploy
+          How It Works
         </Link>
         <span style={getCurrentDividerStyle()}></span>
         <div className="nav-dropdown">
@@ -324,12 +324,12 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         </Link>
         <span style={getCurrentDividerStyle()}></span>
         <Link
-          to="/how"
+          to="/deploy"
           style={{ ...navLinkStyle }}
           onMouseOver={(e) => handleHover(e, true)}
           onMouseOut={(e) => handleHover(e, false)}
         >
-          How It Works
+          Deploy
         </Link>
         <span style={getCurrentDividerStyle()}></span>
         <Link
