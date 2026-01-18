@@ -336,11 +336,13 @@ function App() {
                   <br />
                   Simple to use:
                   <br />
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '16px 0' }}>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>1. Connect wallet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>2. Deploy on testnet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>3. Deploy on mainnet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>4. Check Your deployment</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
+                    <div style={{ width: 220, marginLeft: 96 }}>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>1. Connect</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>2. Check</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>3. Deploy</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>4. Interact</span>
+                    </div>
                   </div>
                   <br />
                   Deploy your own contract in seconds!
