@@ -85,9 +85,9 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Contracts on {network}</div>
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   {contractStats.map((stat) => (
-                    <div key={stat.name} style={{ minWidth: 80, maxWidth: 120, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 12px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: '0.98em', fontWeight: 600 }}>
+                    <div key={stat.name} style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap' }}>
                       <span style={{ color: theme.textPrimary }}>{stat.name}</span>
-                      <span style={{ color: theme.primary, marginLeft: 6 }}>{stat.count}</span>
+                      <span style={{ color: theme.primary, marginLeft: 10 }}>{stat.count}</span>
                     </div>
                   ))}
                 </div>
