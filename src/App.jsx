@@ -27,6 +27,7 @@ function App() {
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
+  const [deployLoading, setDeployLoading] = useState(null);
   
   // Get signer for on-chain operations
   const signer = useSigner(isConnected);
@@ -182,15 +183,18 @@ function App() {
 
   // Deploy contract
   async function deployContract(contractName, bytecode) {
+    setDeployLoading(contractName);
     // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
     if (!isConnected) {
       // Wywołaj modal WalletConnect
       open();
       setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      setDeployLoading(null);
       return;
     }
     if (!window.ethereum) {
       setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
+      setDeployLoading(null);
       return;
     }
     try {
@@ -214,6 +218,8 @@ function App() {
       } else {
         setPopup({ visible: true, message: "Deploy error: " + err.message, txHash: null });
       }
+    } finally {
+      setDeployLoading(null);
     }
   }
 
@@ -410,12 +416,38 @@ function App() {
                                     fontWeight: 600,
                                     cursor: 'pointer',
                                     boxShadow: `0 2px 8px ${theme.shadow}`,
-                                    transition: 'background 0.2s'
+                                    transition: 'background 0.2s',
+                                    position: 'relative',
+                                    minWidth: 90,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
                                   }}
+                                  disabled={deployLoading === contract.name}
                                   onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
                                   onMouseOut={e => e.currentTarget.style.background = theme.primary}
                                   onClick={() => deployContract(contract.name, contract.bytecode)}
-                                >Deploy</button>
+                                >
+                                  {deployLoading === contract.name ? (
+                                    <span style={{
+                                      display: 'inline-block',
+                                      width: 22,
+                                      height: 22,
+                                      border: `3px solid ${theme.primary}`,
+                                      borderTop: '3px solid transparent',
+                                      borderRadius: '50%',
+                                      animation: 'spin 1s linear infinite',
+                                      marginRight: 8
+                                    }} />
+                                  ) : null}
+                                  <span style={{ verticalAlign: 'middle' }}>Deploy</span>
+                                  <style>{`
+                                    @keyframes spin {
+                                      0% { transform: rotate(0deg); }
+                                      100% { transform: rotate(360deg); }
+                                    }
+                                  `}</style>
+                                </button>
                                 <button
                                   style={{
                                     fontSize: '0.96em',
@@ -570,6 +602,47 @@ function App() {
           </Routes>
         </div>
       </div>
+      {deployLoading && (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    background: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    zIndex: 9999,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  }}>
+    <div style={{
+      width: '60px',
+      height: '60px',
+      border: `4px solid ${theme.primary}`,
+      borderTop: '4px solid transparent',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite'
+    }} />
+    <style>{`
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `}</style>
+    <div style={{
+      marginTop: '20px',
+      color: '#fff',
+      fontSize: '1.1em',
+      fontWeight: 600,
+      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+    }}>
+      Processing transaction...
+    </div>
+  </div>
+)}
     </Router>
   );
 }
