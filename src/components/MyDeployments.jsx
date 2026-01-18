@@ -83,15 +83,11 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             {contractStats.length > 0 && (
               <div style={{ marginTop: 24 }}>
                 <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Contracts on {network}</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px' }}>
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   {contractStats.map((stat) => (
-                    <div key={stat.name} style={{ border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '12px 14px', background: `rgba(${theme.primaryRgb},0.08)`, display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 10 }}>
-                      <span style={{ fontWeight: 600, color: theme.textPrimary }}>
-                        {stat.name}
-                      </span>
-                      <span style={{ fontSize: '0.92em', color: theme.textSecondary, marginLeft: 8 }}>
-                        (<b style={{ color: theme.textPrimary }}>{stat.count}</b>)
-                      </span>
+                    <div key={stat.name} style={{ minWidth: 80, maxWidth: 120, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 12px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 6, fontSize: '0.98em', fontWeight: 600 }}>
+                      <span style={{ color: theme.textPrimary }}>{stat.name}</span>
+                      <span style={{ color: theme.primary, marginLeft: 6 }}>{stat.count}</span>
                     </div>
                   ))}
                 </div>
