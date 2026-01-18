@@ -16,6 +16,8 @@ import { MyDeployments } from "./components/MyDeployments";
 // import { Interact } from "./components/Interact";
 import { ContractInteract } from "./components/ContractInteract";
 import { ContractsList } from "./components/ContractsList";
+import { BytecodesList } from "./components/BytecodesList";
+import { BytecodeDetail } from "./components/BytecodeDetail";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
@@ -544,72 +546,11 @@ function App() {
             )} />
             
             <Route path="/bytecodes" element={(
-              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Bytecodes</h2>
-                    <button
-                      style={{
-                        marginLeft: 18,
-                        fontSize: '0.86em',
-                        padding: '3px 10px',
-                        background: theme.cardBg,
-                        color: theme.textPrimary,
-                        border: `1px solid ${theme.primary}`,
-                        borderRadius: '5px',
-                        fontWeight: 500,
-                        cursor: 'pointer',
-                        boxShadow: `0 1px 4px ${theme.shadow}`,
-                        transition: 'background 0.2s',
-                      }}
-                      onClick={() => window.location.href = '/contracts'}
-                    >
-                      Back to Contracts
-                    </button>
-                  </div>
-                  <p style={{ marginBottom: 24 }}>
-                    Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
-                  </p>
-                  {contractBytecodes.map(({ name, bytecode }, idx) => (
-                    <div key={name} style={{ marginBottom: 32 }}>
-                      <div style={{ marginTop: '8px', borderRadius: '10px', background: theme.codeBg, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: theme.codeBg, padding: '8px 18px 8px 18px', borderTopLeftRadius: '10px', borderTopRightRadius: '10px', borderBottom: `1px solid ${theme.highlight}` }}>
-                          <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>{name} bytecode</span>
-                          <div>
-                            <button
-                              onClick={() => handleCopy(bytecode, idx)}
-                              style={{
-                                background: theme.highlight,
-                                color: '#444',
-                                border: 'none',
-                                fontWeight: 500,
-                                fontSize: '0.86em',
-                                cursor: 'pointer',
-                                marginRight: '10px',
-                                padding: '2px 10px',
-                                borderRadius: '4px',
-                                transition: 'background 0.2s',
-                                position: 'relative',
-                                minWidth: 48,
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}
-                            >
-                              {pressedIndex === idx ? (
-                                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
-                              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
-                            </button>
-                          </div>
-                        </div>
-                        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflowWrap: 'anywhere', minHeight: '120px' }}>
-                          {bytecode}
-                        </pre>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <BytecodesList theme={theme} />
+            )} />
+            
+            <Route path="/bytecode/:contractName" element={(
+              <BytecodeDetail theme={theme} />
             )} />
             
             <Route path="/contracts" element={(
