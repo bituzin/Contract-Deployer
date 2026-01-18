@@ -15,6 +15,7 @@ import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
 import { MyDeployments } from "./components/MyDeployments";
 // import { Interact } from "./components/Interact";
 import { ContractInteract } from "./components/ContractInteract";
+import { ContractsList } from "./components/ContractsList";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
@@ -340,8 +341,9 @@ function App() {
                     <div style={{ width: 220, marginLeft: 96 }}>
                       <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>1. Connect</span>
                       <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>2. Check</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>3. Deploy</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>4. Interact</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>3. Read</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>4. Deploy</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>5. Interact</span>
                     </div>
                   </div>
                   <br />
@@ -568,6 +570,10 @@ function App() {
                   ))}
                 </div>
               </div>
+            )} />
+            
+            <Route path="/contracts" element={(
+              <ContractsList theme={theme} />
             )} />
             
             <Route path="/how" element={(

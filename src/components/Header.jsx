@@ -1,5 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { createPortal } from 'react-dom';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
 export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange, isConnected, address, onConnect, onDisconnect }) => {
@@ -95,40 +94,6 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
     e.currentTarget.style.background = isHover ? theme.highlight : 'transparent';
     e.currentTarget.style.color = isHover ? '#222' : theme.textPrimary;
   };
-
-  const [showContracts, setShowContracts] = useState(false);
-  const triggerRef = useRef(null);
-  const closeTimeoutRef = useRef(null);
-  const [contractPos, setContractPos] = useState({ top: 0, left: 0, width: 0 });
-
-  const openContracts = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      setContractPos({ top: rect.bottom, left: rect.left, width: rect.width });
-    }
-    setShowContracts(true);
-  };
-
-  const closeContractsDelayed = () => {
-    closeTimeoutRef.current = setTimeout(() => setShowContracts(false), 150);
-  };
-
-  const cancelClose = () => {
-    if (closeTimeoutRef.current) {
-      clearTimeout(closeTimeoutRef.current);
-      closeTimeoutRef.current = null;
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
-    };
-  }, []);
 
   return (
     <>
@@ -301,20 +266,14 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           How It Works
         </Link>
         <span style={getCurrentDividerStyle()}></span>
-        <div className="nav-dropdown">
-          <span
-            ref={triggerRef}
-            style={{
-              ...navLinkStyle,
-              cursor: 'pointer'
-            }}
-            onMouseEnter={openContracts}
-            onMouseLeave={closeContractsDelayed}
-            onClick={() => setShowContracts((s) => !s)}
-          >
-            Contracts
-          </span>
-        </div>
+        <Link
+          to="/contracts"
+          style={{ ...navLinkStyle }}
+          onMouseOver={(e) => handleHover(e, true)}
+          onMouseOut={(e) => handleHover(e, false)}
+        >
+          Contracts
+        </Link>
         <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/bytecodes"
@@ -345,60 +304,6 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         <span style={getCurrentDividerStyle()}></span>
         {/* Interact tab removed */}
       </div>
-      {showContracts && createPortal(
-        <div
-          onMouseEnter={cancelClose}
-          onMouseLeave={closeContractsDelayed}
-          style={{
-            position: 'fixed',
-            top: contractPos.top,
-            left: contractPos.left,
-            minWidth: 200,
-            width: Math.max(contractPos.width || 220, 220),
-            background: theme.cardBg,
-            borderRadius: 10,
-            boxShadow: `0 4px 16px ${theme.shadow}`,
-            padding: '8px 0',
-            fontFamily: 'Inter, Arial, sans-serif',
-            fontWeight: 500,
-            zIndex: 99999
-          }}
-        >
-          <Link
-            to="/contract/simple-storage"
-            style={{ ...dropdownLinkStyle }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
-          >
-            Simple Storage
-          </Link>
-          <Link
-            to="/contract/click-counter"
-            style={{ ...dropdownLinkStyle }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
-          >
-            Click Counter
-          </Link>
-          <Link
-            to="/contract/message-board"
-            style={{ ...dropdownLinkStyle }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
-          >
-            Message Board
-          </Link>
-          <Link
-            to="/contract/simple-voting"
-            style={{ ...dropdownLinkStyle }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
-          >
-            Simple Voting
-          </Link>
-        </div>,
-        document.body
-      )}
     </>
   );
 };
