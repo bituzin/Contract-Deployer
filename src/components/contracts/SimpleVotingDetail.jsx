@@ -6,7 +6,8 @@ import { useDeployments } from '../../hooks/useDeployments';
 export const SimpleVotingDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
   const { address } = useAccount();
   const { addDeployment } = useDeployments(address);
-    const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const [deployLoading, setDeployLoading] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060f38061001b5f395ff3fe6080604052348015600e575f5ffd5b50600436106044575f3560e01c80633c8d0bec14604857806355416e06146061578063847d52d6146069578063fb32aedb146071575b5f5ffd5b604f5f5481565b60405190815260200160405180910390f35b60676077565b005b604f60015481565b6067608d565b60015f5f828254608691906099565b9091555050565b6001805f828254608691905b8082018082111560b757634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212201a53748d74d7a82011e00c648f970427f5f2a16a963e42bc8d7208522d889f1b64736f6c634300081e0033";
 
   const sourceCode = `// SPDX-License-Identifier: MIT
@@ -39,8 +40,10 @@ contract SimpleVoting {
 }`;
 
   const handleDeploy = async () => {
+    setDeployLoading(true);
     if (!window.ethereum) {
       setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setDeployLoading(false);
       return;
     }
     try {
@@ -48,6 +51,7 @@ contract SimpleVoting {
       const signer = await provider.getSigner();
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
+      setDeployLoading(false);
       if (receipt.contractAddress) {
         addDeployment('SimpleVoting', receipt.contractAddress, network, tx.hash);
         setPopup({ visible: true, message: `Contract SimpleVoting deployed successfully!`, txHash: tx.hash });
@@ -55,6 +59,7 @@ contract SimpleVoting {
         setPopup({ visible: true, message: "Could not get deployed contract address.", txHash: null });
       }
     } catch (err) {
+      setDeployLoading(false);
       if (err && err.message && (err.message.includes('user rejected') || err.message.includes('denied'))) {
         setPopup({ visible: true, message: "Transaction aborted by user", txHash: null });
       } else {
@@ -162,6 +167,47 @@ contract SimpleVoting {
           {sourceCode}
         </pre>
       </div>
+      {deployLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            border: `4px solid ${theme.primary}`,
+            borderTop: '4px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+          <div style={{
+            marginTop: '20px',
+            color: '#fff',
+            fontSize: '1.1em',
+            fontWeight: 600,
+            textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            Processing transaction...
+          </div>
+        </div>
+      )}
     </div>
   );
 };
