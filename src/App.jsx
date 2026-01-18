@@ -329,10 +329,10 @@ function App() {
                     Deploy Your Contract – Fast & Secure!
                   </span>
                   Welcome to panel for deploying smart contracts on 
-                  <span style={{ color: '#627EEA', fontWeight: 700 }}> Sepolia</span>, 
-                     <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700 }}> Celo</span>, 
-                  <span style={{ color: '#0052FF', fontWeight: 700 }}> Base</span> and 
-                  <span style={{ color: '#FF0420', fontWeight: 700 }}> Optimism</span> blockchain.<br />
+                  <span style={{ color: '#627EEA', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Sepolia')}> Sepolia</span>, 
+                  <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Celo')}> Celo</span>, 
+                  <span style={{ color: '#0052FF', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Base')}> Base</span> and 
+                  <span style={{ color: '#FF0420', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Optimism')}> Optimism</span> blockchain.<br />
                   <br />
                   Simple to use:
                   <br />
