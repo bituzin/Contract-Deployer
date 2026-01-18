@@ -82,12 +82,12 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             </div>
             {contractStats.length > 0 && (
               <div style={{ marginTop: 24 }}>
-                <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Contracts on {network}</div>
+                {/* Removed 'Contracts on ...' label as requested */}
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   {contractStats.map((stat) => (
                     <div key={stat.name} style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap' }}>
                       <span style={{ color: theme.textPrimary }}>{stat.name}</span>
-                      <span style={{ color: theme.primary, marginLeft: 10 }}>{stat.count}</span>
+                      <span style={{ color: theme.textPrimary, marginLeft: 10 }}>{stat.count}</span>
                     </div>
                   ))}
                 </div>
@@ -108,15 +108,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           </div>
         ) : (
           <div>
-            <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-              Showing {network} deployments: <b>{filteredDeployments.length}</b>
-            </div>
+            {/* Removed 'Showing ... deployments' line as requested */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {filteredDeployments.map((deployment) => {
                 const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network);
                 const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
-                const shortAddress = `${deployment.contractAddress.slice(0, 10)}...${deployment.contractAddress.slice(-8)}`;
-                const shortTx = `${deployment.txHash.slice(0, 10)}...${deployment.txHash.slice(-8)}`;
+                const fullAddress = deployment.contractAddress;
+                const fullTx = deployment.txHash;
 
                 return (
                   <div
@@ -155,11 +153,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                               target="_blank"
                               rel="noopener noreferrer"
                               style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                              onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                              onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
                             >
-                              {shortAddress}
+                              {fullAddress}
                             </a>
                           ) : (
-                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{fullAddress}</span>
                           )}
                         </div>
                       </div>
@@ -173,11 +173,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                               target="_blank"
                               rel="noopener noreferrer"
                               style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                              onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                              onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
                             >
-                              {shortTx}
+                              {fullTx}
                             </a>
                           ) : (
-                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortTx}</span>
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{fullTx}</span>
                           )}
                         </div>
                       </div>
