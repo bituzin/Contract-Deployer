@@ -21,6 +21,10 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
   const [inputs, setInputs] = useState({});
   const [results, setResults] = useState({});
   const [loading, setLoading] = useState({});
+  
+  // Check if any function is currently loading
+  const isAnyLoading = Object.values(loading).some(l => l === true);
+  
   // Handle input change for function arguments
   const handleInputChange = (fnName, idx, value) => {
     setInputs(prev => ({
@@ -34,6 +38,12 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
 
   // Call contract function
   const handleCallFunction = async (fn) => {
+    // Check if wallet is connected first
+    if (!isConnected) {
+      openModal();
+      return;
+    }
+    
     setLoading(prev => ({ ...prev, [fn.name]: true }));
     setResults(prev => ({ ...prev, [fn.name]: null }));
     try {
@@ -192,8 +202,52 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
   }
 
   return (
-    <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-      <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
+    <>
+      {/* Global loader overlay with blur effect */}
+      {isAnyLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            border: `4px solid ${theme.primary}`,
+            borderTop: '4px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+          <div style={{
+            marginTop: '20px',
+            color: '#fff',
+            fontSize: '1.1em',
+            fontWeight: 600,
+            textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            Processing transaction...
+          </div>
+        </div>
+      )}
+      
+      <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+        <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
             Contract: {contractName}
@@ -290,5 +344,6 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
         </div>
       </div>
     </div>
+    </>
   );
 };
