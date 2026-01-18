@@ -22,8 +22,8 @@ function App() {
   const { isConnected, address } = useAccount();
   const { disconnect } = useDisconnect();
   const { open } = useAppKit();
-  const [showHeader, setShowHeader] = useState(false);
-  const [showWelcome, setShowWelcome] = useState(false);
+  const [showHeader, setShowHeader] = useState(true);
+  const [showWelcome, setShowWelcome] = useState(true);
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
@@ -113,7 +113,7 @@ function App() {
   React.useEffect(() => {
     localStorage.setItem("network", network);
   }, [network]);
-  const [showNav, setShowNav] = useState(false);
+  const [showNav, setShowNav] = useState(true);
 
   // Użyj hooka do obsługi motywu
   let theme = useTheme(network);
@@ -124,25 +124,25 @@ function App() {
     };
   }
 
-  // Animacje przy starcie
-  React.useEffect(() => {
-    const timer = setTimeout(() => setShowHeader(true), 500);
-    return () => clearTimeout(timer);
-  }, []);
+  // Animacje przy starcie - removed for instant display
+  // React.useEffect(() => {
+  //   const timer = setTimeout(() => setShowHeader(true), 500);
+  //   return () => clearTimeout(timer);
+  // }, []);
 
-  React.useEffect(() => {
-    if (showHeader) {
-      const timerNav = setTimeout(() => setShowNav(true), 500);
-      const timerWelcome = setTimeout(() => setShowWelcome(true), 1000);
-      return () => {
-        clearTimeout(timerNav);
-        clearTimeout(timerWelcome);
-      };
-    } else {
-      setShowNav(false);
-      setShowWelcome(false);
-    }
-  }, [showHeader]);
+  // React.useEffect(() => {
+  //   if (showHeader) {
+  //     const timerNav = setTimeout(() => setShowNav(true), 500);
+  //     const timerWelcome = setTimeout(() => setShowWelcome(true), 1000);
+  //     return () => {
+  //       clearTimeout(timerNav);
+  //       clearTimeout(timerWelcome);
+  //     };
+  //   } else {
+  //     setShowNav(false);
+  //     setShowWelcome(false);
+  //   }
+  // }, [showHeader]);
 
   // Automatyczne przełączanie sieci w portfelu po podłączeniu
   React.useEffect(() => {
