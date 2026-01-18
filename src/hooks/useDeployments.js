@@ -23,54 +23,7 @@ export const useDeployments = (address, currentNetwork, signer) => {
     reload: registryReload
   } = useDeploymentRegistry(address, currentNetwork);
 
-  const fetchOnChainDeployments = useCallback(async () => {
-    if (!address) return [];
 
-    let normalizedAddress;
-    try {
-      normalizedAddress = ethers.getAddress(address);
-    } catch (error) {
-      console.error('Invalid address for deployment history lookup:', error);
-      return [];
-    }
-
-    const aggregated = [];
-
-    await Promise.all(Object.entries(NETWORK_RPC_URLS).map(async ([networkName, rpcUrl]) => {
-      try {
-        const provider = new ethers.JsonRpcProvider(rpcUrl);
-        const history = await provider.getHistory(normalizedAddress);
-        const blockCache = {};
-
-        for (const tx of history) {
-          if (tx.to === null && tx.creates) {
-            let timestamp = Date.now();
-            if (tx.blockNumber != null) {
-              if (!blockCache[tx.blockNumber]) {
-                const block = await provider.getBlock(tx.blockNumber);
-                blockCache[tx.blockNumber] = block?.timestamp ? block.timestamp * 1000 : Date.now();
-              }
-              timestamp = blockCache[tx.blockNumber];
-            }
-
-            aggregated.push({
-              id: `${networkName}-${tx.hash}`,
-              contractName: 'External Deployment',
-              contractAddress: tx.creates,
-              network: networkName,
-              txHash: tx.hash,
-              timestamp,
-              formattedDate: new Date(timestamp).toLocaleString()
-            });
-          }
-        }
-      } catch (error) {
-        console.error(`Error fetching deployments from ${networkName}:`, error);
-      }
-    }));
-
-    return aggregated;
-  }, [address]);
 
   const loadDeployments = useCallback(async () => {
     if (!address) {
@@ -83,33 +36,16 @@ export const useDeployments = (address, currentNetwork, signer) => {
         return registryDeployments;
       }
 
-      // Fallback to localStorage and on-chain history
+      // Fallback to localStorage only
       const allDeployments = JSON.parse(localStorage.getItem(DEPLOYMENTS_STORAGE_KEY) || '{}');
       const userDeployments = allDeployments[address.toLowerCase()] || [];
-      const onChainDeployments = await fetchOnChainDeployments();
-
-      const mergedMap = new Map();
-      [...onChainDeployments, ...userDeployments].forEach((deployment) => {
-        if (!deployment || !deployment.txHash) {
-          return;
-        }
-        const key = `${deployment.network}-${deployment.txHash}`;
-        const timestamp = deployment.timestamp || Date.now();
-        mergedMap.set(key, {
-          ...deployment,
-          id: deployment.id || key,
-          timestamp,
-          formattedDate: deployment.formattedDate || new Date(timestamp).toLocaleString(),
-          source: deployment.source || 'localStorage'
-        });
-      });
-
-      return Array.from(mergedMap.values()).sort((a, b) => b.timestamp - a.timestamp);
+      // Usunięto fetchOnChainDeployments i onChainDeployments
+      return userDeployments.sort((a, b) => b.timestamp - a.timestamp);
     } catch (error) {
       console.error('Error loading deployments:', error);
       return [];
     }
-  }, [address, fetchOnChainDeployments, registryDeployments]);
+  }, [address, registryDeployments]);
 
   useEffect(() => {
     let cancelled = false;
