@@ -165,8 +165,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Contract Deployer
         </span>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          <span style={{ color: '#fff', fontWeight: 600, fontSize: '0.95em', letterSpacing: '0.08em', textTransform: 'uppercase' }}>Network</span>
+        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          <span style={{ color: '#fff', fontWeight: 600, fontSize: '0.95em', letterSpacing: '0.08em', textTransform: 'uppercase', marginRight: 8 }}>Network</span>
           <select
             value={network}
             onChange={onNetworkChange}
@@ -191,6 +191,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
               </option>
             ))}
           </select>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
           {!isConnected ? (
             <button
               style={{
