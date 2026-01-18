@@ -361,7 +361,27 @@ function App() {
             <Route path="/deploy" element={(
               <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
-                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Deploy Contract</h2>
+                    <button
+                      style={{
+                        marginLeft: 18,
+                        fontSize: '0.86em',
+                        padding: '3px 10px',
+                        background: theme.cardBg,
+                        color: theme.textPrimary,
+                        border: `1px solid ${theme.primary}`,
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        boxShadow: `0 1px 4px ${theme.shadow}`,
+                        transition: 'background 0.2s',
+                      }}
+                      onClick={() => window.location.href = '/contracts'}
+                    >
+                      Back to Contracts
+                    </button>
+                  </div>
                   <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
                     Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button.<br />
                     If you want to check the estimated network cost, click <b>Fee</b>.<br />
@@ -526,7 +546,27 @@ function App() {
             <Route path="/bytecodes" element={(
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Bytecodes</h2>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Bytecodes</h2>
+                    <button
+                      style={{
+                        marginLeft: 18,
+                        fontSize: '0.86em',
+                        padding: '3px 10px',
+                        background: theme.cardBg,
+                        color: theme.textPrimary,
+                        border: `1px solid ${theme.primary}`,
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        boxShadow: `0 1px 4px ${theme.shadow}`,
+                        transition: 'background 0.2s',
+                      }}
+                      onClick={() => window.location.href = '/contracts'}
+                    >
+                      Back to Contracts
+                    </button>
+                  </div>
                   <p style={{ marginBottom: 24 }}>
                     Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
                   </p>
@@ -576,18 +616,38 @@ function App() {
               <ContractsList theme={theme} />
             )} />
             
-            <Route path="/how" element={(
+            <Route path="/how" element={( 
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
-                <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
-                <div>
-                  <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
-                  <div style={{ marginBottom: 14 }}><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</div>
-                  <div style={{ marginBottom: 14 }}><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</div>
-                  <div style={{ marginBottom: 14 }}><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</div>
-                  <div style={{ marginBottom: 0 }}><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>How It Works</h2>
+                    <button
+                      style={{
+                        marginLeft: 18,
+                        fontSize: '0.86em',
+                        padding: '3px 10px',
+                        background: theme.cardBg,
+                        color: theme.textPrimary,
+                        border: `1px solid ${theme.primary}`,
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        boxShadow: `0 1px 4px ${theme.shadow}`,
+                        transition: 'background 0.2s',
+                      }}
+                      onClick={() => window.location.href = '/'}
+                    >
+                      Back to Home
+                    </button>
+                  </div>
+                  <div>
+                    <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
+                    <div style={{ marginBottom: 14 }}><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</div>
+                    <div style={{ marginBottom: 14 }}><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</div>
+                    <div style={{ marginBottom: 14 }}><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</div>
+                    <div style={{ marginBottom: 0 }}><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</div>
+                  </div>
                 </div>
-              </div>
               </div>
             )} />
             

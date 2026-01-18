@@ -25,13 +25,27 @@ export const ContractsList = ({ theme }) => {
         lineHeight: 1.7, 
         minHeight: 320 
       }}>
-        <h2 style={{ 
-          color: theme.textPrimary, 
-          fontWeight: 700, 
-          fontSize: '1.2em', 
-          margin: 0, 
-          marginBottom: 18 
-        }}>Available Contracts</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Available Contracts</h2>
+          <button
+            style={{
+              marginLeft: 18,
+              fontSize: '0.86em',
+              padding: '3px 10px',
+              background: theme.cardBg,
+              color: theme.textPrimary,
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '5px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+            }}
+            onClick={() => window.location.href = '/my-deployments'}
+          >
+            Back to My Deployments
+          </button>
+        </div>
         <div style={{ 
           fontSize: '0.95em', 
           color: theme.textPrimary, 
@@ -40,7 +54,7 @@ export const ContractsList = ({ theme }) => {
           textAlign: 'left', 
           marginBottom: 28 
         }}>
-          Choose a contract to view details, deploy, and interact with it.
+          Choose a contract to view details.
         </div>
         <div style={{ 
           display: 'grid', 

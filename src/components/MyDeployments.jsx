@@ -61,7 +61,27 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   return (
     <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
       <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, maxWidth: 940 }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 24 }}>My Deployments</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>My Deployments</h2>
+          <button
+            style={{
+              marginLeft: 18,
+              fontSize: '0.86em',
+              padding: '3px 10px',
+              background: theme.cardBg,
+              color: theme.textPrimary,
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '5px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+            }}
+            onClick={() => window.location.href = '/deploy'}
+          >
+            Back to Deploy
+          </button>
+        </div>
         
         {totalFilteredDeployments > 0 && (
           <div style={{ marginBottom: 32 }}>
