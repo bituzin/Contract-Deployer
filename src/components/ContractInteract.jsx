@@ -5,6 +5,7 @@ import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/Cl
 import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
 import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getExplorerUrl } from '../config/explorers';
 
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
   const { contractName, contractAddress, network } = useParams();
@@ -223,7 +224,18 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             Network: {network}
           </div>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
-            Contract Address: {contractAddress}
+            Contract Address: {typeof contractAddress === 'string' && contractAddress.length > 0 ? (
+              <a
+                href={getExplorerUrl('address', contractAddress, network)}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all' }}
+                onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
+              >
+                {contractAddress}
+              </a>
+            ) : contractAddress}
           </div>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
             Deployment date: {new Date().toLocaleString()}
