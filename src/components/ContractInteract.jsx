@@ -294,7 +294,11 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                           background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
                           borderRadius: 4
                         }}>
-                          <b>Result:</b> {results[fn.name]?.toString()}
+                          <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary, fontWeight: 600 }}>
+                            Result:
+                          </span> <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
+                            {results[fn.name]?.toString()}
+                          </span>
                         </div>
                       )}
                     </li>
