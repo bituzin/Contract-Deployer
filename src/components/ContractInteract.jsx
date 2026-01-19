@@ -8,6 +8,13 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { getExplorerUrl } from '../config/explorers';
 
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
+  // Dodaj globalny styl podkreślenia linku do tx hash tylko na hover
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `.tx-hash-link:hover { text-decoration: underline !important; }`;
+    document.head.appendChild(style);
+    return () => { document.head.removeChild(style); };
+  }, []);
   const { contractName, contractAddress, network } = useParams();
   const navigate = useNavigate();
   // Redirect to /my-deployments if network in URL does not match selected network
@@ -349,9 +356,26 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                         }}>
                           <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary, fontWeight: 600 }}>
                             Result:
-                          </span> <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
-                            {results[fn.name]?.toString()}
-                          </span>
+                          </span> 
+                          {results[fn.name] && results[fn.name].toString().startsWith('Tx sent:') ? (
+                            (() => {
+                              const hash = results[fn.name].toString().replace('Tx sent: ', '').trim();
+                              return (
+                                <a
+                                  href={getExplorerUrl('tx', hash, network)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{ color: theme.primary, textDecoration: 'none', wordBreak: 'break-all', fontWeight: 600 }}
+                                >
+                                  {hash}
+                                </a>
+                              );
+                            })()
+                          ) : (
+                            <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
+                              {results[fn.name]?.toString()}
+                            </span>
+                          )}
                         </div>
                       )}
                     </li>
@@ -408,7 +432,29 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                           background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
                           borderRadius: 4
                         }}>
-                          <b>Result:</b> {results[fn.name]?.toString()}
+                          <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary, fontWeight: 600 }}>
+                            Result:
+                          </span> 
+                          {results[fn.name] && results[fn.name].toString().startsWith('Tx sent:') ? (
+                            (() => {
+                              const hash = results[fn.name].toString().replace('Tx sent: ', '').trim();
+                              return (
+                                <a
+                                  href={getExplorerUrl('tx', hash, network)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="tx-hash-link"
+                                  style={{ color: theme.primary, textDecoration: 'none', wordBreak: 'break-all', fontWeight: 600 }}
+                                >
+                                  {hash}
+                                </a>
+                              );
+                            })()
+                          ) : (
+                            <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
+                              {results[fn.name]?.toString()}
+                            </span>
+                          )}
                         </div>
                       )}
                     </li>
