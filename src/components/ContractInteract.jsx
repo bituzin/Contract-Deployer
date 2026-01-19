@@ -245,9 +245,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
           </div>
         </div>
         <div style={{ marginTop: 24, padding: '20px', background: theme.cardBgDark, borderRadius: 8 }}>
-          <div style={{ color: theme.textSecondary, fontSize: '0.92em', textAlign: 'center', marginBottom: 12 }}>
-            <span style={{ fontWeight: 700 }}>Read functions</span> po lewej, <span style={{ fontWeight: 700 }}>Write functions</span> po prawej:
-          </div>
+          {/* usunięto odstęp nad kolumnami */}
           <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', justifyContent: 'space-between' }}>
             <div style={{ flex: 1 }}>
               <div style={{ color: theme.textSecondary, fontWeight: 600, marginBottom: 10 }}>Read (view/pure)</div>
