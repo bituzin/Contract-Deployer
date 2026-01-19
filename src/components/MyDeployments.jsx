@@ -9,28 +9,23 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   };
 
   const filteredDeployments = network ? deployments.filter((deployment) => deployment.network === network) : deployments;
-  const totalDeployments = deployments.length;
+  
+  // Debug logging
+  console.log('MyDeployments - Current network:', network);
+  console.log('MyDeployments - All deployments:', deployments.length, deployments);
+  console.log('MyDeployments - Filtered deployments:', filteredDeployments.length, filteredDeployments);
   const totalFilteredDeployments = filteredDeployments.length;
-  const lastDeployment = deployments[0];
+  const lastDeployment = filteredDeployments[0];
   const lastDeploymentDate = lastDeployment ? formatDate(lastDeployment.timestamp) : '—';
   const lastDeploymentName = lastDeployment ? lastDeployment.contractName : '—';
-  const contractAggregates = deployments.reduce((acc, deployment) => {
+  const contractAggregates = filteredDeployments.reduce((acc, deployment) => {
     const name = deployment.contractName || 'Unknown contract';
-    if (!acc[name]) {
-      acc[name] = { total: 0, perNetwork: {} };
-    }
-    acc[name].total += 1;
-    const networkKey = deployment.network || 'Other network';
-    acc[name].perNetwork[networkKey] = (acc[name].perNetwork[networkKey] || 0) + 1;
+    acc[name] = (acc[name] || 0) + 1;
     return acc;
   }, {});
   const contractStats = Object.entries(contractAggregates)
-    .map(([name, data]) => ({
-      name,
-      total: data.total,
-      currentNetworkCount: network ? (data.perNetwork[network] || 0) : data.total
-    }))
-    .sort((a, b) => b.total - a.total);
+    .map(([name, count]) => ({ name, count }))
+    .sort((a, b) => b.count - a.count);
   const currentNetworkLabel = network ? `Network ${network}` : 'All networks';
 
   if (!isConnected) {
@@ -66,18 +61,34 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   return (
     <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
       <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, maxWidth: 940 }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 24 }}>My Deployments</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>My Deployments</h2>
+          <button
+            style={{
+              marginLeft: 18,
+              fontSize: '0.86em',
+              padding: '3px 10px',
+              background: theme.cardBg,
+              color: theme.textPrimary,
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '5px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+            }}
+            onClick={() => window.location.href = '/deploy'}
+          >
+            Back to Deploy
+          </button>
+        </div>
         
-        {totalDeployments > 0 && (
+        {totalFilteredDeployments > 0 && (
           <div style={{ marginBottom: 32 }}>
-            <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics</div>
+            <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics ({currentNetworkLabel})</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
               <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>All contracts</span>
-                <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalDeployments}</span>
-              </div>
-              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>{currentNetworkLabel}</span>
+                <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Contracts on {network}</span>
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{totalFilteredDeployments}</span>
               </div>
               <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -91,13 +102,12 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             </div>
             {contractStats.length > 0 && (
               <div style={{ marginTop: 24 }}>
-                <div style={{ fontSize: '0.82em', color: theme.textSecondary, fontWeight: 600, marginBottom: 12 }}>Individual contracts</div>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '10px' }}>
+                {/* Removed 'Contracts on ...' label as requested */}
+                <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   {contractStats.map((stat) => (
-                    <div key={stat.name} style={{ border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '12px 14px', background: `rgba(${theme.primaryRgb},0.08)`, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                      <div style={{ fontWeight: 600, color: theme.textPrimary }}>{stat.name}</div>
-                      <div style={{ fontSize: '0.82em', color: theme.textSecondary }}>All: <b style={{ color: theme.textPrimary }}>{stat.total}</b></div>
-                      <div style={{ fontSize: '0.82em', color: theme.textSecondary }}>{`${currentNetworkLabel}: `}<b style={{ color: theme.textPrimary }}>{stat.currentNetworkCount}</b></div>
+                    <div key={stat.name} style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                      <span style={{ color: theme.textPrimary }}>{stat.name}</span>
+                      <span style={{ color: theme.textPrimary, marginLeft: 10 }}>{stat.count}</span>
                     </div>
                   ))}
                 </div>
@@ -118,15 +128,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           </div>
         ) : (
           <div>
-            <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-              Showing {network} deployments: <b>{filteredDeployments.length}</b>
-            </div>
+            {/* Removed 'Showing ... deployments' line as requested */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {filteredDeployments.map((deployment) => {
                 const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network);
                 const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
-                const shortAddress = `${deployment.contractAddress.slice(0, 10)}...${deployment.contractAddress.slice(-8)}`;
-                const shortTx = `${deployment.txHash.slice(0, 10)}...${deployment.txHash.slice(-8)}`;
+                const fullAddress = deployment.contractAddress;
+                const fullTx = deployment.txHash;
 
                 return (
                   <div
@@ -165,11 +173,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                               target="_blank"
                               rel="noopener noreferrer"
                               style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                              onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                              onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
                             >
-                              {shortAddress}
+                              {fullAddress}
                             </a>
                           ) : (
-                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{fullAddress}</span>
                           )}
                         </div>
                       </div>
@@ -183,11 +193,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                               target="_blank"
                               rel="noopener noreferrer"
                               style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                              onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                              onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
                             >
-                              {shortTx}
+                              {fullTx}
                             </a>
                           ) : (
-                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortTx}</span>
+                            <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{fullTx}</span>
                           )}
                         </div>
                       </div>

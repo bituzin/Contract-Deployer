@@ -6,7 +6,8 @@ import { useDeployments } from '../../hooks/useDeployments';
 export const ClickCounterDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
   const { address } = useAccount();
   const { addDeployment } = useDeployments(address);
-    const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const [deployLoading, setDeployLoading] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033";
 
   const sourceCode = `// SPDX-License-Identifier: MIT
@@ -25,8 +26,10 @@ contract ClickCounter {
 }`;
 
   const handleDeploy = async () => {
+    setDeployLoading(true);
     if (!window.ethereum) {
       setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setDeployLoading(false);
       return;
     }
     try {
@@ -46,6 +49,8 @@ contract ClickCounter {
       } else {
         setPopup({ visible: true, message: "Deploy error: " + err.message, txHash: null });
       }
+    } finally {
+      setDeployLoading(false);
     }
   };
 
@@ -142,6 +147,47 @@ contract ClickCounter {
           {sourceCode}
         </pre>
       </div>
+      {deployLoading && (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    background: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    zIndex: 9999,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  }}>
+    <div style={{
+      width: '60px',
+      height: '60px',
+      border: `4px solid ${theme.primary}`,
+      borderTop: '4px solid transparent',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite'
+    }} />
+    <style>{`
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `}</style>
+    <div style={{
+      marginTop: '20px',
+      color: '#fff',
+      fontSize: '1.1em',
+      fontWeight: 600,
+      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+    }}>
+      Processing transaction...
+    </div>
+  </div>
+)}
     </div>
   );
 };

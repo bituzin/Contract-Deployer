@@ -15,6 +15,9 @@ import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
 import { MyDeployments } from "./components/MyDeployments";
 // import { Interact } from "./components/Interact";
 import { ContractInteract } from "./components/ContractInteract";
+import { ContractsList } from "./components/ContractsList";
+import { BytecodesList } from "./components/BytecodesList";
+import { BytecodeDetail } from "./components/BytecodeDetail";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 
@@ -27,6 +30,7 @@ function App() {
   const [popup, setPopup] = useState({ visible: false, message: "", txHash: null });
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
+  const [deployLoading, setDeployLoading] = useState(null);
   
   // Get signer for on-chain operations
   const signer = useSigner(isConnected);
@@ -182,15 +186,18 @@ function App() {
 
   // Deploy contract
   async function deployContract(contractName, bytecode) {
+    setDeployLoading(contractName);
     // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
     if (!isConnected) {
       // Wywołaj modal WalletConnect
       open();
       setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
+      setDeployLoading(null);
       return;
     }
     if (!window.ethereum) {
       setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
+      setDeployLoading(null);
       return;
     }
     try {
@@ -214,6 +221,8 @@ function App() {
       } else {
         setPopup({ visible: true, message: "Deploy error: " + err.message, txHash: null });
       }
+    } finally {
+      setDeployLoading(null);
     }
   }
 
@@ -323,23 +332,29 @@ function App() {
                     Deploy Your Contract – Fast & Secure!
                   </span>
                   Welcome to panel for deploying smart contracts on 
-                  <span style={{ color: '#627EEA', fontWeight: 700 }}> Sepolia</span>, 
-                     <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700 }}> Celo</span>, 
-                  <span style={{ color: '#0052FF', fontWeight: 700 }}> Base</span> and 
-                  <span style={{ color: '#FF0420', fontWeight: 700 }}> Optimism</span> blockchain.<br />
+                  <span style={{ color: '#627EEA', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Sepolia')}> Sepolia</span>, 
+                  <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Celo')}> Celo</span>, 
+                  <span style={{ color: '#0052FF', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Base')}> Base</span> and 
+                  <span style={{ color: '#FF0420', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Optimism')}> Optimism</span> blockchain.<br />
                   <br />
                   Simple to use:
                   <br />
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '16px 0' }}>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>1. Connect wallet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>2. Deploy on testnet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>3. Deploy on mainnet</span>
-                    <span style={{ whiteSpace: 'nowrap', width: 220, textAlign: 'left' }}>4. Check Your deployment</span>
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
+                    <div style={{ width: 220, marginLeft: 96 }}>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>1. Connect</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>2. Check</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>3. Read</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>4. Deploy</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>5. Interact</span>
+                    </div>
                   </div>
                   <br />
                   Deploy your own contract in seconds!
                 </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 28, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                  *first, read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
+                </span>
+                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
                   *currently 4 contracts available, more coming soon.
                 </span>
               </div>
@@ -348,7 +363,27 @@ function App() {
             <Route path="/deploy" element={(
               <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
-                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Deploy Contract</h2>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Deploy Contract</h2>
+                    <button
+                      style={{
+                        marginLeft: 18,
+                        fontSize: '0.86em',
+                        padding: '3px 10px',
+                        background: theme.cardBg,
+                        color: theme.textPrimary,
+                        border: `1px solid ${theme.primary}`,
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        boxShadow: `0 1px 4px ${theme.shadow}`,
+                        transition: 'background 0.2s',
+                      }}
+                      onClick={() => window.location.href = '/contracts'}
+                    >
+                      Back to Contracts
+                    </button>
+                  </div>
                   <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
                     Deploying your smart contract is simple and fast. Just select the contract and click the <b>Deploy</b> button.<br />
                     If you want to check the estimated network cost, click <b>Fee</b>.<br />
@@ -410,12 +445,38 @@ function App() {
                                     fontWeight: 600,
                                     cursor: 'pointer',
                                     boxShadow: `0 2px 8px ${theme.shadow}`,
-                                    transition: 'background 0.2s'
+                                    transition: 'background 0.2s',
+                                    position: 'relative',
+                                    minWidth: 90,
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
                                   }}
+                                  disabled={deployLoading === contract.name}
                                   onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
                                   onMouseOut={e => e.currentTarget.style.background = theme.primary}
                                   onClick={() => deployContract(contract.name, contract.bytecode)}
-                                >Deploy</button>
+                                >
+                                  {deployLoading === contract.name ? (
+                                    <span style={{
+                                      display: 'inline-block',
+                                      width: 22,
+                                      height: 22,
+                                      border: `3px solid ${theme.primary}`,
+                                      borderTop: '3px solid transparent',
+                                      borderRadius: '50%',
+                                      animation: 'spin 1s linear infinite',
+                                      marginRight: 8
+                                    }} />
+                                  ) : null}
+                                  <span style={{ verticalAlign: 'middle' }}>Deploy</span>
+                                  <style>{`
+                                    @keyframes spin {
+                                      0% { transform: rotate(0deg); }
+                                      100% { transform: rotate(360deg); }
+                                    }
+                                  `}</style>
+                                </button>
                                 <button
                                   style={{
                                     fontSize: '0.96em',
@@ -485,66 +546,49 @@ function App() {
             )} />
             
             <Route path="/bytecodes" element={(
-              <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-                  <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Bytecodes</h2>
-                  <p style={{ marginBottom: 24 }}>
-                    Contract Deployer uses bytecodes to deploy Your contract. All contracts are compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization, with the following bytecodes:
-                  </p>
-                  {contractBytecodes.map(({ name, bytecode }, idx) => (
-                    <div key={name} style={{ marginBottom: 32 }}>
-                      <div style={{ marginTop: '8px', borderRadius: '10px', background: theme.codeBg, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: theme.codeBg, padding: '8px 18px 8px 18px', borderTopLeftRadius: '10px', borderTopRightRadius: '10px', borderBottom: `1px solid ${theme.highlight}` }}>
-                          <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>{name} bytecode</span>
-                          <div>
-                            <button
-                              onClick={() => handleCopy(bytecode, idx)}
-                              style={{
-                                background: theme.highlight,
-                                color: '#444',
-                                border: 'none',
-                                fontWeight: 500,
-                                fontSize: '0.86em',
-                                cursor: 'pointer',
-                                marginRight: '10px',
-                                padding: '2px 10px',
-                                borderRadius: '4px',
-                                transition: 'background 0.2s',
-                                position: 'relative',
-                                minWidth: 48,
-                                display: 'inline-flex',
-                                alignItems: 'center',
-                                justifyContent: 'center'
-                              }}
-                            >
-                              {pressedIndex === idx ? (
-                                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
-                              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
-                            </button>
-                          </div>
-                        </div>
-                        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.92em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', whiteSpace: 'pre-wrap', wordBreak: 'break-word', overflowWrap: 'anywhere', minHeight: '120px' }}>
-                          {bytecode}
-                        </pre>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <BytecodesList theme={theme} />
             )} />
             
-            <Route path="/how" element={(
+            <Route path="/bytecode/:contractName" element={(
+              <BytecodeDetail theme={theme} />
+            )} />
+            
+            <Route path="/contracts" element={(
+              <ContractsList theme={theme} />
+            )} />
+            
+            <Route path="/how" element={( 
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
                 <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
-                <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>How It Works</h2>
-                <div>
-                  <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
-                  <div style={{ marginBottom: 14 }}><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</div>
-                  <div style={{ marginBottom: 14 }}><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</div>
-                  <div style={{ marginBottom: 14 }}><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</div>
-                  <div style={{ marginBottom: 0 }}><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</div>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+                    <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>How It Works</h2>
+                    <button
+                      style={{
+                        marginLeft: 18,
+                        fontSize: '0.86em',
+                        padding: '3px 10px',
+                        background: theme.cardBg,
+                        color: theme.textPrimary,
+                        border: `1px solid ${theme.primary}`,
+                        borderRadius: '5px',
+                        fontWeight: 500,
+                        cursor: 'pointer',
+                        boxShadow: `0 1px 4px ${theme.shadow}`,
+                        transition: 'background 0.2s',
+                      }}
+                      onClick={() => window.location.href = '/'}
+                    >
+                      Back to Home
+                    </button>
+                  </div>
+                  <div>
+                    <div style={{ marginBottom: 14 }}><b>Connect Your Wallet</b><br />Use MetaMask or another EVM-compatible wallet to authenticate and sign transactions.</div>
+                    <div style={{ marginBottom: 14 }}><b>Choose a Network</b><br />Select the blockchain network (Sepolia, Celo, Base, Optimism) where you want to deploy your contract.</div>
+                    <div style={{ marginBottom: 14 }}><b>Select a Contract</b><br />Pick one of the available smart contracts. Each contract is written in Solidity and pre-compiled.</div>
+                    <div style={{ marginBottom: 14 }}><b>Deploy with One Click</b><br />When you click "Deploy", the dapp sends the contract's bytecode (compiled from Solidity) to the blockchain. Your wallet will prompt you to confirm the transaction.</div>
+                    <div style={{ marginBottom: 0 }}><b>Track and Interact</b><br />After deployment, you receive the contract address and transaction hash. You can interact with your contract directly from the dapp.</div>
+                  </div>
                 </div>
-              </div>
               </div>
             )} />
             
@@ -570,6 +614,47 @@ function App() {
           </Routes>
         </div>
       </div>
+      {deployLoading && (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100vw',
+    height: '100vh',
+    background: 'rgba(0, 0, 0, 0.5)',
+    backdropFilter: 'blur(8px)',
+    WebkitBackdropFilter: 'blur(8px)',
+    zIndex: 9999,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'column'
+  }}>
+    <div style={{
+      width: '60px',
+      height: '60px',
+      border: `4px solid ${theme.primary}`,
+      borderTop: '4px solid transparent',
+      borderRadius: '50%',
+      animation: 'spin 1s linear infinite'
+    }} />
+    <style>{`
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `}</style>
+    <div style={{
+      marginTop: '20px',
+      color: '#fff',
+      fontSize: '1.1em',
+      fontWeight: 600,
+      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+    }}>
+      Processing transaction...
+    </div>
+  </div>
+)}
     </Router>
   );
 }

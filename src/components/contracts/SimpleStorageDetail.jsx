@@ -6,9 +6,10 @@ import { useDeployments } from '../../hooks/useDeployments';
 export const SimpleStorageDetail = ({ theme, setPopup, isConnected, openModal, network = 'Celo' }) => {
   const { address } = useAccount();
   const { addDeployment } = useDeployments(address);
-    const [copied, setCopied] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+  const [deployLoading, setDeployLoading] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060ba80601a5f395ff3fe6080604052348015600e575f5ffd5b5060043610603a575f3560e01c806309ce9ccb14603e5780633fb5c1cb146057578063f2c9ecd8146068575b5f5ffd5b60455f5481565b60405190815260200160405180910390f35b60666062366004606e565b5f55565b005b5f546045565b5f60208284031215607d575f5ffd5b503591905056fea26469706673582212200cf668aaa1a8919f982a5eb6458914b17b8d63ca0f5c3aac933d33cc0699e59264736f6c634300081e0033";
-  
+
   const sourceCode = `// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
@@ -25,8 +26,10 @@ contract SimpleStorage {
 }`;
 
   const handleDeploy = async () => {
+    setDeployLoading(true);
     if (!window.ethereum) {
       setPopup({ visible: true, message: "MetaMask or other wallet required", txHash: null });
+      setDeployLoading(false);
       return;
     }
     try {
@@ -34,6 +37,7 @@ contract SimpleStorage {
       const signer = await provider.getSigner();
       const tx = await signer.sendTransaction({ data: bytecode });
       const receipt = await tx.wait();
+      setDeployLoading(false);
       if (receipt.contractAddress) {
         addDeployment('SimpleStorage', receipt.contractAddress, network, tx.hash);
         setPopup({ visible: true, message: `Contract SimpleStorage deployed successfully!`, txHash: tx.hash });
@@ -41,6 +45,7 @@ contract SimpleStorage {
         setPopup({ visible: true, message: "Could not get deployed contract address.", txHash: null });
       }
     } catch (err) {
+      setDeployLoading(false);
       if (err && err.message && (err.message.includes('user rejected') || err.message.includes('denied'))) {
         setPopup({ visible: true, message: "Transaction aborted by user", txHash: null });
       } else {
@@ -142,6 +147,47 @@ contract SimpleStorage {
           {sourceCode}
         </pre>
       </div>
+      {deployLoading && (
+        <div style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100vw',
+          height: '100vh',
+          background: 'rgba(0, 0, 0, 0.5)',
+          backdropFilter: 'blur(8px)',
+          WebkitBackdropFilter: 'blur(8px)',
+          zIndex: 9999,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column'
+        }}>
+          <div style={{
+            width: '60px',
+            height: '60px',
+            border: `4px solid ${theme.primary}`,
+            borderTop: '4px solid transparent',
+            borderRadius: '50%',
+            animation: 'spin 1s linear infinite'
+          }} />
+          <style>{`
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          `}</style>
+          <div style={{
+            marginTop: '20px',
+            color: '#fff',
+            fontSize: '1.1em',
+            fontWeight: 600,
+            textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+          }}>
+            Processing transaction...
+          </div>
+        </div>
+      )}
     </div>
   );
 };
