@@ -229,7 +229,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                 href={getExplorerUrl('address', contractAddress, network)}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all' }}
+                style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', fontSize: '0.82em' }}
                 onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
                 onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
               >
