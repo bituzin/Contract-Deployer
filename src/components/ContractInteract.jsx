@@ -5,8 +5,16 @@ import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/Cl
 import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
 import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
 import { useParams, useNavigate } from 'react-router-dom';
+import { getExplorerUrl } from '../config/explorers';
 
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
+  // Dodaj globalny styl podkreślenia linku do tx hash tylko na hover
+  useEffect(() => {
+    const style = document.createElement('style');
+    style.innerHTML = `.tx-hash-link:hover { text-decoration: underline !important; }`;
+    document.head.appendChild(style);
+    return () => { document.head.removeChild(style); };
+  }, []);
   const { contractName, contractAddress, network } = useParams();
   const navigate = useNavigate();
   // Redirect to /my-deployments if network in URL does not match selected network
@@ -201,6 +209,10 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
     );
   }
 
+  // Podział funkcji na read i write
+  const readFunctions = functions.filter(fn => fn.stateMutability === 'view' || fn.stateMutability === 'pure');
+  const writeFunctions = functions.filter(fn => fn.stateMutability !== 'view' && fn.stateMutability !== 'pure');
+
   return (
     <>
       {/* Global loader overlay with blur effect */}
@@ -245,8 +257,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
           </div>
         </div>
       )}
-      
-      <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
+      <div style={{ maxWidth: 1100, margin: '60px auto 32px auto' }}>
         <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
@@ -271,76 +282,189 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             Back to My Deployments
           </button>
         </div>
-        
         <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
             Network: {network}
           </div>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
-            Contract Address: {contractAddress}
+            Contract Address: {typeof contractAddress === 'string' && contractAddress.length > 0 ? (
+              <a
+                href={getExplorerUrl('address', contractAddress, network)}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', fontSize: '0.82em' }}
+                onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
+              >
+                {contractAddress}
+              </a>
+            ) : contractAddress}
           </div>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
             Deployment date: {new Date().toLocaleString()}
           </div>
         </div>
         <div style={{ marginTop: 24, padding: '20px', background: theme.cardBgDark, borderRadius: 8 }}>
-          <div style={{ color: theme.textSecondary, fontSize: '0.92em', textAlign: 'center', marginBottom: 12 }}>
-            Available contract functions:
+          {/* usunięto odstęp nad kolumnami */}
+          <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start', justifyContent: 'space-between' }}>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: theme.textSecondary, fontWeight: 600, marginBottom: 10 }}>Read (view/pure)</div>
+              {readFunctions.length > 0 ? (
+                <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
+                  {readFunctions.map((fn, idx) => (
+                    <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
+                      <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
+                      <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
+                        Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
+                        Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
+                      </span>
+                      {fn.inputs && fn.inputs.length > 0 && (
+                        <form style={{ marginTop: 18, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
+                          {fn.inputs.map((input, i) => (
+                            <input
+                              key={i}
+                              type="text"
+                              placeholder={input.name + ' (' + input.type + ')'}
+                              value={inputs[fn.name]?.[i] || ''}
+                              onChange={e => handleInputChange(fn.name, i, e.target.value)}
+                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
+                            />
+                          ))}
+                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                            Call
+                          </button>
+                        </form>
+                      )}
+                      {(!fn.inputs || fn.inputs.length === 0) && (
+                        <div style={{ marginTop: 18 }}>
+                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                            Call
+                          </button>
+                        </div>
+                      )}
+                      {results[fn.name] !== undefined && (
+                        <div style={{ 
+                          marginTop: 8, 
+                          color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : 
+                                 results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : 
+                                 theme.textSecondary, 
+                          fontSize: '0.96em', 
+                          wordBreak: 'break-word',
+                          padding: '8px',
+                          background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
+                          borderRadius: 4
+                        }}>
+                          <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary, fontWeight: 600 }}>
+                            Result:
+                          </span> 
+                          {results[fn.name] && results[fn.name].toString().startsWith('Tx sent:') ? (
+                            (() => {
+                              const hash = results[fn.name].toString().replace('Tx sent: ', '').trim();
+                              return (
+                                <a
+                                  href={getExplorerUrl('tx', hash, network)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  style={{ color: theme.primary, textDecoration: 'none', wordBreak: 'break-all', fontWeight: 600 }}
+                                >
+                                  {hash}
+                                </a>
+                              );
+                            })()
+                          ) : (
+                            <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
+                              {results[fn.name]?.toString()}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div style={{ color: theme.textSecondary }}>No read functions found.</div>
+              )}
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ color: theme.textSecondary, fontWeight: 600, marginBottom: 10 }}>Write (state-changing)</div>
+              {writeFunctions.length > 0 ? (
+                <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
+                  {writeFunctions.map((fn, idx) => (
+                    <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
+                      <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
+                      <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
+                        Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
+                        Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
+                      </span>
+                      {fn.inputs && fn.inputs.length > 0 && (
+                        <form style={{ marginTop: 18, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
+                          {fn.inputs.map((input, i) => (
+                            <input
+                              key={i}
+                              type="text"
+                              placeholder={input.name + ' (' + input.type + ')'}
+                              value={inputs[fn.name]?.[i] || ''}
+                              onChange={e => handleInputChange(fn.name, i, e.target.value)}
+                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
+                            />
+                          ))}
+                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                            Send
+                          </button>
+                        </form>
+                      )}
+                      {(!fn.inputs || fn.inputs.length === 0) && (
+                        <div style={{ marginTop: 18 }}>
+                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                            Send
+                          </button>
+                        </div>
+                      )}
+                      {results[fn.name] !== undefined && (
+                        <div style={{ 
+                          marginTop: 8, 
+                          color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : 
+                                 results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : 
+                                 theme.textSecondary, 
+                          fontSize: '0.96em', 
+                          wordBreak: 'break-word',
+                          padding: '8px',
+                          background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
+                          borderRadius: 4
+                        }}>
+                          <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary, fontWeight: 600 }}>
+                            Result:
+                          </span> 
+                          {results[fn.name] && results[fn.name].toString().startsWith('Tx sent:') ? (
+                            (() => {
+                              const hash = results[fn.name].toString().replace('Tx sent: ', '').trim();
+                              return (
+                                <a
+                                  href={getExplorerUrl('tx', hash, network)}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="tx-hash-link"
+                                  style={{ color: theme.primary, textDecoration: 'none', wordBreak: 'break-all', fontWeight: 600 }}
+                                >
+                                  {hash}
+                                </a>
+                              );
+                            })()
+                          ) : (
+                            <span style={{ color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : theme.textSecondary }}>
+                              {results[fn.name]?.toString()}
+                            </span>
+                          )}
+                        </div>
+                      )}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <div style={{ color: theme.textSecondary }}>No write functions found.</div>
+              )}
+            </div>
           </div>
-          {functions.length > 0 ? (
-            <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
-              {functions.map((fn, idx) => (
-                <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
-                  <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
-                  <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
-                    Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
-                    Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
-                  </span>
-                  {fn.inputs && fn.inputs.length > 0 && (
-                    <form style={{ marginTop: 18, marginBottom: 8 }} onSubmit={e => { e.preventDefault(); handleCallFunction(fn); }}>
-                      {fn.inputs.map((input, i) => (
-                        <input
-                          key={i}
-                          type="text"
-                          placeholder={input.name + ' (' + input.type + ')'}
-                          value={inputs[fn.name]?.[i] || ''}
-                          onChange={e => handleInputChange(fn.name, i, e.target.value)}
-                          style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
-                        />
-                      ))}
-                      <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
-                        {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
-                      </button>
-                    </form>
-                  )}
-                  {(!fn.inputs || fn.inputs.length === 0) && (
-                    <div style={{ marginTop: 18 }}>
-                      <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
-                        {fn.stateMutability === 'view' || fn.stateMutability === 'pure' ? 'Call' : 'Send'}
-                      </button>
-                    </div>
-                  )}
-                  {results[fn.name] !== undefined && (
-                    <div style={{ 
-                      marginTop: 8, 
-                      color: results[fn.name] && results[fn.name].toString().includes('ERROR') ? '#d32f2f' : 
-                             results[fn.name] && results[fn.name].toString().startsWith('Tx sent') ? theme.primary : 
-                             theme.textSecondary, 
-                      fontSize: '0.96em', 
-                      wordBreak: 'break-word',
-                      padding: '8px',
-                      background: results[fn.name] && results[fn.name].toString().includes('ERROR') ? 'rgba(211, 47, 47, 0.1)' : 'transparent',
-                      borderRadius: 4
-                    }}>
-                      <b>Result:</b> {results[fn.name]?.toString()}
-                    </div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <div style={{ color: theme.textSecondary }}>No ABI or functions found for this contract.</div>
-          )}
         </div>
       </div>
     </div>
