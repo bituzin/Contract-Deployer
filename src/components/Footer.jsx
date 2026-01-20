@@ -14,6 +14,8 @@ const Footer = () => (
       </svg>
       GitHub
     </a>
+    &nbsp;|&nbsp;
+    <a href="mailto:bituzin2@gmail.com" style={{ color: '#888' }}>bituzin2@gmail.com</a>
   </footer>
 );
 
