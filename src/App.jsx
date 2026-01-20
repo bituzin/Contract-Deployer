@@ -654,7 +654,7 @@ function App() {
   </div>
 )}
     </Router>
-    <Footer />
+    <Footer network={network} />
     </>
   );
 }
