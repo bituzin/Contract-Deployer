@@ -3,9 +3,9 @@ import React from "react";
 
 const TRANSPARENCY = 0.7;
 const networkStyles = {
-  Celo:    { bg: `rgba(255, 234, 98, ${TRANSPARENCY})`, text: '#1C6B37', link: '#A67C1A' }, // ciemny zielony tekst, kontrastowy ciemny złoty/brąz
+  Celo:    { bg: `rgba(255, 234, 98, ${TRANSPARENCY})`, text: '#2c2900', link: '#8f6702' }, // jak tło fee (highlight)
   Base:    { bg: `rgba(230, 240, 251, ${TRANSPARENCY})`, text: '#003366', link: '#0052ff' },
-  Sepolia: { bg: `rgba(247, 243, 230, ${TRANSPARENCY})`, text: '#5B3E9B', link: '#7C3AED' }, // fioletowy tekst, fioletowy link
+  Sepolia: { bg: `rgba(247, 243, 230, ${TRANSPARENCY})`, text: '#39295c', link: '#3456b3' }, // fioletowy tekst, fioletowy link
   Optimism:{ bg: `rgba(255, 234, 234, ${TRANSPARENCY})`, text: '#a80000', link: '#ff0420' },
   default: { bg: `rgba(245, 245, 245, ${TRANSPARENCY})`, text: '#333', link: '#0070f3' }
 };
