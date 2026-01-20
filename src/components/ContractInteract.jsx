@@ -3,12 +3,12 @@ const functionDescriptions = {
   voteA: {
     signature: 'voteA()',
     signatureType: 'no parameters',
-    description: 'cast a vote for option A. each address can vote only once.'
+    description: 'cast a vote for option A.'
   },
   voteB: {
     signature: 'voteB()',
     signatureType: 'no parameters',
-    description: 'cast a vote for option B. each address can vote only once.'
+    description: 'cast a vote for option B.'
   },
   votesOptionA: {
     signature: 'votesOptionA()',
