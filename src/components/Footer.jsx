@@ -1,12 +1,13 @@
 
 import React from "react";
 
+const TRANSPARENCY = 0.7;
 const networkStyles = {
-  Celo:    { bg: '#f5fbe6', text: '#3a3a00', link: '#35d07f' },
-  Base:    { bg: '#e6f0fb', text: '#003366', link: '#0052ff' },
-  Sepolia: { bg: '#f7f3e6', text: '#5c4a1a', link: '#bfa14a' },
-  Optimism:{ bg: '#ffeaea', text: '#a80000', link: '#ff0420' },
-  default: { bg: '#f5f5f5', text: '#333', link: '#0070f3' }
+  Celo:    { bg: `rgba(255, 234, 98, ${TRANSPARENCY})`, text: '#1C6B37', link: '#A67C1A' }, // ciemny zielony tekst, kontrastowy ciemny złoty/brąz
+  Base:    { bg: `rgba(230, 240, 251, ${TRANSPARENCY})`, text: '#003366', link: '#0052ff' },
+  Sepolia: { bg: `rgba(247, 243, 230, ${TRANSPARENCY})`, text: '#5B3E9B', link: '#7C3AED' }, // fioletowy tekst, fioletowy link
+  Optimism:{ bg: `rgba(255, 234, 234, ${TRANSPARENCY})`, text: '#a80000', link: '#ff0420' },
+  default: { bg: `rgba(245, 245, 245, ${TRANSPARENCY})`, text: '#333', link: '#0070f3' }
 };
 
 const Footer = ({ network = 'Celo' }) => {
