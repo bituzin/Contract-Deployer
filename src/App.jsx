@@ -20,6 +20,7 @@ import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
+import Footer from "./components/Footer";
 
 function App() {
   const { isConnected, address } = useAccount();
@@ -45,10 +46,6 @@ function App() {
       // Wywołaj modal WalletConnect
       open();
       setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
-      return;
-    }
-    if (!window.ethereum) {
-      setPopup({ visible: true, message: "Wallet provider not available", txHash: null });
       return;
     }
     
@@ -255,6 +252,7 @@ function App() {
   };
 
   return (
+    <>
     <Router basename="/">
       <div style={{ position: 'fixed', inset: 0, zIndex: -2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
         <img
@@ -656,6 +654,8 @@ function App() {
   </div>
 )}
     </Router>
+    <Footer />
+    </>
   );
 }
 
