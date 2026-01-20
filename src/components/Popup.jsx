@@ -56,9 +56,12 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme, child
               rel="noopener noreferrer"
               style={{ 
                 color: network === "Celo" ? theme.textPrimary : theme.primary,
-                textDecoration: 'underline', 
-                fontSize: '0.92em' 
+                textDecoration: 'none',
+                fontSize: '0.92em',
+                cursor: 'pointer'
               }}
+              onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+              onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
             >
               View transaction on explorer
             </a>

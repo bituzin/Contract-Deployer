@@ -1,3 +1,26 @@
+// English descriptions for SimpleVoting functions
+const functionDescriptions = {
+  voteA: {
+    signature: 'voteA()',
+    signatureType: 'no parameters',
+    description: 'cast a vote for option A.'
+  },
+  voteB: {
+    signature: 'voteB()',
+    signatureType: 'no parameters',
+    description: 'cast a vote for option B.'
+  },
+  votesOptionA: {
+    signature: 'votesOptionA()',
+    signatureType: 'view',
+    description: 'returns the current number of votes for option A.'
+  },
+  votesOptionB: {
+    signature: 'votesOptionB()',
+    signatureType: 'view',
+    description: 'returns the current number of votes for option B.'
+  }
+};
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import artifactsSimpleStorage from '../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json';
@@ -313,7 +336,20 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                 <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
                   {readFunctions.map((fn, idx) => (
                     <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
-                      <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
+                      {functionDescriptions[fn.name] ? (
+                        <>
+                          <span style={{ fontWeight: 500, color: theme.textPrimary }}>{functionDescriptions[fn.name].signature}</span>
+                          <span style={{ color: theme.textSecondary, fontWeight: 400 }}> (</span>
+                          <span style={{ color: theme.textPrimary, fontWeight: 500 }}>{functionDescriptions[fn.name].signatureType}</span>
+                          <span style={{ color: theme.textSecondary, fontWeight: 400 }}>) – </span>
+                            <span style={{ fontSize: '0.92em', color: theme.textSecondary, fontWeight: 400 }}>{functionDescriptions[fn.name].description}</span>
+                        </>
+                      ) : (
+                        <span>
+                          <b>{fn.name}</b> <span style={{ color: theme.textSecondary }}>({fn.stateMutability})</span>
+                        </span>
+                      )}
+                      <br />
                       <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
                         Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
                         Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
@@ -391,7 +427,20 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                 <ul style={{ color: theme.textPrimary, fontSize: '0.98em', listStyle: 'none', padding: 0 }}>
                   {writeFunctions.map((fn, idx) => (
                     <li key={idx} style={{ marginBottom: 16, background: theme.cardBg, borderRadius: 6, padding: '12px 14px' }}>
-                      <b>{fn.name}</b> (<span style={{ color: theme.textSecondary }}>{fn.stateMutability}</span>)<br />
+                      {functionDescriptions[fn.name] ? (
+                        <>
+                          <span style={{ fontWeight: 500, color: theme.textPrimary }}>{functionDescriptions[fn.name].signature}</span>
+                          <span style={{ color: theme.textSecondary, fontWeight: 400 }}> (</span>
+                          <span style={{ color: theme.textPrimary, fontWeight: 500 }}>{functionDescriptions[fn.name].signatureType}</span>
+                          <span style={{ color: theme.textSecondary, fontWeight: 400 }}>) – </span>
+                            <span style={{ fontSize: '0.92em', color: theme.textSecondary, fontWeight: 400 }}>{functionDescriptions[fn.name].description}</span>
+                        </>
+                      ) : (
+                        <span>
+                          <b>{fn.name}</b> <span style={{ color: theme.textSecondary }}>({fn.stateMutability})</span>
+                        </span>
+                      )}
+                      <br />
                       <span style={{ fontSize: '0.92em', color: theme.textSecondary }}>
                         Inputs: {fn.inputs && fn.inputs.length > 0 ? fn.inputs.map(i => i.name + ': ' + i.type).join(', ') : 'none'}<br />
                         Outputs: {fn.outputs && fn.outputs.length > 0 ? fn.outputs.map(o => o.type).join(', ') : 'none'}
