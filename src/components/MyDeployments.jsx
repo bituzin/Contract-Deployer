@@ -169,13 +169,8 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-                        <span style={{ fontWeight: 700, fontSize: '1.04em', color: theme.textPrimary }}>{deployment.contractName}</span>
-                        <span style={{ fontSize: '0.88em', color: theme.textSecondary }}>{formatDate(deployment.timestamp)}</span>
-                      </div>
-                      <div style={{ fontSize: '0.86em', fontWeight: 600, background: theme.highlight, color: '#444', padding: '4px 12px', borderRadius: '6px' }}>
-                        {deployment.network}
-                      </div>
+                      <span style={{ fontWeight: 700, fontSize: '1.04em', color: theme.textPrimary }}>{deployment.contractName}</span>
+                      <span style={{ fontSize: '0.88em', color: theme.textSecondary }}>{formatDate(deployment.timestamp)}</span>
                     </div>
 
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
