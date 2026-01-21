@@ -69,8 +69,8 @@ contract SimpleStorage {
               marginLeft: '12px',
               background: theme.gradient,
               color: theme.network === 'celo' ? '#444' : '#fff',
-              border: 'none',
-              borderRadius: '6px',
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '10px',
               fontWeight: 500,
               cursor: 'pointer',
               boxShadow: `0 2px 8px ${theme.shadow}`,
@@ -89,8 +89,8 @@ contract SimpleStorage {
               marginLeft: '12px',
               background: theme.gradient,
               color: theme.network === 'celo' ? '#444' : '#fff',
-              border: 'none',
-              borderRadius: '6px',
+              border: `1px solid ${theme.primary}`,
+              borderRadius: '10px',
               fontWeight: 500,
               cursor: 'pointer',
               boxShadow: `0 2px 8px ${theme.shadow}`,
@@ -122,13 +122,13 @@ contract SimpleStorage {
               style={{
                 background: theme.highlight,
                 color: '#444',
-                border: 'none',
+                border: `1px solid ${theme.primary}`,
                 fontWeight: 500,
                 fontSize: '0.86em',
                 cursor: 'pointer',
                 marginRight: '10px',
                 padding: '2px 10px',
-                borderRadius: '4px',
+                borderRadius: '10px',
                 transition: 'background 0.2s'
               }}
             onClick={() => {

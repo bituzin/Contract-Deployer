@@ -29,6 +29,7 @@ import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/Me
 import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getExplorerUrl } from '../config/explorers';
+import { BackButton } from './common/BackButton';
 
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
   // Dodaj globalny styl podkreślenia linku do tx hash tylko na hover
@@ -286,24 +287,9 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
             Contract: {contractName}
           </h2>
-          <button
-            style={{
-              marginLeft: 18,
-              fontSize: '0.86em',
-              padding: '3px 10px',
-              background: theme.cardBg,
-              color: theme.textPrimary,
-              border: `1px solid ${theme.primary}`,
-              borderRadius: '5px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 1px 4px ${theme.shadow}`,
-              transition: 'background 0.2s',
-            }}
-            onClick={() => window.location.href = '/my-deployments'}
-          >
+          <BackButton theme={theme} to="/my-deployments">
             Back to My Deployments
-          </button>
+          </BackButton>
         </div>
         <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>
           <div style={{ fontSize: '0.82em', color: theme.textPrimary, fontWeight: 500, background: theme.cardBgDark, padding: '5px 10px', borderRadius: 6, fontFamily: 'monospace', minWidth: 0 }}>
@@ -363,17 +349,17 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                               placeholder={input.name + ' (' + input.type + ')'}
                               value={inputs[fn.name]?.[i] || ''}
                               onChange={e => handleInputChange(fn.name, i, e.target.value)}
-                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
+                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 10, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
                             />
                           ))}
-                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 10, background: theme.primary, color: '#fff', border: `1px solid ${theme.primary}`, fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
                             Call
                           </button>
                         </form>
                       )}
                       {(!fn.inputs || fn.inputs.length === 0) && (
                         <div style={{ marginTop: 18 }}>
-                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 10, background: theme.primary, color: '#fff', border: `1px solid ${theme.primary}`, fontWeight: 600, cursor: 'pointer' }}>
                             Call
                           </button>
                         </div>
