@@ -1,14 +1,22 @@
+
+import { useState } from 'react';
 import { getExplorerUrl } from '../config/explorers';
 
 
 
 export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
+  // Dodany stan do filtrowania po nazwie kontraktu
+  const [filteredContractName, setFilteredContractName] = useState(null);
   const formatDate = (timestamp) => {
     const date = timestamp ? new Date(timestamp) : new Date();
     return date.toLocaleString();
   };
 
-  const filteredDeployments = network ? deployments.filter((deployment) => deployment.network === network) : deployments;
+  // Filtrowanie tylko dla Optimism
+  const selectedNetwork = 'Optimism';
+  const filteredDeployments = deployments.filter(
+    (deployment) => deployment.network === selectedNetwork && (!filteredContractName || deployment.contractName === filteredContractName)
+  );
   
   // Debug logging
   console.log('MyDeployments - Current network:', network);
@@ -18,7 +26,9 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   const lastDeployment = filteredDeployments[0];
   const lastDeploymentDate = lastDeployment ? formatDate(lastDeployment.timestamp) : '—';
   const lastDeploymentName = lastDeployment ? lastDeployment.contractName : '—';
-  const contractAggregates = filteredDeployments.reduce((acc, deployment) => {
+  // Statystyki na podstawie wszystkich deploymentów na Optimism
+  const optimismDeployments = deployments.filter((deployment) => deployment.network === selectedNetwork);
+  const contractAggregates = optimismDeployments.reduce((acc, deployment) => {
     const name = deployment.contractName || 'Unknown contract';
     acc[name] = (acc[name] || 0) + 1;
     return acc;
@@ -26,7 +36,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   const contractStats = Object.entries(contractAggregates)
     .map(([name, count]) => ({ name, count }))
     .sort((a, b) => b.count - a.count);
-  const currentNetworkLabel = network ? `Network ${network}` : 'All networks';
+  const currentNetworkLabel = `Network ${selectedNetwork}`;
 
   if (!isConnected) {
     return (
@@ -105,11 +115,22 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 {/* Removed 'Contracts on ...' label as requested */}
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   {contractStats.map((stat) => (
-                    <div key={stat.name} style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap' }}>
+                    <div
+                      key={stat.name}
+                      style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap', cursor: 'pointer', boxShadow: filteredContractName === stat.name ? `0 0 0 2px ${theme.primary}` : 'none' }}
+                      onClick={() => setFilteredContractName(stat.name)}
+                      title={`Show only ${stat.name} contracts`}
+                    >
                       <span style={{ color: theme.textPrimary }}>{stat.name}</span>
                       <span style={{ color: theme.textPrimary, marginLeft: 10 }}>{stat.count}</span>
                     </div>
                   ))}
+                  {filteredContractName && (
+                    <button
+                      style={{ marginLeft: 16, padding: '6px 16px', borderRadius: 8, border: `1px solid ${theme.primary}`, background: theme.cardBg, color: theme.textPrimary, fontWeight: 600, cursor: 'pointer' }}
+                      onClick={() => setFilteredContractName(null)}
+                    >Show all</button>
+                  )}
                 </div>
               </div>
             )}
