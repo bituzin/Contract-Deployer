@@ -114,6 +114,10 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
               <div style={{ marginTop: 24 }}>
                 {/* Filtr po nazwie kontraktu tylko na Optimism */}
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
+                  <button
+                    style={{ padding: '6px 16px', borderRadius: 8, border: `1px solid ${theme.primary}`, background: !filteredContractName ? theme.primary : theme.cardBg, color: !filteredContractName ? '#fff' : theme.textPrimary, fontWeight: 600, cursor: 'pointer' }}
+                    onClick={() => setFilteredContractName(null)}
+                  >Show all</button>
                   {contractStats.map((stat) => (
                     <div
                       key={stat.name}
@@ -125,12 +129,6 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                       <span style={{ color: theme.textPrimary, marginLeft: 10 }}>{stat.count}</span>
                     </div>
                   ))}
-                  {filteredContractName && (
-                    <button
-                      style={{ marginLeft: 16, padding: '6px 16px', borderRadius: 8, border: `1px solid ${theme.primary}`, background: theme.cardBg, color: theme.textPrimary, fontWeight: 600, cursor: 'pointer' }}
-                      onClick={() => setFilteredContractName(null)}
-                    >Show all</button>
-                  )}
                 </div>
               </div>
             )}
