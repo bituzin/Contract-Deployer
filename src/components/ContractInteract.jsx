@@ -294,7 +294,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
               background: theme.cardBg,
               color: theme.textPrimary,
               border: `1px solid ${theme.primary}`,
-              borderRadius: '5px',
+              borderRadius: '10px',
               fontWeight: 500,
               cursor: 'pointer',
               boxShadow: `0 1px 4px ${theme.shadow}`,
@@ -363,17 +363,17 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
                               placeholder={input.name + ' (' + input.type + ')'}
                               value={inputs[fn.name]?.[i] || ''}
                               onChange={e => handleInputChange(fn.name, i, e.target.value)}
-                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 4, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
+                              style={{ marginRight: 8, padding: '4px 8px', borderRadius: 10, border: `1px solid ${theme.primary}`, fontSize: '0.96em' }}
                             />
                           ))}
-                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
+                          <button type="submit" disabled={loading[fn.name]} style={{ marginTop: 8, padding: '4px 14px', borderRadius: 10, background: theme.primary, color: '#fff', border: `1px solid ${theme.primary}`, fontWeight: 600, cursor: 'pointer', marginLeft: 8 }}>
                             Call
                           </button>
                         </form>
                       )}
                       {(!fn.inputs || fn.inputs.length === 0) && (
                         <div style={{ marginTop: 18 }}>
-                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 4, background: theme.primary, color: '#fff', border: 'none', fontWeight: 600, cursor: 'pointer' }}>
+                          <button onClick={() => handleCallFunction(fn)} disabled={loading[fn.name]} style={{ padding: '4px 14px', borderRadius: 10, background: theme.primary, color: '#fff', border: `1px solid ${theme.primary}`, fontWeight: 600, cursor: 'pointer' }}>
                             Call
                           </button>
                         </div>

@@ -35,7 +35,7 @@ export const ContractsList = ({ theme }) => {
               background: theme.cardBg,
               color: theme.textPrimary,
               border: `1px solid ${theme.primary}`,
-              borderRadius: '5px',
+              borderRadius: '10px',
               fontWeight: 500,
               cursor: 'pointer',
               boxShadow: `0 1px 4px ${theme.shadow}`,

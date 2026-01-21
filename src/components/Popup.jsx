@@ -21,7 +21,8 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme, child
       <div 
         style={{
           background: theme.cardBg + 'E6',
-          borderRadius: 12,
+          borderRadius: 10,
+          border: `1px solid ${theme.primary}`,
           boxShadow: `0 2px 12px ${theme.shadow}`,
           padding: '20px 22px',
           minWidth: 220,
@@ -76,8 +77,8 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme, child
             marginTop: '6px',
             background: network === 'Celo' ? theme.primary : theme.primary,
             color: network === 'Celo' ? '#444' : '#fff',
-            border: 'none',
-            borderRadius: '6px',
+            border: `1px solid ${theme.primary}`,
+            borderRadius: '10px',
             fontWeight: 600,
             cursor: 'pointer',
             boxShadow: `0 2px 8px ${theme.shadow}`,
