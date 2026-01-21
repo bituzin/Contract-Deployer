@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { getExplorerUrl } from '../config/explorers';
+import { BackButton } from './common/BackButton';
 
 
 
@@ -22,10 +23,10 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   console.log('MyDeployments - Current network:', network);
   console.log('MyDeployments - All deployments:', deployments.length, deployments);
   console.log('MyDeployments - Filtered deployments:', filteredDeployments.length, filteredDeployments);
-  const totalFilteredDeployments = filteredDeployments.length;
-  const lastDeployment = filteredDeployments[0];
-  const lastDeploymentDate = lastDeployment ? formatDate(lastDeployment.timestamp) : '—';
-  const lastDeploymentName = lastDeployment ? lastDeployment.contractName : '—';
+  // const totalFilteredDeployments = filteredDeployments.length;
+  // const lastDeployment = filteredDeployments[0];
+  // const lastDeploymentDate = lastDeployment ? formatDate(lastDeployment.timestamp) : '—';
+  // const lastDeploymentName = lastDeployment ? lastDeployment.contractName : '—';
   // Statystyki na podstawie wszystkich deploymentów na wybranej sieci
   const networkDeployments = deployments.filter((deployment) => deployment.network === selectedNetwork);
   const contractAggregates = networkDeployments.reduce((acc, deployment) => {
@@ -73,24 +74,9 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
       <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, maxWidth: 940 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>My Deployments</h2>
-          <button
-            style={{
-              marginLeft: 18,
-              fontSize: '0.86em',
-              padding: '3px 10px',
-              background: theme.cardBg,
-              color: theme.textPrimary,
-              border: `1px solid ${theme.primary}`,
-              borderRadius: '5px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 1px 4px ${theme.shadow}`,
-              transition: 'background 0.2s',
-            }}
-            onClick={() => window.location.href = '/deploy'}
-          >
+          <BackButton theme={theme} to="/deploy">
             Back to Deploy
-          </button>
+          </BackButton>
         </div>
         
         {networkDeployments.length > 0 && (

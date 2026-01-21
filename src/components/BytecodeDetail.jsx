@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { contracts } from '../config/contracts';
+import { PageContainer } from './common/PageContainer';
+import { BackButton } from './common/BackButton';
 
 export const BytecodeDetail = ({ theme }) => {
   const { contractName } = useParams();
-  const navigate = useNavigate();
   const [copied, setCopied] = useState(false);
 
   const toKebabCase = (str) => {
@@ -17,28 +18,16 @@ export const BytecodeDetail = ({ theme }) => {
 
   if (!contract) {
     return (
-      <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-        <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7 }}>
-          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Contract not found</h2>
-          <button
-            style={{
-              fontSize: '0.96em',
-              padding: '0.48em 1.32em',
-              background: theme.primary,
-              color: theme.textPrimary,
-              border: `1px solid ${theme.primary}`,
-              borderRadius: '10px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onClick={() => navigate('/bytecodes')}
-          >
+      <PageContainer
+        theme={theme}
+        title="Contract not found"
+        backButton={
+          <BackButton theme={theme} to="/bytecodes">
             Back to Bytecodes
-          </button>
-        </div>
-      </div>
+          </BackButton>
+        }
+        maxWidth={720}
+      />
     );
   }
 
@@ -49,32 +38,19 @@ export const BytecodeDetail = ({ theme }) => {
   };
 
   return (
-    <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-      <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>{contract.name} Bytecode</h2>
-          <button
-            style={{
-              marginLeft: 18,
-              fontSize: '0.86em',
-              padding: '3px 10px',
-              background: theme.cardBg,
-              color: theme.textPrimary,
-                  border: `1px solid ${theme.primary}`,
-                  borderRadius: '10px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 1px 4px ${theme.shadow}`,
-              transition: 'background 0.2s',
-            }}
-            onClick={() => navigate('/bytecodes')}
-          >
-            Back to Bytecodes
-          </button>
-        </div>
-        <p style={{ marginBottom: 24 }}>
-          Contract compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization.
-        </p>
+    <PageContainer
+      theme={theme}
+      title={`${contract.name} Bytecode`}
+      backButton={
+        <BackButton theme={theme} to="/bytecodes">
+          Back to Bytecodes
+        </BackButton>
+      }
+      maxWidth={720}
+    >
+      <p style={{ marginBottom: 24 }}>
+        Contract compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization.
+      </p>
         <div style={{ marginBottom: 32 }}>
           <div style={{ marginTop: '8px', borderRadius: '10px', background: theme.codeBg, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', position: 'relative', overflow: 'hidden' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: theme.codeBg, padding: '8px 18px 8px 18px', borderTopLeftRadius: '10px', borderTopRightRadius: '10px', borderBottom: `1px solid ${theme.highlight}` }}>
@@ -111,7 +87,6 @@ export const BytecodeDetail = ({ theme }) => {
             </pre>
           </div>
         </div>
-      </div>
-    </div>
+    </PageContainer>
   );
 };
