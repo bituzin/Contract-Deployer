@@ -14,7 +14,8 @@ export const ContractsList = ({ theme }) => {
     <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
       <div style={{ 
         background: theme.cardBg + 'E6', 
-        borderRadius: 12, 
+        border: `1px solid ${theme.primary}`,
+        borderRadius: 10, 
         boxShadow: '0 2px 12px rgba(0,0,0,0.04)', 
         padding: '28px 32px', 
         color: theme.textPrimary, 
@@ -70,7 +71,7 @@ export const ContractsList = ({ theme }) => {
                 background: `rgba(${theme.primaryRgb},0.08)`,
                 borderRadius: 10,
                 boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
-                border: `2px solid ${theme.primary}`,
+                border: `1px solid ${theme.primary}`,
                 padding: '24px 20px',
                 display: 'flex',
                 flexDirection: 'column',

@@ -41,7 +41,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
   if (!isConnected) {
     return (
       <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-        <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
+        <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
           <div style={{ marginBottom: 24 }}>
             Connect your wallet to view your deployed contracts.
@@ -70,7 +70,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
 
   return (
     <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
-      <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, maxWidth: 940 }}>
+      <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, maxWidth: 940 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>My Deployments</h2>
           <button
@@ -97,15 +97,15 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           <div style={{ marginBottom: 32 }}>
             <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics ({currentNetworkLabel})</div>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '14px' }}>
-              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid ${theme.primary}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Contracts on {network}</span>
                 <span style={{ fontSize: '1.6em', fontWeight: 700, color: theme.textPrimary }}>{networkDeployments.length}</span>
               </div>
-              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid ${theme.primary}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last deployment date</span>
                 <span style={{ fontSize: '1em', fontWeight: 600, color: theme.textPrimary }}>{networkDeployments[0] ? formatDate(networkDeployments[0].timestamp) : '—'}</span>
               </div>
-              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
+              <div style={{ background: `rgba(${theme.primaryRgb},0.08)`, border: `1px solid ${theme.primary}`, borderRadius: 10, padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 6 }}>
                 <span style={{ fontSize: '0.78em', letterSpacing: 0.2, color: theme.textSecondary, fontWeight: 600 }}>Last contract</span>
                 <span style={{ fontSize: '1em', fontWeight: 700, color: theme.textPrimary }}>{networkDeployments[0] ? networkDeployments[0].contractName : '—'}</span>
               </div>
@@ -115,13 +115,13 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                 {/* Filtr po nazwie kontraktu tylko na Optimism */}
                 <div style={{ display: 'flex', flexDirection: 'row', gap: '10px', flexWrap: 'wrap' }}>
                   <button
-                    style={{ padding: '6px 16px', borderRadius: 8, border: `1px solid ${theme.primary}`, background: !filteredContractName ? theme.primary : theme.cardBg, color: !filteredContractName ? '#fff' : theme.textPrimary, fontWeight: 600, cursor: 'pointer' }}
+                    style={{ padding: '6px 16px', borderRadius: 10, border: `1px solid ${theme.primary}`, background: !filteredContractName ? theme.primary : theme.cardBg, color: !filteredContractName ? '#fff' : theme.textPrimary, fontWeight: 600, cursor: 'pointer' }}
                     onClick={() => setFilteredContractName(null)}
                   >Show all</button>
                   {contractStats.map((stat) => (
                     <div
                       key={stat.name}
-                      style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid rgba(${theme.primaryRgb},0.25)`, borderRadius: 8, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap', cursor: 'pointer', boxShadow: filteredContractName === stat.name ? `0 0 0 2px ${theme.primary}` : 'none' }}
+                      style={{ minWidth: 'auto', maxWidth: 'none', border: `1px solid ${theme.primary}`, borderRadius: 10, padding: '8px 18px', background: `rgba(${theme.primaryRgb},0.12)`, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, fontSize: '1em', fontWeight: 600, whiteSpace: 'nowrap', cursor: 'pointer', boxShadow: filteredContractName === stat.name ? `0 0 0 2px ${theme.primary}` : 'none' }}
                       onClick={() => setFilteredContractName(stat.name)}
                       title={`Show only ${stat.name} contracts`}
                     >
@@ -176,7 +176,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                       <div>
                         <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Contract Address</div>
-                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '10px', fontSize: '0.82em', fontFamily: 'monospace', border: `1px solid ${theme.primary}` }}>
                           {explorerUrl ? (
                             <a
                               href={explorerUrl}
@@ -196,7 +196,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
 
                       <div>
                         <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Transaction Hash</div>
-                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '6px', fontSize: '0.82em', fontFamily: 'monospace' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '10px', fontSize: '0.82em', fontFamily: 'monospace', border: `1px solid ${theme.primary}` }}>
                           {txUrl ? (
                             <a
                               href={txUrl}
@@ -223,8 +223,8 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
                           padding: '0.48em 1.32em',
                           background: theme.primary,
                           color: network === 'Celo' ? '#444' : '#fff',
-                          border: 'none',
-                          borderRadius: '6px',
+                          border: `1px solid ${theme.primary}`,
+                          borderRadius: '10px',
                           fontWeight: 600,
                           cursor: 'pointer',
                           boxShadow: `0 2px 8px ${theme.shadow}`,

@@ -360,7 +360,7 @@ function App() {
             
             <Route path="/deploy" element={(
               <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
+                <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                     <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Deploy Contract</h2>
                     <button
@@ -394,7 +394,7 @@ function App() {
                           background: `rgba(${theme.primaryRgb},0.10)`,
                           borderRadius: 10,
                           boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-                          border: `2px solid ${theme.primary}`,
+                          border: `1px solid ${theme.primary}`,
                           padding: '22px 28px',
                           minWidth: 270,
                           maxWidth: 340,
