@@ -10,20 +10,18 @@ export const ClickCounterDetail = ({ theme, setPopup, isConnected, openModal, ne
   const [deployLoading, setDeployLoading] = React.useState(false);
   const bytecode = "0x6080604052348015600e575f5ffd5b5060c580601a5f395ff3fe6080604052348015600e575f5ffd5b50600436106030575f3560e01c806306661abd1460345780637d55923d14604d575b5f5ffd5b603b5f5481565b60405190815260200160405180910390f35b60536055565b005b60015f5f82825460649190606b565b9091555050565b80820180821115608957634e487b7160e01b5f52601160045260245ffd5b9291505056fea26469706673582212205c59a7297bf9296c81d569fd83247fe0bf9f7d0951f5a677a17656223aaee51864736f6c634300081e0033";
 
-  const sourceCode = `// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
+    const sourceCode = `// SPDX-License-Identifier: MIT
+  pragma solidity ^0.8.30;
 
-contract ClickCounter {
+  contract ClickCounter {
     uint256 public count;
+    event Clicked(address indexed clicker, uint256 newCount);
 
     function click() public {
-        count += 1;
+      count += 1;
+      emit Clicked(msg.sender, count);
     }
-
-    function getCount() public view returns (uint256) {
-        return count;
-    }
-}`;
+  }`;
 
   const handleDeploy = async () => {
     setDeployLoading(true);
