@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
 import { getExplorerUrl } from '../config/explorers';
+import { shortenAddress } from '../utils/shortenAddress';
 
 export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
   const [interactionCount, setInteractionCount] = useState(null);
@@ -14,11 +15,55 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
       
       try {
         const provider = new ethers.BrowserProvider(window.ethereum);
-        const artifact = await import('../../artifacts/contracts/ClickCounter.sol/ClickCounter.json');
-        const abi = artifact.abi;
+        
+        // ABI dla ClickCounter z eventem Clicked
+        const abi = [
+          {
+            "anonymous": false,
+            "inputs": [
+              {
+                "indexed": true,
+                "internalType": "address",
+                "name": "clicker",
+                "type": "address"
+              },
+              {
+                "indexed": false,
+                "internalType": "uint256",
+                "name": "newCount",
+                "type": "uint256"
+              }
+            ],
+            "name": "Clicked",
+            "type": "event"
+          },
+          {
+            "inputs": [],
+            "name": "click",
+            "outputs": [],
+            "stateMutability": "nonpayable",
+            "type": "function"
+          },
+          {
+            "inputs": [],
+            "name": "count",
+            "outputs": [
+              {
+                "internalType": "uint256",
+                "name": "",
+                "type": "uint256"
+              }
+            ],
+            "stateMutability": "view",
+            "type": "function"
+          }
+        ];
         
         const contract = new ethers.Contract(deployment.contractAddress, abi, provider);
         const eventFragment = contract.interface.getEvent('Clicked');
+        
+        console.log('Fetching interactions for:', deployment.contractAddress);
+        console.log('Event fragment:', eventFragment);
         
         const logs = await provider.getLogs({
           address: deployment.contractAddress,
@@ -27,9 +72,11 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
           toBlock: 'latest',
         });
         
+        console.log('Logs found:', logs.length);
         setInteractionCount(logs.length);
-      } catch {
-        setInteractionCount(null);
+      } catch (err) {
+        console.error('Error fetching interactions:', err);
+        setInteractionCount(0);
       }
     }
     
@@ -39,6 +86,7 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
   const explorerUrl = getExplorerUrl('address', deployment.contractAddress, deployment.network);
   const txUrl = getExplorerUrl('tx', deployment.txHash, deployment.network);
   const fullAddress = deployment.contractAddress;
+  const shortAddress = shortenAddress(fullAddress);
   const fullTx = deployment.txHash;
   const shortTx = fullTx ? `${fullTx.slice(0, 6)}...${fullTx.slice(-4)}` : '';
 
@@ -77,11 +125,12 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
                 style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
                 onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
                 onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
+                title={fullAddress}
               >
-                {fullAddress}
+                {shortAddress}
               </a>
             ) : (
-              <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{fullAddress}</span>
+              <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
             )}
           </div>
         </div>
