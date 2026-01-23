@@ -116,25 +116,22 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
         <div>
           <div style={{ fontSize: '0.8em', color: theme.textSecondary, marginBottom: 4, fontWeight: 600 }}>Contract Address</div>
-          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '10px', fontSize: '0.82em', fontFamily: 'monospace', border: `1px solid ${theme.primary}` }}>
-            <div style={{ display: 'flex', alignItems: 'center', width: '100%' }}>
-              {explorerUrl ? (
-                <a
-                  href={explorerUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
-                  onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
-                  onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
-                  title={fullAddress}
-                >
-                  {shortAddress}
-                </a>
-              ) : (
-                <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
-              )}
-            </div>
-            <div style={{ color: theme.textSecondary, fontSize: '0.78em', marginTop: 2, wordBreak: 'break-all' }}>{fullAddress}</div>
+          <div style={{ display: 'flex', alignItems: 'center', background: theme.cardBgDark, padding: '8px 12px', borderRadius: '10px', fontSize: '0.82em', fontFamily: 'monospace', border: `1px solid ${theme.primary}` }}>
+            {explorerUrl ? (
+              <a
+                href={explorerUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: theme.textPrimary, textDecoration: 'none', wordBreak: 'break-all', flex: 1 }}
+                onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
+                onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
+                title={fullAddress}
+              >
+                {shortAddress}
+              </a>
+            ) : (
+              <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
+            )}
           </div>
         </div>
 
