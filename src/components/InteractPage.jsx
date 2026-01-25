@@ -10,7 +10,19 @@ export const InteractPage = ({ theme, network }) => {
   };
 
   return (
-    <div style={{ maxWidth: 480, margin: '80px auto 32px auto', background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 16px rgba(0,0,0,0.08)', padding: '32px 36px', textAlign: 'center', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, color: theme.textPrimary }}>
+    <div style={{
+      maxWidth: 540,
+      margin: '80px auto 32px auto',
+      background: theme.cardBg + 'E6',
+      border: `1px solid ${theme.primary}`,
+      borderRadius: 12,
+      boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
+      padding: '32px 36px',
+      textAlign: 'center',
+      fontFamily: 'Inter, Arial, sans-serif',
+      fontWeight: 500,
+      color: theme.textPrimary
+    }}>
       <h2 style={{ fontWeight: 700, fontSize: '1.18em', marginBottom: 18 }}>Enter Contract Address</h2>
       <form onSubmit={handleSubmit}>
         <input
