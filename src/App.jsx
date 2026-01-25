@@ -24,6 +24,7 @@ import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
 import { InteractSection } from "./components/InteractSection.jsx";
 import { InteractModal } from "./components/InteractModal";
+import { InteractPage } from "./components/InteractPage";
 
 function App() {
   const { isConnected, address } = useAccount();
@@ -595,7 +596,6 @@ function App() {
                 />
               </>
             )} />
-            {/* Interact route removed */}
             <Route path="/interact/:contractName/:contractAddress/:network" element={(
               <ContractInteract 
                 theme={theme}
@@ -603,6 +603,9 @@ function App() {
                 openModal={open}
                 network={network}
               />
+            )} />
+            <Route path="/interact" element={(
+              <InteractPage theme={theme} network={network} />
             )} />
           </Routes>
         </div>
