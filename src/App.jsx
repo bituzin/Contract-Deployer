@@ -22,6 +22,7 @@ import { BackButton } from "./components/common/BackButton";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
+import { InteractSection } from "./components/InteractSection.jsx";
 
 function App() {
   const { isConnected, address } = useAccount();
