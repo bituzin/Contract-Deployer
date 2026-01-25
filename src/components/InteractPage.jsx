@@ -1,12 +1,28 @@
 import React, { useState } from 'react';
+import { fetchAbiFromExplorer } from '../utils/fetchAbiFromExplorer';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [abi, setAbi] = useState(null);
+  const [abiError, setAbiError] = useState(null);
+  const [loadingAbi, setLoadingAbi] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+    setAbi(null);
+    setAbiError(null);
+    setLoadingAbi(true);
+    try {
+      const apiKey = import.meta.env.VITE_EXPLORER_API_KEY;
+      const abiResult = await fetchAbiFromExplorer(address, network, apiKey);
+      setAbi(abiResult);
+    } catch (err) {
+      setAbiError(err.message);
+    } finally {
+      setLoadingAbi(false);
+    }
   };
 
   return (
@@ -65,6 +81,30 @@ export const InteractPage = ({ theme, network }) => {
       {submitted && (
         <div style={{ marginTop: 24, fontSize: '1em', color: theme.primary }}>
           Entered address: {address}
+        </div>
+      )}
+      {loadingAbi && (
+        <div style={{ marginTop: 24, fontSize: '1em', color: theme.textSecondary }}>
+          Fetching ABI from explorer...
+        </div>
+      )}
+      {abiError && (
+        <div style={{ marginTop: 24, fontSize: '1em', color: 'red' }}>
+          {abiError}
+        </div>
+      )}
+      {abi && (
+        <div style={{ marginTop: 24, textAlign: 'left' }}>
+          <div style={{ fontWeight: 700, marginBottom: 8, color: theme.primary }}>Contract Functions:</div>
+          <ul style={{ fontSize: '0.98em', color: theme.textPrimary, paddingLeft: 18 }}>
+            {abi.filter(f => f.type === 'function').map((fn, idx) => (
+              <li key={idx} style={{ marginBottom: 6 }}>
+                <span style={{ fontFamily: 'Fira Mono, monospace', color: theme.textSecondary }}>
+                  {fn.name}({fn.inputs.map(i => i.type).join(', ')})
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
