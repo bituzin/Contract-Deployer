@@ -23,11 +23,59 @@ const functionDescriptions = {
 };
 import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
-import artifactsSimpleStorage from '../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json';
-import artifactsClickCounter from '../../artifacts/contracts/ClickCounter.sol/ClickCounter.json';
-import artifactsMessageBoard from '../../artifacts/contracts/MessageBoard.sol/MessageBoard.json';
-import artifactsSimpleVoting from '../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json';
 import { useParams, useNavigate } from 'react-router-dom';
+
+// Inline ABI dla ClickCounter z eventem Clicked
+const clickCounterAbi = [
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "clicker",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "newCount",
+        "type": "uint256"
+      }
+    ],
+    "name": "Clicked",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "click",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "count",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+];
+
+let artifactsSimpleStorage, artifactsMessageBoard, artifactsSimpleVoting;
+try {
+  artifactsSimpleStorage = await import('../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json');
+  artifactsMessageBoard = await import('../../artifacts/contracts/MessageBoard.sol/MessageBoard.json');
+  artifactsSimpleVoting = await import('../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json');
+} catch (e) {
+  console.warn('Could not load artifacts:', e);
+}
 import { getExplorerUrl } from '../config/explorers';
 import { BackButton } from './common/BackButton';
 
@@ -183,7 +231,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
         artifact = artifactsSimpleStorage;
         break;
       case 'ClickCounter':
-        artifact = artifactsClickCounter;
+        artifact = { abi: clickCounterAbi };
         break;
       case 'MessageBoard':
         artifact = artifactsMessageBoard;
