@@ -305,8 +305,12 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         </Link>
         <span style={getCurrentDividerStyle()}></span>
         <Link
-          to="/interact"
+          to="#"
           style={{ ...navLinkStyle }}
+          onClick={e => {
+            e.preventDefault();
+            if (window && window.showInteractModal) window.showInteractModal();
+          }}
           onMouseOver={(e) => handleHover(e, true)}
           onMouseOut={(e) => handleHover(e, false)}
         >
