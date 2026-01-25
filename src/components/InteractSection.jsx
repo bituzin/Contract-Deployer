@@ -1,5 +1,5 @@
 import React from 'react';
-import { ContractInteract } from './contracts/ContractInteract';
+import { ContractInteract } from './ContractInteract';
 
 export const InteractSection = ({ theme, isConnected, openModal, network }) => {
   return (
