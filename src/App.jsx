@@ -281,6 +281,7 @@ function App() {
         </div>
         <div className="App" style={{
           minHeight: '100vh',
+          background: theme.cardBg + 'E6',
           transition: 'background 0.3s'
         }}>
         <Popup 
