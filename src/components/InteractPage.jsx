@@ -40,6 +40,8 @@ export const InteractPage = ({ theme, network }) => {
             fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace',
             background: theme.cardBg,
             color: theme.textPrimary,
+            outline: 'none',
+            boxShadow: 'none',
           }}
           required
           pattern="^0x[a-fA-F0-9]{40}$"
