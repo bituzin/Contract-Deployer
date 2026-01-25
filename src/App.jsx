@@ -562,14 +562,23 @@ function App() {
             )} />
             
             <Route path="/my-deployments" element={( 
-              <MyDeployments 
-                theme={theme}
-                deployments={deployments}
-                isConnected={isConnected}
-                openModal={open}
-                network={network}
-                setPopup={setPopup}
-              />
+              <>
+                <MyDeployments 
+                  theme={theme}
+                  deployments={deployments}
+                  isConnected={isConnected}
+                  openModal={open}
+                  network={network}
+                  setPopup={setPopup}
+                />
+                <div style={{ height: 32 }} />
+                <InteractSection 
+                  theme={theme}
+                  isConnected={isConnected}
+                  openModal={open}
+                  network={network}
+                />
+              </>
             )} />
             {/* Interact route removed */}
             <Route path="/interact/:contractName/:contractAddress/:network" element={(
