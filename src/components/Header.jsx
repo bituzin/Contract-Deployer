@@ -304,7 +304,15 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           My Deployments
         </Link>
         <span style={getCurrentDividerStyle()}></span>
-        {/* Interact tab removed */}
+        <Link
+          to="/interact"
+          style={{ ...navLinkStyle }}
+          onMouseOver={(e) => handleHover(e, true)}
+          onMouseOut={(e) => handleHover(e, false)}
+        >
+          Interact
+        </Link>
+        <span style={getCurrentDividerStyle()}></span>
       </div>
     </>
   );

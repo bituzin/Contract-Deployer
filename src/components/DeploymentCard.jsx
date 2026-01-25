@@ -5,6 +5,8 @@ import { shortenAddress } from '../utils/shortenAddress';
 
 export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
   const [interactionCount, setInteractionCount] = useState(null);
+  const [copiedAddress, setCopiedAddress] = useState(false);
+  const [copiedTx, setCopiedTx] = useState(false);
 
   useEffect(() => {
     async function fetchInteractions() {
@@ -132,6 +134,34 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
             ) : (
               <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortAddress}</span>
             )}
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(fullAddress);
+                setCopiedAddress(true);
+                setTimeout(() => setCopiedAddress(false), 1000);
+              }}
+              style={{
+                background: theme.highlight,
+                color: '#444',
+                border: 'none',
+                fontWeight: 500,
+                fontSize: '0.86em',
+                cursor: 'pointer',
+                marginLeft: '10px',
+                padding: '2px 10px',
+                borderRadius: '4px',
+                transition: 'background 0.2s',
+                position: 'relative',
+                minWidth: 48,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {copiedAddress ? (
+                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
+              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
+            </button>
           </div>
         </div>
 
@@ -152,6 +182,34 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
             ) : (
               <span style={{ color: theme.textPrimary, wordBreak: 'break-all', flex: 1 }}>{shortTx}</span>
             )}
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(fullTx);
+                setCopiedTx(true);
+                setTimeout(() => setCopiedTx(false), 1000);
+              }}
+              style={{
+                background: theme.highlight,
+                color: '#444',
+                border: 'none',
+                fontWeight: 500,
+                fontSize: '0.86em',
+                cursor: 'pointer',
+                marginLeft: '10px',
+                padding: '2px 10px',
+                borderRadius: '4px',
+                transition: 'background 0.2s',
+                position: 'relative',
+                minWidth: 48,
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              {copiedTx ? (
+                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
+              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
+            </button>
           </div>
         </div>
       </div>

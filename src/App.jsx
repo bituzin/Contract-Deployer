@@ -22,6 +22,9 @@ import { BackButton } from "./components/common/BackButton";
 import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
+import { InteractSection } from "./components/InteractSection.jsx";
+import { InteractModal } from "./components/InteractModal";
+import { InteractPage } from "./components/InteractPage";
 
 function App() {
   const { isConnected, address } = useAccount();
@@ -33,6 +36,7 @@ function App() {
   const [network, setNetwork] = useState(() => localStorage.getItem("network") || "Celo");
   const [priceCache, setPriceCache] = useState({});
   const [deployLoading, setDeployLoading] = useState(null);
+  const [interactModalVisible, setInteractModalVisible] = useState(false);
   
   // Get signer for on-chain operations
   const signer = useSigner(isConnected);
@@ -252,6 +256,17 @@ function App() {
     setTimeout(() => setPressedIndex(null), 1000);
   };
 
+  React.useEffect(() => {
+    window.showInteractModal = () => setInteractModalVisible(true);
+  }, []);
+  const handleInteractModalClose = () => setInteractModalVisible(false);
+  const handleInteractModalSubmit = (address) => {
+    setInteractModalVisible(false);
+    // You can handle the address here, e.g. navigate to /interact or show ContractInteract
+    // Example: navigate(`/interact/contractName/${address}/${network}`);
+    setPopup({ visible: true, message: `Entered address: ${address}` });
+  };
+
   return (
     <>
     <Router basename="/">
@@ -281,6 +296,7 @@ function App() {
         </div>
         <div className="App" style={{
           minHeight: '100vh',
+          background: theme.cardBg + 'E6',
           transition: 'background 0.3s'
         }}>
         <Popup 
@@ -571,7 +587,6 @@ function App() {
                 setPopup={setPopup}
               />
             )} />
-            {/* Interact route removed */}
             <Route path="/interact/:contractName/:contractAddress/:network" element={(
               <ContractInteract 
                 theme={theme}
@@ -579,6 +594,9 @@ function App() {
                 openModal={open}
                 network={network}
               />
+            )} />
+            <Route path="/interact" element={(
+              <InteractPage theme={theme} network={network} />
             )} />
           </Routes>
         </div>
@@ -626,6 +644,12 @@ function App() {
 )}
     </Router>
     <Footer network={network} />
+    <InteractModal
+      theme={theme}
+      visible={interactModalVisible}
+      onClose={handleInteractModalClose}
+      onSubmit={handleInteractModalSubmit}
+    />
     </>
   );
 }
