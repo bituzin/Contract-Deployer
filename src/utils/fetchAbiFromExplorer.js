@@ -1,33 +1,36 @@
 // Utility to fetch ABI from Etherscan-like APIs
 export async function fetchAbiFromExplorer(address, network, apiKey) {
-  let url = '';
+  const url = 'https://api.etherscan.io/v2/api';
   let chainId = '';
   if (network === 'Sepolia') {
-    url = `https://api-sepolia.etherscan.io/v2/api`;
     chainId = '11155111';
   } else if (network === 'Celo') {
-    url = `https://api.celoscan.io/v2/api`;
     chainId = '42220';
   } else if (network === 'Base') {
-    url = `https://api.basescan.org/v2/api`;
     chainId = '8453';
   } else if (network === 'Optimism') {
-    url = `https://api-optimistic.etherscan.io/v2/api`;
     chainId = '10';
   } else if (network === 'Ethereum' || network === 'Mainnet') {
-    url = `https://api.etherscan.io/v2/api`;
     chainId = '1';
   } else {
     throw new Error('Unsupported network');
   }
   const params = new URLSearchParams({
     chainid: chainId,
+    module: 'contract',
     action: 'getabi',
     address,
     apikey: apiKey
   });
   const res = await fetch(`${url}?${params.toString()}`);
-  const data = await res.json();
+  let data;
+  try {
+    data = await res.json();
+  } catch (e) {
+    const text = await res.text();
+    console.error('API response is not JSON:', text);
+    throw new Error(`API response is not JSON (status ${res.status}): ${text.slice(0, 200)}`);
+  }
   if (data.status === '1' || data.status === 1) {
     try {
       return typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
