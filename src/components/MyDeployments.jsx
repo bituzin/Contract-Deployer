@@ -48,18 +48,16 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           </div>
           <button
             style={{
-              fontSize: '0.9em',
-              padding: '0.45em 1.4em',
+              fontSize: '0.96em',
+              padding: '0.48em 1.32em',
               background: theme.primary,
               color: network === 'Celo' ? '#444' : '#fff',
               border: 'none',
-              border: `1px solid ${theme.primary}`,
-              borderRadius: 10,
+              borderRadius: '6px',
               fontWeight: 600,
               cursor: 'pointer',
               boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s',
-              minWidth: 120
+              transition: 'background 0.2s'
             }}
             onMouseOver={e => (e.currentTarget.style.background = theme.primaryDark)}
             onMouseOut={e => (e.currentTarget.style.background = theme.primary)}
