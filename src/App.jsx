@@ -44,12 +44,16 @@ function App() {
   // Pass signer to useDeployments for on-chain registry support
   const { deployments, addDeployment } = useDeployments(address, network, signer);
 
+  // Wrapper functions to preserve context for WalletConnect/Reown AppKit
+  const handleConnect = () => open();
+  const handleDisconnect = () => disconnect();
+
   // Szacowanie fee za deploy kontraktu w dolarach
   async function showDeployFee(bytecode, contractName) {
     // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
     if (!isConnected) {
       // Wywołaj modal WalletConnect
-      open();
+      handleConnect();
       setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
       return;
     }
@@ -192,7 +196,7 @@ function App() {
     // Sprawdź czy portfel jest podłączony przez WalletConnect/Reown
     if (!isConnected) {
       // Wywołaj modal WalletConnect
-      open();
+      handleConnect();
       setPopup({ visible: true, message: "Please connect your wallet first", txHash: null });
       setDeployLoading(null);
       return;
@@ -318,8 +322,8 @@ function App() {
           onNetworkChange={handleNetworkChange}
           isConnected={isConnected}
           address={address}
-          onConnect={open}
-          onDisconnect={disconnect}
+          onConnect={handleConnect}
+          onDisconnect={handleDisconnect}
         />
         <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
@@ -430,7 +434,7 @@ function App() {
                                 }}
                                 onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
                                 onMouseOut={e => e.currentTarget.style.background = theme.primary}
-                                onClick={() => open()}
+                                onClick={handleConnect}
                               >Connect</button>
                             ) : (
                               <>
@@ -510,7 +514,7 @@ function App() {
                 theme={theme}
                 setPopup={setPopup}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
               />
             )} />
@@ -520,7 +524,7 @@ function App() {
                 theme={theme}
                 setPopup={setPopup}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
               />
             )} />
@@ -530,7 +534,7 @@ function App() {
                 theme={theme}
                 setPopup={setPopup}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
               />
             )} />
@@ -540,7 +544,7 @@ function App() {
                 theme={theme}
                 setPopup={setPopup}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
               />
             )} />
@@ -582,7 +586,7 @@ function App() {
                 theme={theme}
                 deployments={deployments}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
                 setPopup={setPopup}
               />
@@ -591,7 +595,7 @@ function App() {
               <ContractInteract 
                 theme={theme}
                 isConnected={isConnected}
-                openModal={open}
+                openModal={handleConnect}
                 network={network}
               />
             )} />
