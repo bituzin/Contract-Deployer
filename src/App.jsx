@@ -361,10 +361,10 @@ function App() {
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
                     <div style={{ width: 220 }}>
                       <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0', paddingLeft: 18 }}>1. Connect</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>2. Check</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>3. Read</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>4. Deploy</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0' }}>5. Interact</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0', paddingLeft: 18 }}>2. Check</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0', paddingLeft: 18 }}>3. Read</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0', paddingLeft: 18 }}>4. Deploy</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', textAlign: 'left', margin: '2px 0', paddingLeft: 18 }}>5. Interact</span>
                     </div>
                   </div>
                   <br />
