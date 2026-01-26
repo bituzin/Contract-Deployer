@@ -48,21 +48,22 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
           </div>
           <button
             style={{
-              fontSize: '0.96em',
-              padding: '0.48em 1.32em',
+              fontSize: '0.9em',
+              padding: '0.45em 1.4em',
               background: theme.primary,
-              color: theme.textPrimary,
+              color: network === 'Celo' ? '#444' : '#fff',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: 10,
               fontWeight: 600,
               cursor: 'pointer',
               boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s'
+              transition: 'background 0.2s',
+              minWidth: 120
             }}
-            onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-            onMouseOut={e => e.currentTarget.style.background = theme.primary}
+            onMouseOver={e => (e.currentTarget.style.background = theme.primaryDark)}
+            onMouseOut={e => (e.currentTarget.style.background = theme.primary)}
             onClick={openModal}
-          >Connect Wallet</button>
+          >Connect</button>
         </div>
       </div>
     );
