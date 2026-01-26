@@ -53,6 +53,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
               background: theme.primary,
               color: network === 'Celo' ? '#444' : '#fff',
               border: 'none',
+              border: `1px solid ${theme.primary}`,
               borderRadius: 10,
               fontWeight: 600,
               cursor: 'pointer',
