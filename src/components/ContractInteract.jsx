@@ -161,7 +161,15 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
       console.log('Code length:', code.length, 'Code:', code.substring(0, 100) + '...');
       
       if (code === '0x') {
-        setResults(prev => ({ ...prev, [fn.name]: `ERROR: No contract deployed at ${contractAddress} on ${network}. The address exists but has no code. Did you deploy on a different network?` }));
+        setResults(prev => ({
+          ...prev,
+          [fn.name]: (
+            <span style={{ color: '#d32f2f', fontWeight: 600 }}>
+              Contract source code not verified or not deployed at this address on <b>{network}</b>.<br />
+              Please verify the contract or check if it was deployed on a different network.
+            </span>
+          )
+        }));
         setLoading(prev => ({ ...prev, [fn.name]: false }));
         return;
       }
