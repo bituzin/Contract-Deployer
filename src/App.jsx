@@ -359,7 +359,7 @@ function App() {
                   Simple to use:
                   <br />
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
-                    <div style={{ width: 220, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div style={{ width: 220, textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', margin: '0 auto' }}>
                       <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>• Connect</span>
                       <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>• Check</span>
                       <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>• Read</span>
