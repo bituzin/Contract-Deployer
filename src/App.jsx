@@ -359,12 +359,12 @@ function App() {
                   Simple to use:
                   <br />
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
-                    <div style={{ width: 220, textAlign: 'center' }}>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>1. Connect</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>2. Check</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>3. Read</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>4. Deploy</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>5. Interact</span>
+                    <div style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <span style={{ margin: '2px 0' }}>1. Connect</span>
+                      <span style={{ margin: '2px 0' }}>2. Check</span>
+                      <span style={{ margin: '2px 0' }}>3. Read</span>
+                      <span style={{ margin: '2px 0' }}>4. Deploy</span>
+                      <span style={{ margin: '2px 0' }}>5. Interact</span>
                     </div>
                   </div>
                   <br />
