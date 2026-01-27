@@ -360,11 +360,11 @@ function App() {
                   <br />
                   <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
                     <div style={{ width: 220, textAlign: 'center' }}>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>1. Connect</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>2. Check</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>3. Read</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>4. Deploy</span>
-                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 18 }}>5. Interact</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>1. Connect</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>2. Check</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>3. Read</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>4. Deploy</span>
+                      <span style={{ display: 'block', whiteSpace: 'nowrap', margin: '2px 0', textAlign: 'center' }}>5. Interact</span>
                     </div>
                   </div>
                   <br />
