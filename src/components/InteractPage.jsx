@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { fetchAbiFromExplorer } from '../utils/fetchAbiFromExplorer';
+import { fetchCodeFromRpc } from '../utils/fetchCodeFromRpc';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
@@ -15,6 +16,13 @@ export const InteractPage = ({ theme, network }) => {
     setAbiError(null);
     setLoadingAbi(true);
     try {
+      // Najpierw sprawdź, czy pod adresem jest kod kontraktu
+      const code = await fetchCodeFromRpc(address, network);
+      if (!code || code === '0x' || code === '0x0') {
+        setAbiError('No contract deployed at this address on ' + network + '.');
+        setLoadingAbi(false);
+        return;
+      }
       const apiKey = import.meta.env.VITE_EXPLORER_API_KEY;
       const abiResult = await fetchAbiFromExplorer(address, network, apiKey);
       setAbi(abiResult);
