@@ -294,6 +294,18 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Deploy
         </Link>
+        {/* Verify section only on Base network */}
+        {network === 'Base' && <>
+          <span style={getCurrentDividerStyle()}></span>
+          <Link
+            to="/verify"
+            style={{ ...navLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Verify
+          </Link>
+        </>}
         <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/my-deployments"
