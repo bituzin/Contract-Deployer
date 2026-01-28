@@ -281,7 +281,6 @@ function App() {
         </div>
         <div className="App" style={{
           minHeight: '100vh',
-          background: theme.cardBg,
           transition: 'background 0.3s'
         }}>
         <Popup 
@@ -313,7 +312,6 @@ function App() {
                 style={{
                   maxWidth: 540,
                   margin: '60px auto 32px auto',
-                  background: theme.cardBg,
                   borderRadius: 12,
                   boxShadow: `0 2px 16px ${theme.shadow}`,
                   padding: '28px 32px',
