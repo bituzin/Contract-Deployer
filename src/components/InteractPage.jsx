@@ -44,7 +44,6 @@ export const InteractPage = ({ theme, network }) => {
     <div style={{
       maxWidth: 540,
       margin: '80px auto 32px auto',
-      background: theme.cardBg + 'E6',
       border: `1px solid ${theme.primary}`,
       borderRadius: 12,
       boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
