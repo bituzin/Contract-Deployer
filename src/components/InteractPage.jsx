@@ -86,11 +86,6 @@ export const InteractPage = ({ theme, network }) => {
           }}
         >Submit</button>
       </form>
-      {submitted && (
-        <div style={{ marginTop: 24, fontSize: '1em', color: theme.primary }}>
-          Entered address: {address}
-        </div>
-      )}
       {loadingAbi && (
         <div style={{ marginTop: 24, fontSize: '1em', color: theme.textSecondary }}>
           Fetching ABI from explorer...
