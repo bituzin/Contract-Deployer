@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchAbiFromExplorer } from '../utils/fetchAbiFromExplorer';
 import { fetchCodeFromRpc } from '../utils/fetchCodeFromRpc';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
+    // Clear address input when network changes
+    useEffect(() => {
+      setAddress('');
+      setSubmitted(false);
+      setAbi(null);
+      setAbiError(null);
+    }, [network]);
   const [submitted, setSubmitted] = useState(false);
   const [abi, setAbi] = useState(null);
   const [abiError, setAbiError] = useState(null);
@@ -37,7 +44,6 @@ export const InteractPage = ({ theme, network }) => {
     <div style={{
       maxWidth: 540,
       margin: '80px auto 32px auto',
-      background: theme.cardBg + 'E6',
       border: `1px solid ${theme.primary}`,
       borderRadius: 12,
       boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
@@ -86,11 +92,6 @@ export const InteractPage = ({ theme, network }) => {
           }}
         >Submit</button>
       </form>
-      {submitted && (
-        <div style={{ marginTop: 24, fontSize: '1em', color: theme.primary }}>
-          Entered address: {address}
-        </div>
-      )}
       {loadingAbi && (
         <div style={{ marginTop: 24, fontSize: '1em', color: theme.textSecondary }}>
           Fetching ABI from explorer...

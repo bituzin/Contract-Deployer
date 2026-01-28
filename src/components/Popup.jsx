@@ -20,7 +20,7 @@ export const Popup = ({ visible, message, txHash, network, onClose, theme, child
     >
       <div 
         style={{
-          background: theme.cardBg + 'E6',
+          // background removed
           borderRadius: 10,
           border: `1px solid ${theme.primary}`,
           boxShadow: `0 2px 12px ${theme.shadow}`,

@@ -25,6 +25,8 @@ import React, { useEffect, useState } from 'react';
 import { ethers } from 'ethers';
 import { useParams, useNavigate } from 'react-router-dom';
 
+// Opis funkcji ClickCounter
+const clickCounterDescription = `Anyone can increment the global counter.\nEmits a Clicked event with the sender address and new count on every click.`;
 // Inline ABI dla ClickCounter z eventem Clicked
 const clickCounterAbi = [
   {
@@ -293,6 +295,9 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
   const readFunctions = functions.filter(fn => fn.stateMutability === 'view' || fn.stateMutability === 'pure');
   const writeFunctions = functions.filter(fn => fn.stateMutability !== 'view' && fn.stateMutability !== 'pure');
 
+  // Dodaj opis dla ClickCounter na górze sekcji
+  const showClickCounterDescription = contractName === 'ClickCounter';
+
   return (
     <>
       {/* Global loader overlay with blur effect */}
@@ -338,6 +343,22 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
         </div>
       )}
       <div style={{ maxWidth: 1100, margin: '60px auto 32px auto' }}>
+        {showClickCounterDescription && (
+          <div style={{
+            background: theme.cardBgDark,
+            color: theme.textSecondary,
+            fontSize: '1.04em',
+            fontWeight: 500,
+            borderRadius: 8,
+            padding: '14px 18px',
+            marginBottom: 18,
+            whiteSpace: 'pre-line',
+            border: `1px solid ${theme.primary}`
+          }}>
+            Anyone can increment the global counter.
+            Emits a Clicked event with the sender address and new count on every click.
+          </div>
+        )}
         <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>

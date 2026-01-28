@@ -9,20 +9,22 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
   const navLinkStyle = {
     textDecoration: 'none',
     color: theme.textPrimary,
-    padding: '4px 12px',
+    padding: '3px 7px', // less padding
     borderRadius: 8,
-    margin: '0 6px',
+    margin: '0 2px', // less margin
     fontWeight: 600,
     fontSize: '0.9em',
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
-    transition: 'background 0.2s, color 0.2s'
+    transition: 'background 0.2s, color 0.2s',
+    flexShrink: 0,
   };
 
   const dividerStyle = {
-    height: 26,
-    margin: '0 12px',
-    display: 'inline-block'
+    height: 22,
+    margin: '0 3px', // less margin
+    display: 'inline-block',
+    flexShrink: 0,
   };
 
   const hexToRgb = (hex) => {
@@ -234,11 +236,11 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           borderBottom: `1px solid ${theme.highlight}`,
           display: 'flex',
           alignItems: 'center',
-          gap: '12px',
-          padding: '6px 16px',
-          flexWrap: 'nowrap',
-          overflowX: 'auto',
-          whiteSpace: 'nowrap',
+          gap: '4px', // reduced gap
+          padding: '4px 4vw', // less padding, responsive
+          flexWrap: 'wrap', // allow wrapping
+          overflowX: 'hidden', // hide scroll
+          whiteSpace: 'normal', // allow wrap
           fontFamily: 'Inter, Arial, sans-serif',
           fontWeight: 500,
           fontSize: '0.9em',
@@ -247,7 +249,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           opacity: showNav ? 0.92 : 0,
           transform: showNav ? 'translateY(0)' : 'translateY(20px)',
           transition: 'opacity 0.8s, transform 0.8s',
-          pointerEvents: showNav ? 'auto' : 'none'
+          pointerEvents: showNav ? 'auto' : 'none',
+          minHeight: 44,
         }}
       >
         <Link
@@ -294,6 +297,18 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Deploy
         </Link>
+        {/* Verify section only on Base network */}
+        {network === 'Base' && <>
+          <span style={getCurrentDividerStyle()}></span>
+          <Link
+            to="/verify"
+            style={{ ...navLinkStyle }}
+            onMouseOver={(e) => handleHover(e, true)}
+            onMouseOut={(e) => handleHover(e, false)}
+          >
+            Verify
+          </Link>
+        </>}
         <span style={getCurrentDividerStyle()}></span>
         <Link
           to="/my-deployments"
