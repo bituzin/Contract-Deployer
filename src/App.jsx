@@ -274,33 +274,14 @@ function App() {
   return (
     <>
     <Router basename="/">
-      <div style={{ position: 'fixed', inset: 0, zIndex: -2, width: '100vw', height: '100vh', overflow: 'hidden' }}>
-        <img
-          src={
-            network === 'Base' ? '/base.webp'
-            : network === 'Celo' ? '/celo.webp'
-            : network === 'Sepolia' ? '/sepolia.webp'
-            : network === 'Optimism' ? '/optimism.webp'
-            : '/base.webp'
-          }
-          alt="background"
-          style={{
-            width: '100vw',
-            height: '100vh',
-            objectFit: 'cover',
-            position: 'absolute',
-            inset: 0,
-            zIndex: -2
-          }}
-        />
-      </div>
+      {/* Removed transparent background image */}
         {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
         <div style={{ display: 'none' }}>
           <appkit-button />
         </div>
         <div className="App" style={{
           minHeight: '100vh',
-          background: theme.cardBg + 'E6',
+          background: theme.cardBg,
           transition: 'background 0.3s'
         }}>
         <Popup 
@@ -332,7 +313,7 @@ function App() {
                 style={{
                   maxWidth: 540,
                   margin: '60px auto 32px auto',
-                  background: theme.cardBg + 'E6',
+                  background: theme.cardBg,
                   borderRadius: 12,
                   boxShadow: `0 2px 16px ${theme.shadow}`,
                   padding: '28px 32px',
