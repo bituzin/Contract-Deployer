@@ -1,9 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchAbiFromExplorer } from '../utils/fetchAbiFromExplorer';
 import { fetchCodeFromRpc } from '../utils/fetchCodeFromRpc';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
+    // Clear address input when network changes
+    useEffect(() => {
+      setAddress('');
+      setSubmitted(false);
+      setAbi(null);
+      setAbiError(null);
+    }, [network]);
   const [submitted, setSubmitted] = useState(false);
   const [abi, setAbi] = useState(null);
   const [abiError, setAbiError] = useState(null);
