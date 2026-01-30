@@ -112,9 +112,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           position: 'fixed',
           top: 0,
           left: 0,
-          width: network === 'Base' ? '320px' : '100%',
-          maxWidth: network === 'Base' ? '320px' : '100%',
-          padding: network === 'Base' ? '24px 16px' : '4px 8vw',
+          width: '100%',
+          padding: '4px 8vw',
           zIndex: 1000,
           background: theme.gradient,
           opacity: 0.92
