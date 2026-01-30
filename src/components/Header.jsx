@@ -239,7 +239,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           justifyContent: 'center', // centrowanie menu
           gap: '32px', // większy odstęp między pozycjami
           padding: '4px 4vw',
-          flexWrap: 'wrap',
+          flexWrap: 'nowrap',
           overflowX: 'hidden',
           whiteSpace: 'normal',
           fontFamily: 'Inter, Arial, sans-serif',
