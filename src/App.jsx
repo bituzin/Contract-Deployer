@@ -300,7 +300,8 @@ function App() {
         </div>
         <div className="App" style={{
           minHeight: '100vh',
-          transition: 'background 0.3s'
+          transition: 'background 0.3s',
+          background: network === 'Base' ? 'transparent' : undefined
         }}>
         <Popup 
           visible={popup.visible} 
