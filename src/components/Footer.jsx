@@ -19,9 +19,6 @@ const Footer = ({ network = 'Celo' }) => {
       padding: 0,
       border: 'none',
       boxShadow: 'none',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
       minHeight: 0
     }}>
       <div style={{
