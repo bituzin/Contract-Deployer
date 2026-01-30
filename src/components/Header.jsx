@@ -124,30 +124,45 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           style={{
             color: '#fff',
             fontFamily: 'Inter, Arial, sans-serif',
-              {network === 'Base' ? (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
-                  <Link
-                    to="/"
-                    style={{ ...navLinkStyle }}
-                    onMouseOver={(e) => handleHover(e, true)}
-                    onMouseOut={(e) => handleHover(e, false)}
-                  >
-                    Home
-                  </Link>
-                  <Link
-                    to="/how"
-                    style={{ ...navLinkStyle }}
-                    onMouseOver={(e) => handleHover(e, true)}
-                    onMouseOut={(e) => handleHover(e, false)}
-                  >
-                    How It Works
-                  </Link>
-                </div>
-              ) : (
-                <>
-                  <Link
-                    to="/"
-                    style={{ ...navLinkStyle }}
+            fontWeight: 700,
+            fontSize: '1.5em',
+            letterSpacing: '0.03em',
+            opacity: showHeader ? 1 : 0,
+            transition: 'opacity 1s'
+          }}
+        >
+          Contract Deployer
+        </span>
+        {network === 'Base' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
+            <Link
+              to="/"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              Home
+            </Link>
+            <Link
+              to="/how"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              How It Works
+            </Link>
+            <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+            <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+            <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+            <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
+            <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+            <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+          </div>
+        ) : (
+          <>
+            <Link
+              to="/"
+              style={{ ...navLinkStyle }}
                     onMouseOver={(e) => handleHover(e, true)}
                     onMouseOut={(e) => handleHover(e, false)}
                   >
