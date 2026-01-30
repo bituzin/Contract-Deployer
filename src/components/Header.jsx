@@ -163,21 +163,33 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             <Link
               to="/"
               style={{ ...navLinkStyle }}
-                    onMouseOver={(e) => handleHover(e, true)}
-                    onMouseOut={(e) => handleHover(e, false)}
-                  >
-                    Home
-                  </Link>
-                  <span style={getCurrentDividerStyle()}></span>
-                  <Link
-                    to="/how"
-                    style={{ ...navLinkStyle }}
-                    onMouseOver={(e) => handleHover(e, true)}
-                    onMouseOut={(e) => handleHover(e, false)}
-                  >
-                    How It Works
-                  </Link>
-                  <span style={getCurrentDividerStyle()}></span>
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              Home
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link
+              to="/how"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              How It Works
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+          </>
                 </>
               )}
                 color: network === 'Celo' ? '#444' : '#fff',
