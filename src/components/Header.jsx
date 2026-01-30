@@ -8,78 +8,80 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
 
   const navLinkStyle = {
     textDecoration: 'none',
-    color: theme.textPrimary,
-    padding: '3px 7px', // less padding
-    borderRadius: 8,
-    margin: '0 2px', // less margin
-    fontWeight: 600,
-    fontSize: '0.9em',
-    letterSpacing: '0.05em',
-    textTransform: 'uppercase',
-    transition: 'background 0.2s, color 0.2s',
-    flexShrink: 0,
-  };
-
-  const dividerStyle = {
-    height: 22,
-    margin: '0 3px', // less margin
-    display: 'inline-block',
-    flexShrink: 0,
-  };
-
-  const hexToRgb = (hex) => {
-    if (!hex) return null;
-    const clean = hex.replace('#', '');
-    const bigint = parseInt(clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean, 16);
-    const r = (bigint >> 16) & 255;
-    const g = (bigint >> 8) & 255;
-    const b = bigint & 255;
-    return { r, g, b };
-  };
-
-  const luminance = (r, g, b) => {
-    const a = [r, g, b].map((v) => {
-      v /= 255;
-      return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
-    });
-    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
-  };
-
-  // choose a subtle divider color depending on card background luminance
-  const cardRgb = hexToRgb(theme.cardBg);
-  const dividerColor = cardRgb && luminance(cardRgb.r, cardRgb.g, cardRgb.b) > 0.6 ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.12)';
-
-  const location = useLocation();
-
-  const mapRouteToColor = (route) => {
-    if (!route) return null;
-    if (route === '/' ) return theme.textPrimary;
-    if (route === '/deploy') return theme.primary;
-    if (route.startsWith('/contract')) return theme.primaryLight;
-    if (route === '/bytecodes') return theme.primaryDark;
-    if (route === '/how') return theme.highlight;
-    if (route === '/my-deployments') return theme.primary;
-    // if (route === '/interact') return theme.textSecondary; // Interact tab removed
-    return null;
-  };
-
-  const getDividerStyle = (targetRoute) => {
-    const rc = mapRouteToColor(targetRoute);
-    const color = rc || dividerColor;
-    return { ...dividerStyle, borderLeft: `1px solid ${color}` };
-  };
-
-  // use current route color for all dividers
-  const currentDividerColor = mapRouteToColor(location.pathname) || dividerColor;
-  const getCurrentDividerStyle = () => ({ ...dividerStyle, borderLeft: `1px solid ${currentDividerColor}` });
-
-  const dropdownLinkStyle = {
-    display: 'block',
-    padding: '8px 18px',
-    color: theme.textPrimary,
-    textDecoration: 'none',
-    fontWeight: 600,
-    fontSize: '0.9em',
+        <>
+          <span
+            className="header-title"
+            style={{
+              color: '#fff',
+              fontFamily: 'Inter, Arial, sans-serif',
+              fontWeight: 700,
+              fontSize: '1.5em',
+              letterSpacing: '0.03em',
+              opacity: showHeader ? 1 : 0,
+              transition: 'opacity 1s'
+            }}
+          >
+            Contract Deployer
+          </span>
+          {network === 'Base' ? (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
+              <Link
+                to="/"
+                style={{ ...navLinkStyle }}
+                onMouseOver={(e) => handleHover(e, true)}
+                onMouseOut={(e) => handleHover(e, false)}
+              >
+                Home
+              </Link>
+              <Link
+                to="/how"
+                style={{ ...navLinkStyle }}
+                onMouseOver={(e) => handleHover(e, true)}
+                onMouseOut={(e) => handleHover(e, false)}
+              >
+                How It Works
+              </Link>
+              <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+              <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+              <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+              <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
+              <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+              <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+            </div>
+          ) : (
+            <>
+              <Link
+                to="/"
+                style={{ ...navLinkStyle }}
+                onMouseOver={(e) => handleHover(e, true)}
+                onMouseOut={(e) => handleHover(e, false)}
+              >
+                Home
+              </Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link
+                to="/how"
+                style={{ ...navLinkStyle }}
+                onMouseOver={(e) => handleHover(e, true)}
+                onMouseOut={(e) => handleHover(e, false)}
+              >
+                How It Works
+              </Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+            </>
+          )}
+        </>
     letterSpacing: '0.03em',
     borderRadius: 0,
     transition: 'background 0.2s, color 0.2s'
