@@ -11,6 +11,26 @@ export const ContractsList = ({ theme }) => {
       .toLowerCase();
   };
 
+  // Przykładowe kontrakty (możesz dodać więcej lub pobierać z innego źródła)
+  const contracts = [
+    {
+      name: "SimpleStorage",
+      description: "Minimal contract for storing a single integer value.",
+    },
+    {
+      name: "ClickCounter",
+      description: "Counts the number of clicks by users.",
+    },
+    {
+      name: "MessageBoard",
+      description: "Allows users to post and read messages.",
+    },
+    {
+      name: "SimpleVoting",
+      description: "Simple voting contract for demonstration purposes.",
+    },
+  ];
+
   return (
     <PageContainer
       theme={theme}
