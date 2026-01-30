@@ -23,6 +23,117 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
   // --- KONIEC LOGIKI, POCZĄTEK JSX ---
   return (
     <>
+      {/* Pasek tytułu i wyboru sieci */}
+      <div
+        style={{
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '12px 32px',
+          height: 68,
+          boxSizing: 'border-box',
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 1200,
+          background: theme.gradient || theme.cardBg,
+          opacity: 0.97,
+          borderBottom: `1px solid ${theme.highlight}`,
+        }}
+      >
+        <span
+          style={{
+            color: '#fff',
+            fontFamily: 'Inter, Arial, sans-serif',
+            fontWeight: 700,
+            fontSize: '1.5em',
+            letterSpacing: '0.03em',
+            opacity: showHeader ? 1 : 0,
+            transition: 'opacity 1s',
+          }}
+        >
+          Contract Deployer
+        </span>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          {networks && (
+            <select
+              value={network}
+              onChange={onNetworkChange}
+              style={{
+                fontSize: '1em',
+                padding: '4px 12px',
+                borderRadius: 8,
+                border: `1px solid ${theme.highlight}`,
+                background: theme.cardBg,
+                color: theme.textPrimary,
+                fontWeight: 600,
+                marginRight: 12,
+              }}
+            >
+              {networks.map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          )}
+          {isConnected && address && (
+            <span
+              style={{
+                color: theme.textPrimary,
+                background: theme.highlight,
+                borderRadius: 8,
+                padding: '4px 10px',
+                fontWeight: 600,
+                cursor: 'pointer',
+                marginLeft: 8,
+              }}
+              onClick={() => {
+                navigator.clipboard.writeText(address);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 1000);
+              }}
+              title={address}
+            >
+              {displayAddress} {copied ? '✓' : ''}
+            </span>
+          )}
+          {!isConnected && (
+            <button
+              style={{
+                background: theme.highlight,
+                color: '#222',
+                border: 'none',
+                borderRadius: 8,
+                padding: '4px 14px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                marginLeft: 8,
+              }}
+              onClick={onConnect}
+            >
+              Connect
+            </button>
+          )}
+          {isConnected && (
+            <button
+              style={{
+                background: 'transparent',
+                color: theme.textPrimary,
+                border: `1px solid ${theme.highlight}`,
+                borderRadius: 8,
+                padding: '4px 14px',
+                fontWeight: 700,
+                cursor: 'pointer',
+                marginLeft: 8,
+              }}
+              onClick={onDisconnect}
+            >
+              Disconnect
+            </button>
+          )}
+        </div>
+      </div>
+      {/* Pasek nawigacyjny */}
       <div
         style={{
           width: network === 'Base' ? '320px' : '100%',
