@@ -39,6 +39,7 @@ const Footer = ({ network = 'Celo' }) => {
         lineHeight: 1.2,
         maxWidth: 540,
         width: '100%',
+        margin: '0 auto',
         boxSizing: 'border-box',
         textAlign: 'center',
         whiteSpace: 'nowrap',
