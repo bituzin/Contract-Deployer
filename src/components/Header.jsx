@@ -1,29 +1,38 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const Header = ({ theme, showHeader, showNav, network, networks, onNetworkChange, isConnected, address, onConnect, onDisconnect }) => {
   const [copied, setCopied] = useState(false);
-
   const displayAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : '';
 
   const navLinkStyle = {
     textDecoration: 'none',
     color: theme.textPrimary,
-    padding: '3px 7px',
+    padding: '6px 14px',
     borderRadius: 8,
-    margin: '0 2px',
+    margin: '0 4px',
     fontWeight: 600,
-    fontSize: '0.9em',
+    fontSize: '1em',
     letterSpacing: '0.05em',
     textTransform: 'uppercase',
     transition: 'background 0.2s, color 0.2s',
-    flexShrink: 0,
+    background: 'transparent',
+    border: 'none',
+    outline: 'none',
+    cursor: 'pointer',
+    display: 'inline-block',
   };
-  // ...existing code...
-  // --- KONIEC LOGIKI, POCZĄTEK JSX ---
+
+  const navLinkHoverStyle = {
+    background: theme.highlight,
+    color: '#222',
+  };
+
+  const [hovered, setHovered] = useState(null);
+
   return (
     <>
-      {/* Pasek tytułu i wyboru sieci w jednej linii */}
+      {/* Główny pasek headera */}
       <div
         style={{
           width: '100%',
@@ -146,16 +155,13 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           flexDirection: network === 'Base' ? 'column' : 'row',
           alignItems: network === 'Base' ? 'flex-start' : 'center',
           justifyContent: network === 'Base' ? 'flex-start' : 'center',
-          gap: '16px',
+          gap: '8px',
           padding: network === 'Base' ? '24px 32px' : '0 32px',
           zIndex: 1100,
           background: theme.cardBg,
-          flexWrap: 'nowrap',
-          overflowX: 'hidden',
-          whiteSpace: 'normal',
           fontFamily: 'Inter, Arial, sans-serif',
           fontWeight: 500,
-          fontSize: '0.9em',
+          fontSize: '0.98em',
           color: theme.textPrimary,
           boxShadow: `0 2px 8px ${theme.shadow}`,
           opacity: showNav ? 0.92 : 0,
@@ -165,36 +171,24 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           minHeight: 44,
         }}
       >
-        {network === 'Base' ? (
-          <>
-            <Link to="/" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Home</Link>
-            <Link to="/how" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>How It Works</Link>
-            <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
-            <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
-            <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
-            <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
-            <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
-            <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
-          </>
-        ) : (
-          <>
-            <Link to="/" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Home</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/how" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>How It Works</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
-            <span style={getCurrentDividerStyle()}></span>
-            <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
-          </>
-        )}
+        {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx) => {
+          const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
+          return (
+            <Link
+              key={path}
+              to={path}
+              style={
+                hovered === idx
+                  ? { ...navLinkStyle, ...navLinkHoverStyle }
+                  : navLinkStyle
+              }
+              onMouseEnter={() => setHovered(idx)}
+              onMouseLeave={() => setHovered(null)}
+            >
+              {names[idx]}
+            </Link>
+          );
+        })}
       </div>
     </>
   );
