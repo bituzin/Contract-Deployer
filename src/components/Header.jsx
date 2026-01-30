@@ -23,28 +23,28 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
   // --- KONIEC LOGIKI, POCZĄTEK JSX ---
   return (
     <>
-      {/* Pasek tytułu i wyboru sieci */}
+      {/* Pasek tytułu i wyboru sieci w jednej linii */}
       <div
         style={{
           width: '100%',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '12px 32px',
+          padding: '16px 32px',
           height: 68,
           boxSizing: 'border-box',
           position: 'fixed',
           top: 0,
           left: 0,
           zIndex: 1200,
-          background: theme.gradient || theme.cardBg,
-          opacity: 0.97,
+          background: theme.cardBg,
           borderBottom: `1px solid ${theme.highlight}`,
+          fontFamily: 'Inter, Arial, sans-serif',
         }}
       >
         <span
           style={{
-            color: '#fff',
+            color: theme.textPrimary,
             fontFamily: 'Inter, Arial, sans-serif',
             fontWeight: 700,
             fontSize: '1.5em',
@@ -147,10 +147,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           alignItems: network === 'Base' ? 'flex-start' : 'center',
           justifyContent: network === 'Base' ? 'flex-start' : 'center',
           gap: '16px',
-          padding: network === 'Base' ? '32px 16px' : '4px 8vw',
+          padding: network === 'Base' ? '24px 32px' : '0 32px',
           zIndex: 1100,
           background: theme.cardBg,
-          borderBottom: `1px solid ${theme.highlight}`,
           flexWrap: 'nowrap',
           overflowX: 'hidden',
           whiteSpace: 'normal',
