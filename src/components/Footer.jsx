@@ -21,7 +21,7 @@ const Footer = ({ network = 'Celo' }) => {
       gap: 8,
       color: style.text,
       fontSize: '0.85em',
-      marginTop: 20,
+      marginTop: 4,
       padding: '2px 6px',
       background: style.bg,
       lineHeight: 1.2,
