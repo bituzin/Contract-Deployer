@@ -19,7 +19,26 @@ import { ContractsList } from "./components/ContractsList";
 import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
 import { BackButton } from "./components/common/BackButton";
-// import { contracts } from "./config/contracts";
+
+// Przykładowa lista kontraktów (możesz dodać więcej lub pobierać z innego źródła)
+const contracts = [
+  {
+    name: "SimpleStorage",
+    description: "Minimal contract for storing a single integer value.",
+  },
+  {
+    name: "ClickCounter",
+    description: "Counts the number of clicks by users.",
+  },
+  {
+    name: "MessageBoard",
+    description: "Allows users to post and read messages.",
+  },
+  {
+    name: "SimpleVoting",
+    description: "Simple voting contract for demonstration purposes.",
+  },
+];
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
 import { InteractSection } from "./components/InteractSection.jsx";
