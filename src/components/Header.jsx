@@ -236,11 +236,12 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           borderBottom: `1px solid ${theme.highlight}`,
           display: 'flex',
           alignItems: 'center',
-          gap: '4px', // reduced gap
-          padding: '4px 4vw', // less padding, responsive
-          flexWrap: 'wrap', // allow wrapping
-          overflowX: 'hidden', // hide scroll
-          whiteSpace: 'normal', // allow wrap
+          justifyContent: 'center', // centrowanie menu
+          gap: '32px', // większy odstęp między pozycjami
+          padding: '4px 4vw',
+          flexWrap: 'wrap',
+          overflowX: 'hidden',
+          whiteSpace: 'normal',
           fontFamily: 'Inter, Arial, sans-serif',
           fontWeight: 500,
           fontSize: '0.9em',
