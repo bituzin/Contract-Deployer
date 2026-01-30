@@ -342,7 +342,8 @@ function App() {
                   letterSpacing: '0.01em',
                   opacity: showWelcome ? 1 : 0,
                   transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                  transition: 'opacity 1s, transform 1s'
+                  transition: 'opacity 1s, transform 1s',
+                  background: network === 'Base' ? 'transparent' : theme.cardBg + 'E6'
                 }}
               >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
