@@ -238,7 +238,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           flexDirection: network === 'Base' ? 'column' : 'row',
           alignItems: network === 'Base' ? 'flex-start' : 'center',
           justifyContent: network === 'Base' ? 'flex-start' : 'center',
-          padding: network === 'Base' ? '32px 16px 32px 24px' : '4px 8vw',
+          padding: network === 'Base' ? '32px 16px' : '4px 8vw',
           zIndex: 1100,
           background: theme.cardBg,
           borderBottom: `1px solid ${theme.highlight}`,
