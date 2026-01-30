@@ -14,20 +14,24 @@ const Footer = ({ network = 'Celo' }) => {
   const style = networkStyles[network] || networkStyles.default;
   return (
     <footer style={{
-      textAlign: 'center',
+      display: 'flex',
+      flexWrap: 'wrap',
+      alignItems: 'center',
+      justifyContent: 'center',
+      gap: 8,
       color: style.text,
       fontSize: '0.85em',
       marginTop: 20,
       padding: '2px 6px',
       background: style.bg,
-      wordBreak: 'break-word',
-      whiteSpace: 'normal',
       lineHeight: 1.2,
       maxWidth: '100vw',
       boxSizing: 'border-box',
-      minHeight: 0
+      minHeight: 0,
+      textAlign: 'center'
     }}>
-      © 2026 Contract Deployer &nbsp;|&nbsp;
+      <span>© 2026 Contract Deployer</span>
+      <span>|</span>
       <a
         href="https://github.com/bituzin/Contract-Deployer"
         target="_blank"
@@ -41,12 +45,12 @@ const Footer = ({ network = 'Celo' }) => {
         </svg>
         GitHub
       </a>
-      &nbsp;|&nbsp;
+      <span>|</span>
       <a href="mailto:bituzin2@gmail.com" style={{ color: style.link, textDecoration: 'none' }}
         onMouseOver={e => e.currentTarget.style.textDecoration = 'underline'}
         onMouseOut={e => e.currentTarget.style.textDecoration = 'none'}
       >bituzin2@gmail.com</a>
-      &nbsp;|&nbsp;
+      <span>|</span>
       <span style={{ color: style.text, fontWeight: 500 }}>MIT License</span>
     </footer>
   );
