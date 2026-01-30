@@ -235,10 +235,11 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           background: theme.cardBg,
           borderBottom: `1px solid ${theme.highlight}`,
           display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center', // wyśrodkowanie menu
-          gap: '16px', // mniejszy odstęp między pozycjami
-          padding: '4px 8vw', // równy padding po bokach
+          flexDirection: network === 'Base' ? 'column' : 'row', // pionowo tylko dla Base
+          alignItems: network === 'Base' ? 'flex-start' : 'center',
+          justifyContent: network === 'Base' ? 'flex-start' : 'center',
+          gap: '16px',
+          padding: '4px 8vw',
           flexWrap: 'nowrap',
           overflowX: 'hidden',
           whiteSpace: 'normal',
