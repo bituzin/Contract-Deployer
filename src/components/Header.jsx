@@ -254,24 +254,49 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           minHeight: 44,
         }}
       >
-        <Link
-          to="/"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          Home
-        </Link>
-        <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/how"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          How It Works
-        </Link>
-        <span style={getCurrentDividerStyle()}></span>
+        {network === 'Base' ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
+            <Link
+              to="/"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              Home
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link
+              to="/how"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              How It Works
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+          </div>
+        ) : (
+          <>
+            <Link
+              to="/"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              Home
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+            <Link
+              to="/how"
+              style={{ ...navLinkStyle }}
+              onMouseOver={(e) => handleHover(e, true)}
+              onMouseOut={(e) => handleHover(e, false)}
+            >
+              How It Works
+            </Link>
+            <span style={getCurrentDividerStyle()}></span>
+          </>
+        )}
         <Link
           to="/contracts"
           style={{ ...navLinkStyle }}
