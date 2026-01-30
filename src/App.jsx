@@ -19,26 +19,7 @@ import { ContractsList } from "./components/ContractsList";
 import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
 import { BackButton } from "./components/common/BackButton";
-
-// Przykładowa lista kontraktów (możesz dodać więcej lub pobierać z innego źródła)
-const contracts = [
-  {
-    name: "SimpleStorage",
-    description: "Minimal contract for storing a single integer value.",
-  },
-  {
-    name: "ClickCounter",
-    description: "Counts the number of clicks by users.",
-  },
-  {
-    name: "MessageBoard",
-    description: "Allows users to post and read messages.",
-  },
-  {
-    name: "SimpleVoting",
-    description: "Simple voting contract for demonstration purposes.",
-  },
-];
+import { contracts } from "./config/contracts.js";
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
 import { InteractSection } from "./components/InteractSection.jsx";
@@ -300,8 +281,7 @@ function App() {
         </div>
         <div className="App" style={{
           minHeight: '100vh',
-          transition: 'background 0.3s',
-          background: network === 'Base' ? 'transparent' : undefined
+          transition: 'background 0.3s'
         }}>
         <Popup 
           visible={popup.visible} 
@@ -342,8 +322,7 @@ function App() {
                   letterSpacing: '0.01em',
                   opacity: showWelcome ? 1 : 0,
                   transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                  transition: 'opacity 1s, transform 1s',
-                  background: network === 'Base' ? 'transparent' : theme.cardBg + 'E6'
+                  transition: 'opacity 1s, transform 1s'
                 }}
               >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
