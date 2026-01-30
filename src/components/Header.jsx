@@ -190,20 +190,6 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             <span style={getCurrentDividerStyle()}></span>
             <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
           </>
-                  cursor: 'pointer',
-                  boxShadow: `0 2px 8px ${theme.shadow}`,
-                  transition: 'background 0.2s'
-                }}
-                onMouseOver={(e) => (e.currentTarget.style.background = theme.primary)}
-                onMouseOut={(e) => (e.currentTarget.style.background = theme.primaryDark)}
-                onClick={onDisconnect}
-              >
-                Disconnect
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
 
       <div
         style={{
