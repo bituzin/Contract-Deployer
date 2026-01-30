@@ -313,9 +313,9 @@ function App() {
                 style={{
                   maxWidth: 540,
                   margin: '60px auto 32px auto',
-                  borderRadius: 12,
-                  boxShadow: `0 2px 16px ${theme.shadow}`,
-                  padding: '28px 32px',
+                  borderRadius: 16,
+                  boxShadow: `0 2px 24px ${theme.shadow}`,
+                  padding: '32px 36px',
                   textAlign: 'center',
                   fontFamily: 'Inter, Arial, sans-serif',
                   fontWeight: 500,
@@ -323,7 +323,11 @@ function App() {
                   letterSpacing: '0.01em',
                   opacity: showWelcome ? 1 : 0,
                   transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                  transition: 'opacity 1s, transform 1s'
+                  transition: 'opacity 1s, transform 1s',
+                  background: 'rgba(255,255,255,0.82)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(0,0,0,0.07)'
                 }}
               >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
