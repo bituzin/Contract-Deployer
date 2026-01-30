@@ -190,34 +190,6 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             <span style={getCurrentDividerStyle()}></span>
             <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
           </>
-                </>
-              )}
-                color: network === 'Celo' ? '#444' : '#fff',
-                border: 'none',
-                 border: `1px solid ${theme.primary}`,
-                 borderRadius: 10,
-                fontWeight: 600,
-                cursor: 'pointer',
-                boxShadow: `0 2px 8px ${theme.shadow}`,
-                transition: 'background 0.2s'
-              }}
-              onMouseOver={(e) => (e.currentTarget.style.background = theme.primaryDark)}
-              onMouseOut={(e) => (e.currentTarget.style.background = theme.primary)}
-              onClick={onConnect}
-            >
-              Connect
-            </button>
-          ) : (
-            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-              <button
-                onClick={handleCopy}
-                style={{
-                  padding: '0.38em 1em',
-                  background: 'rgba(255,255,255,0.15)',
-                  border: '1px solid rgba(255,255,255,0.4)',
-                  borderRadius: 24,
-                  color: '#fff',
-                  fontWeight: 600,
                   fontSize: '0.86em',
                   cursor: 'pointer',
                   minWidth: 120
