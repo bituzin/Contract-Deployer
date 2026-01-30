@@ -16,15 +16,16 @@ const Footer = ({ network = 'Celo' }) => {
     <footer style={{
       textAlign: 'center',
       color: style.text,
-      fontSize: '0.95em',
-      marginTop: 32,
-      padding: '8px 12px',
+      fontSize: '0.85em',
+      marginTop: 20,
+      padding: '2px 6px',
       background: style.bg,
       wordBreak: 'break-word',
       whiteSpace: 'normal',
-      lineHeight: 1.5,
+      lineHeight: 1.2,
       maxWidth: '100vw',
-      boxSizing: 'border-box'
+      boxSizing: 'border-box',
+      minHeight: 0
     }}>
       © 2026 Contract Deployer &nbsp;|&nbsp;
       <a
