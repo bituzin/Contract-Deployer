@@ -282,7 +282,7 @@ function App() {
         <div className="App" style={{
           minHeight: '100vh',
           transition: 'background 0.3s',
-          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
+          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
         }}>
         <Popup 
           visible={popup.visible} 
