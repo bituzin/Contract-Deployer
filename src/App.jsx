@@ -19,26 +19,7 @@ import { ContractsList } from "./components/ContractsList";
 import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
 import { BackButton } from "./components/common/BackButton";
-
-// Przykładowa lista kontraktów (możesz dodać więcej lub pobierać z innego źródła)
-const contracts = [
-  {
-    name: "SimpleStorage",
-    description: "Minimal contract for storing a single integer value.",
-  },
-  {
-    name: "ClickCounter",
-    description: "Counts the number of clicks by users.",
-  },
-  {
-    name: "MessageBoard",
-    description: "Allows users to post and read messages.",
-  },
-  {
-    name: "SimpleVoting",
-    description: "Simple voting contract for demonstration purposes.",
-  },
-];
+import { contracts } from "./config/contracts.js";
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
 import { InteractSection } from "./components/InteractSection.jsx";
@@ -301,7 +282,7 @@ function App() {
         <div className="App" style={{
           minHeight: '100vh',
           transition: 'background 0.3s',
-          background: network === 'Base' ? 'transparent' : undefined
+          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
         }}>
         <Popup 
           visible={popup.visible} 
@@ -332,9 +313,9 @@ function App() {
                 style={{
                   maxWidth: 540,
                   margin: '60px auto 32px auto',
-                  borderRadius: 12,
-                  boxShadow: `0 2px 16px ${theme.shadow}`,
-                  padding: '28px 32px',
+                  borderRadius: 16,
+                  boxShadow: `0 2px 24px ${theme.shadow}`,
+                  padding: '32px 36px',
                   textAlign: 'center',
                   fontFamily: 'Inter, Arial, sans-serif',
                   fontWeight: 500,
@@ -343,7 +324,10 @@ function App() {
                   opacity: showWelcome ? 1 : 0,
                   transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
                   transition: 'opacity 1s, transform 1s',
-                  background: network === 'Base' ? 'transparent' : theme.cardBg + 'E6'
+                  background: 'rgba(255,255,255,0.82)',
+                  backdropFilter: 'blur(8px)',
+                  WebkitBackdropFilter: 'blur(8px)',
+                  border: '1px solid rgba(0,0,0,0.07)'
                 }}
               >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>

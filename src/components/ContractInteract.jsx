@@ -70,18 +70,35 @@ const clickCounterAbi = [
   }
 ];
 
-let artifactsSimpleStorage, artifactsMessageBoard, artifactsSimpleVoting;
-try {
-  artifactsSimpleStorage = await import('../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json');
-  artifactsMessageBoard = await import('../../artifacts/contracts/MessageBoard.sol/MessageBoard.json');
-  artifactsSimpleVoting = await import('../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json');
-} catch (e) {
-  console.warn('Could not load artifacts:', e);
-}
+import { getExplorerUrl } from '../config/explorers';
+import { BackButton } from './common/BackButton';
+
 import { getExplorerUrl } from '../config/explorers';
 import { BackButton } from './common/BackButton';
 
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
+  const [artifactsSimpleStorage, setArtifactsSimpleStorage] = useState(null);
+  const [artifactsMessageBoard, setArtifactsMessageBoard] = useState(null);
+  const [artifactsSimpleVoting, setArtifactsSimpleVoting] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    (async () => {
+      try {
+        const storage = await import('../../artifacts/contracts/SimpleStorage.sol/SimpleStorage.json');
+        const messageBoard = await import('../../artifacts/contracts/MessageBoard.sol/MessageBoard.json');
+        const simpleVoting = await import('../../artifacts/contracts/SimpleVoting.sol/SimpleVoting.json');
+        if (isMounted) {
+          setArtifactsSimpleStorage(storage);
+          setArtifactsMessageBoard(messageBoard);
+          setArtifactsSimpleVoting(simpleVoting);
+        }
+      } catch (e) {
+        console.warn('Could not load artifacts:', e);
+      }
+    })();
+    return () => { isMounted = false; };
+  }, []);
   // Dodaj globalny styl podkreślenia linku do tx hash tylko na hover
   useEffect(() => {
     const style = document.createElement('style');
