@@ -19,7 +19,7 @@ import { ContractsList } from "./components/ContractsList";
 import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
 import { BackButton } from "./components/common/BackButton";
-import { contracts } from "./config/contracts";
+// import { contracts } from "./config/contracts";
 import { networks, getNetworkParam } from "./config/networks";
 import Footer from "./components/Footer";
 import { InteractSection } from "./components/InteractSection.jsx";
