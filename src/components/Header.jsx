@@ -236,9 +236,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           borderBottom: `1px solid ${theme.highlight}`,
           display: 'flex',
           alignItems: 'center',
-          justifyContent: 'center', // centrowanie menu
+          justifyContent: 'flex-start', // wyrównanie do lewej
           gap: '32px', // większy odstęp między pozycjami
-          padding: '4px 8vw 4px 8vw', // większy padding po bokach
+          padding: '4px 12vw 4px 4vw', // większy padding z lewej
           flexWrap: 'nowrap',
           overflowX: 'hidden',
           whiteSpace: 'normal',
