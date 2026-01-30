@@ -13,7 +13,19 @@ const networkStyles = {
 const Footer = ({ network = 'Celo' }) => {
   const style = networkStyles[network] || networkStyles.default;
   return (
-    <footer style={{ textAlign: 'center', color: style.text, fontSize: '0.95em', marginTop: 32, padding: '8px 0', background: style.bg }}>
+    <footer style={{
+      textAlign: 'center',
+      color: style.text,
+      fontSize: '0.95em',
+      marginTop: 32,
+      padding: '8px 12px',
+      background: style.bg,
+      wordBreak: 'break-word',
+      whiteSpace: 'normal',
+      lineHeight: 1.5,
+      maxWidth: '100vw',
+      boxSizing: 'border-box'
+    }}>
       © 2026 Contract Deployer &nbsp;|&nbsp;
       <a
         href="https://github.com/bituzin/Contract-Deployer"
