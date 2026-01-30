@@ -124,49 +124,47 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           style={{
             color: '#fff',
             fontFamily: 'Inter, Arial, sans-serif',
-            fontWeight: 700,
-            fontSize: '1.5em',
-            letterSpacing: '0.03em',
-            opacity: showHeader ? 1 : 0,
-            transition: 'opacity 1s'
-          }}
-        >
-          Contract Deployer
-        </span>
-        <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-          <span style={{ color: '#fff', fontWeight: 600, fontSize: '0.95em', letterSpacing: '0.08em', textTransform: 'uppercase', marginRight: 8 }}>Network</span>
-          <select
-            value={network}
-            onChange={onNetworkChange}
-            style={{
-              padding: '6px 18px',
-              borderRadius: 8,
-              border: 'none',
-              fontWeight: 600,
-              fontSize: '0.95em',
-              background: theme.primaryDark,
-              color: '#fff',
-              boxShadow: `0 2px 8px ${theme.shadow}`,
-              cursor: 'pointer',
-              outline: 'none',
-              appearance: 'none',
-              minWidth: 120
-            }}
-          >
-            {networks.map((n) => (
-              <option key={n} value={n} style={{ background: theme.cardBg, color: theme.textPrimary }}>
-                {n}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
-          {!isConnected ? (
-            <button
-              style={{
-                fontSize: '0.9em',
-                padding: '0.45em 1.4em',
-                background: theme.primary,
+              {network === 'Base' ? (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
+                  <Link
+                    to="/"
+                    style={{ ...navLinkStyle }}
+                    onMouseOver={(e) => handleHover(e, true)}
+                    onMouseOut={(e) => handleHover(e, false)}
+                  >
+                    Home
+                  </Link>
+                  <Link
+                    to="/how"
+                    style={{ ...navLinkStyle }}
+                    onMouseOver={(e) => handleHover(e, true)}
+                    onMouseOut={(e) => handleHover(e, false)}
+                  >
+                    How It Works
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  <Link
+                    to="/"
+                    style={{ ...navLinkStyle }}
+                    onMouseOver={(e) => handleHover(e, true)}
+                    onMouseOut={(e) => handleHover(e, false)}
+                  >
+                    Home
+                  </Link>
+                  <span style={getCurrentDividerStyle()}></span>
+                  <Link
+                    to="/how"
+                    style={{ ...navLinkStyle }}
+                    onMouseOver={(e) => handleHover(e, true)}
+                    onMouseOut={(e) => handleHover(e, false)}
+                  >
+                    How It Works
+                  </Link>
+                  <span style={getCurrentDividerStyle()}></span>
+                </>
+              )}
                 color: network === 'Celo' ? '#444' : '#fff',
                 border: 'none',
                  border: `1px solid ${theme.primary}`,
@@ -314,55 +312,35 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         >
           Contracts
         </Link>
-        <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/bytecodes"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          Bytecodes
-        </Link>
-        <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/deploy"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          Deploy
-        </Link>
-        {/* Verify section only on Base network */}
-        {network === 'Base' && <>
-          <span style={getCurrentDividerStyle()}></span>
-          <Link
-            to="/verify"
-            style={{ ...navLinkStyle }}
-            onMouseOver={(e) => handleHover(e, true)}
-            onMouseOut={(e) => handleHover(e, false)}
-          >
-            Verify
-          </Link>
-        </>}
-        <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/my-deployments"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          My Deployments
-        </Link>
-        <span style={getCurrentDividerStyle()}></span>
-        <Link
-          to="/interact"
-          style={{ ...navLinkStyle }}
-          onMouseOver={(e) => handleHover(e, true)}
-          onMouseOut={(e) => handleHover(e, false)}
-        >
-          Interact
-        </Link>
-        <span style={getCurrentDividerStyle()}></span>
+          {network === 'Base' ? (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 0 }}>
+              <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+              <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+              <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+              {network === 'Base' && <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>}
+              <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+              <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+            </div>
+          ) : (
+            <>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/contracts" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Contracts</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/bytecodes" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Bytecodes</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/deploy" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Deploy</Link>
+              {/* Verify section only on Base network */}
+              {network === 'Base' && <>
+                <span style={getCurrentDividerStyle()}></span>
+                <Link to="/verify" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Verify</Link>
+              </>}
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/my-deployments" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>My Deployments</Link>
+              <span style={getCurrentDividerStyle()}></span>
+              <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
+              <span style={getCurrentDividerStyle()}></span>
+            </>
+          )}
       </div>
     </>
   );
