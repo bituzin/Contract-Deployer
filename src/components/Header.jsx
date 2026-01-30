@@ -190,24 +190,6 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
             <span style={getCurrentDividerStyle()}></span>
             <Link to="/interact" style={{ ...navLinkStyle }} onMouseOver={e => handleHover(e, true)} onMouseOut={e => handleHover(e, false)}>Interact</Link>
           </>
-                  fontSize: '0.86em',
-                  cursor: 'pointer',
-                  minWidth: 120
-                }}
-                title="Copy address"
-              >
-                {copied ? 'Copied' : displayAddress}
-              </button>
-              <button
-                style={{
-                  fontSize: '0.86em',
-                  padding: '0.4em 1em',
-                  background: theme.primaryDark,
-                  color: '#fff',
-                  border: 'none',
-                    border: `1px solid ${theme.primary}`,
-                    borderRadius: 10,
-                  fontWeight: 600,
                   cursor: 'pointer',
                   boxShadow: `0 2px 8px ${theme.shadow}`,
                   transition: 'background 0.2s'
