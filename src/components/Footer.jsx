@@ -30,7 +30,7 @@ const Footer = ({ network = 'Celo' }) => {
         boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
         padding: '4px 18px',
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 8,
@@ -40,7 +40,12 @@ const Footer = ({ network = 'Celo' }) => {
         maxWidth: 540,
         width: '100%',
         boxSizing: 'border-box',
-        textAlign: 'center'
+        textAlign: 'center',
+        whiteSpace: 'nowrap',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        minWidth: 0,
+        minHeight: 0
       }}>
         <span>© 2026 Contract Deployer</span>
         <span>|</span>
