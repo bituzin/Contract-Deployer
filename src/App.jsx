@@ -314,7 +314,7 @@ function App() {
                   maxWidth: 540,
                   margin: '60px 0 32px 0',
                   position: 'relative',
-                  left: 'calc((100vw - 340px - 540px) / 2 + 340px)',
+                  left: 340,
                   borderRadius: 16,
                   boxShadow: `0 2px 24px ${theme.shadow}`,
                   padding: '32px 36px',
