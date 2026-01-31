@@ -151,25 +151,22 @@ function App() {
   //   } else {
   //     setShowNav(false);
   //     setShowWelcome(false);
-  //   }
-  // }, [showHeader]);
-
-  // Automatyczne przełączanie sieci w portfelu po podłączeniu
-  React.useEffect(() => {
-    if (isConnected) {
-      const networkParam = getNetworkParam(network);
-      if (window.ethereum && networkParam) {
-        window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: networkParam.chainId }]
-        }).catch(err => {
-          console.log("Network switch error:", err);
-        });
-      }
-    }
-  }, [isConnected, network]);
-
-  // Przełączanie sieci
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          paddingLeft: '340px', // szerokość menu
+        }}
+      >
+        <main
+          style={{
+            maxWidth: '800px',
+            width: '100%',
+          }}
+        >
+          {children}
+        </main>
+      </div>
   async function handleNetworkChange(e) {
     const selected = e.target.value;
     setNetwork(selected);
