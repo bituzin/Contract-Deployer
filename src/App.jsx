@@ -312,7 +312,9 @@ function App() {
               <div
                 style={{
                   maxWidth: 540,
-                  margin: '60px auto 32px 340px',
+                  margin: '60px 0 32px 0',
+                  position: 'relative',
+                  left: 'calc((100vw - 340px - 540px) / 2 + 340px)',
                   borderRadius: 16,
                   boxShadow: `0 2px 24px ${theme.shadow}`,
                   padding: '32px 36px',
