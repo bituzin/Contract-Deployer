@@ -73,9 +73,6 @@ const clickCounterAbi = [
 import { getExplorerUrl } from '../config/explorers';
 import { BackButton } from './common/BackButton';
 
-import { getExplorerUrl } from '../config/explorers';
-import { BackButton } from './common/BackButton';
-
 export const ContractInteract = ({ theme, isConnected, openModal, network: selectedNetwork }) => {
   const [artifactsSimpleStorage, setArtifactsSimpleStorage] = useState(null);
   const [artifactsMessageBoard, setArtifactsMessageBoard] = useState(null);
