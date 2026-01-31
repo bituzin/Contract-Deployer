@@ -151,22 +151,7 @@ function App() {
   //   } else {
   //     setShowNav(false);
   //     setShowWelcome(false);
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          paddingLeft: '340px', // szerokość menu
-        }}
-      >
-        <main
-          style={{
-            maxWidth: '800px',
-            width: '100%',
-          }}
-        >
-          {children}
-        </main>
-      </div>
+      // ...existing code...
   async function handleNetworkChange(e) {
     const selected = e.target.value;
     setNetwork(selected);
