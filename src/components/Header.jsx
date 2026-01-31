@@ -190,12 +190,11 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
               {idx < arr.length - 1 && (
                 <span
                   style={{
-                    display: 'inline-block',
-                    width: 1,
-                    height: 18,
+                    display: 'block',
+                    width: '80%',
+                    height: 1,
                     background: 'rgba(0,0,0,0.18)',
-                    margin: '0 7px',
-                    verticalAlign: 'middle',
+                    margin: '6px auto',
                   }}
                 />
               )}
