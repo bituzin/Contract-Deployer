@@ -1,5 +1,5 @@
 import React from 'react';
-// import { contracts } from '../config/contracts';
+import { contracts } from '../config/contracts';
 import { PageContainer } from './common/PageContainer';
 import { BackButton } from './common/BackButton';
 import { ContractCard } from './common/ContractCard';
