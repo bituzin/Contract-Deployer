@@ -32,7 +32,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
 
   return (
     <>
-      {/* Pasek tytułu i wyboru sieci - gradient, wyższy, białe napisy */}
+      {/* Pasek tytułu i wyboru sieci - oryginalny wygląd */}
       <div
         style={{
           width: '100%',
@@ -40,7 +40,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '16px 32px',
-          height: 72,
+          height: 68,
           boxSizing: 'border-box',
           position: 'fixed',
           top: 0,
