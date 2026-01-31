@@ -306,13 +306,13 @@ function App() {
           onConnect={handleConnect}
           onDisconnect={handleDisconnect}
         />
-        <div style={{ padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'flex-start', paddingLeft: 340 }}>
+        <div style={{ padding: 40, paddingTop: 120 }}>
           <Routes>
             <Route path="/" element={( 
               <div
                 style={{
                   maxWidth: 540,
-                  marginBottom: 32,
+                  margin: '60px auto 32px 340px',
                   borderRadius: 16,
                   boxShadow: `0 2px 24px ${theme.shadow}`,
                   padding: '32px 36px',
