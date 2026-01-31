@@ -171,22 +171,35 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           minHeight: 44,
         }}
       >
-        {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx) => {
+        {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx, arr) => {
           const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
           return (
-            <Link
-              key={path}
-              to={path}
-              style={
-                hovered === idx
-                  ? { ...navLinkStyle, ...navLinkHoverStyle }
-                  : navLinkStyle
-              }
-              onMouseEnter={() => setHovered(idx)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              {names[idx]}
-            </Link>
+            <React.Fragment key={path}>
+              <Link
+                to={path}
+                style={
+                  hovered === idx
+                    ? { ...navLinkStyle, ...navLinkHoverStyle }
+                    : navLinkStyle
+                }
+                onMouseEnter={() => setHovered(idx)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                {names[idx]}
+              </Link>
+              {idx < arr.length - 1 && (
+                <span
+                  style={{
+                    display: 'inline-block',
+                    width: 1,
+                    height: 18,
+                    background: 'rgba(0,0,0,0.18)',
+                    margin: '0 7px',
+                    verticalAlign: 'middle',
+                  }}
+                />
+              )}
+            </React.Fragment>
           );
         })}
       </div>
