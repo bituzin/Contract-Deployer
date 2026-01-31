@@ -146,7 +146,8 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
         style={{
           width: 'fit-content',
           maxWidth: 'fit-content',
-          margin: '0 auto',
+          margin: 0,
+          justifyContent: 'flex-start',
           position: 'fixed',
           top: 68,
           left: 0,
