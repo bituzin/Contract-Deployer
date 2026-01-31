@@ -144,9 +144,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
       {/* Pasek nawigacyjny */}
       <div
         style={{
-          width: network === 'Base' ? '320px' : '100%',
-          maxWidth: network === 'Base' ? '320px' : '540px',
-          margin: network === 'Base' ? '0' : '0 auto',
+          width: 'fit-content',
+          maxWidth: 'fit-content',
+          margin: '0 auto',
           position: 'fixed',
           top: 68,
           left: 0,
