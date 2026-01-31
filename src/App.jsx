@@ -151,25 +151,7 @@ function App() {
   //   } else {
   //     setShowNav(false);
   //     setShowWelcome(false);
-  //   }
-  // }, [showHeader]);
-
-  // Automatyczne przełączanie sieci w portfelu po podłączeniu
-  React.useEffect(() => {
-    if (isConnected) {
-      const networkParam = getNetworkParam(network);
-      if (window.ethereum && networkParam) {
-        window.ethereum.request({
-          method: "wallet_switchEthereumChain",
-          params: [{ chainId: networkParam.chainId }]
-        }).catch(err => {
-          console.log("Network switch error:", err);
-        });
-      }
-    }
-  }, [isConnected, network]);
-
-  // Przełączanie sieci
+      // ...existing code...
   async function handleNetworkChange(e) {
     const selected = e.target.value;
     setNetwork(selected);
@@ -306,13 +288,12 @@ function App() {
           onConnect={handleConnect}
           onDisconnect={handleDisconnect}
         />
-        <div style={{ padding: 40, paddingTop: 120 }}>
+        <div style={{ padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center', paddingLeft: 340 }}>
           <Routes>
             <Route path="/" element={( 
               <div
                 style={{
-                  maxWidth: 540,
-                  margin: '60px auto 32px auto',
+                  maxWidth: 900,
                   borderRadius: 16,
                   boxShadow: `0 2px 24px ${theme.shadow}`,
                   padding: '32px 36px',

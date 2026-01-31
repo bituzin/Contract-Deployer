@@ -32,7 +32,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
 
   return (
     <>
-      {/* Główny pasek headera */}
+      {/* Pasek tytułu i wyboru sieci - oryginalny wygląd */}
       <div
         style={{
           width: '100%',
@@ -46,14 +46,13 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           top: 0,
           left: 0,
           zIndex: 1200,
-          background: theme.cardBg,
-          borderBottom: `1px solid ${theme.highlight}`,
+          background: theme.gradient,
           fontFamily: 'Inter, Arial, sans-serif',
         }}
       >
         <span
           style={{
-            color: theme.textPrimary,
+            color: '#fff',
             fontFamily: 'Inter, Arial, sans-serif',
             fontWeight: 700,
             fontSize: '1.5em',
@@ -145,18 +144,19 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
       {/* Pasek nawigacyjny */}
       <div
         style={{
-          width: network === 'Base' ? '320px' : '100%',
-          maxWidth: network === 'Base' ? '320px' : '100%',
+          width: 'fit-content',
+          maxWidth: 'fit-content',
+          margin: 0,
           position: 'fixed',
           top: 68,
           left: 0,
           height: network === 'Base' ? '100vh' : undefined,
           display: 'flex',
           flexDirection: network === 'Base' ? 'column' : 'row',
-          alignItems: network === 'Base' ? 'flex-start' : 'center',
-          justifyContent: network === 'Base' ? 'flex-start' : 'center',
+          alignItems: 'flex-start',
+          justifyContent: 'flex-start',
           gap: '8px',
-          padding: network === 'Base' ? '24px 32px' : '0 32px',
+          padding: 0,
           zIndex: 1100,
           background: theme.cardBg,
           fontFamily: 'Inter, Arial, sans-serif',
@@ -171,22 +171,34 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           minHeight: 44,
         }}
       >
-        {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx) => {
+        {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx, arr) => {
           const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
           return (
-            <Link
-              key={path}
-              to={path}
-              style={
-                hovered === idx
-                  ? { ...navLinkStyle, ...navLinkHoverStyle }
-                  : navLinkStyle
-              }
-              onMouseEnter={() => setHovered(idx)}
-              onMouseLeave={() => setHovered(null)}
-            >
-              {names[idx]}
-            </Link>
+            <React.Fragment key={path}>
+              <Link
+                to={path}
+                style={
+                  hovered === idx
+                    ? { ...navLinkStyle, ...navLinkHoverStyle }
+                    : navLinkStyle
+                }
+                onMouseEnter={() => setHovered(idx)}
+                onMouseLeave={() => setHovered(null)}
+              >
+                {names[idx]}
+              </Link>
+              {idx < arr.length - 1 && (
+                <span
+                  style={{
+                    display: 'block',
+                    width: '80%',
+                    height: 1,
+                    background: 'rgba(0,0,0,0.18)',
+                    margin: '6px auto',
+                  }}
+                />
+              )}
+            </React.Fragment>
           );
         })}
       </div>
