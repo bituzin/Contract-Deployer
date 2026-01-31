@@ -32,7 +32,7 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
 
   return (
     <>
-      {/* Główny pasek headera */}
+      {/* Pasek tytułu i wyboru sieci - gradient, wyższy, białe napisy */}
       <div
         style={{
           width: '100%',
@@ -40,20 +40,19 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           alignItems: 'center',
           justifyContent: 'space-between',
           padding: '16px 32px',
-          height: 68,
+          height: 72,
           boxSizing: 'border-box',
           position: 'fixed',
           top: 0,
           left: 0,
           zIndex: 1200,
-          background: theme.cardBg,
-          borderBottom: `1px solid ${theme.highlight}`,
+          background: theme.gradient,
           fontFamily: 'Inter, Arial, sans-serif',
         }}
       >
         <span
           style={{
-            color: theme.textPrimary,
+            color: '#fff',
             fontFamily: 'Inter, Arial, sans-serif',
             fontWeight: 700,
             fontSize: '1.5em',
