@@ -178,9 +178,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
               <Link
                 to={path}
                 style={
-                  hovered === idx
-                    ? { ...navLinkStyle, ...navLinkHoverStyle }
-                    : navLinkStyle
+                  idx === 0
+                    ? { ...(hovered === idx ? { ...navLinkStyle, ...navLinkHoverStyle } : navLinkStyle), marginTop: 18 }
+                    : (hovered === idx ? { ...navLinkStyle, ...navLinkHoverStyle } : navLinkStyle)
                 }
                 onMouseEnter={() => setHovered(idx)}
                 onMouseLeave={() => setHovered(null)}
