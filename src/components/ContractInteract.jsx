@@ -278,7 +278,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
   if (!isConnected) {
     return (
       <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-        <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320 }}>
+        <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>Contract Interaction</h2>
           <div style={{ marginBottom: 24 }}>
             Connect your wallet to interact with this contract.
@@ -356,7 +356,8 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
           </div>
         </div>
       )}
-      <div style={{ maxWidth: 1100, margin: '60px auto 32px auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingTop: 60, marginBottom: 32 }}>
+        <div style={{ maxWidth: 1000, width: '100%' }}>
         {showClickCounterDescription && (
           <div style={{
             background: theme.cardBgDark,
@@ -373,7 +374,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             Emits a Clicked event with the sender address and new count on every click.
           </div>
         )}
-        <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
+        <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7 }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
           <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
             Contract: {contractName}
@@ -592,8 +593,9 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             </div>
           </div>
         </div>
+        </div>
+        </div>
       </div>
-    </div>
     </>
   );
 };

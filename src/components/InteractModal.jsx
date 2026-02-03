@@ -26,9 +26,11 @@ export const InteractModal = ({ theme, visible, onClose, onSubmit }) => {
       justifyContent: 'center',
     }}>
       <div style={{
-        borderRadius: 12,
-        boxShadow: '0 2px 16px rgba(0,0,0,0.12)',
-        padding: '32px 36px',
+        background: theme.cardBg + 'E6',
+        border: `1px solid ${theme.primary}`,
+        borderRadius: 10,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+        padding: '28px 32px',
         minWidth: 340,
         maxWidth: 420,
         textAlign: 'center',
