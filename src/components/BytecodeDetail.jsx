@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-// import { contracts } from '../config/contracts';
+import { contracts } from '../config/contracts';
 import { PageContainer } from './common/PageContainer';
 import { BackButton } from './common/BackButton';
 

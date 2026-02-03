@@ -93,17 +93,18 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
   const shortTx = fullTx ? `${fullTx.slice(0, 6)}...${fullTx.slice(-4)}` : '';
 
   return (
-    <div
-      style={{
-        background: `rgba(${theme.primaryRgb},0.08)`,
-        border: `1px solid ${theme.primary}`,
-        borderRadius: '10px',
-        padding: '16px 20px',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '12px'
-      }}
-    >
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
+      <div
+        style={{
+          background: `rgba(${theme.primaryRgb},0.08)`,
+          border: `1px solid ${theme.primary}`,
+          borderRadius: '10px',
+          padding: '16px 20px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '12px'
+        }}
+      >
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span style={{ fontWeight: 700, fontSize: '1.04em', color: theme.textPrimary }}>{deployment.contractName}</span>
         <span style={{ fontSize: '0.88em', color: theme.textSecondary }}>{formatDate(deployment.timestamp)}</span>
@@ -238,6 +239,7 @@ export const DeploymentCard = ({ deployment, theme, network, formatDate }) => {
           onClick={() => window.location.href = `/interact/${deployment.contractName}/${deployment.contractAddress}/${deployment.network}`}
         >Interact with contract</button>
       )}
+      </div>
     </div>
   );
 };
