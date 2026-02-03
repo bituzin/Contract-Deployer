@@ -256,16 +256,15 @@ function App() {
   return (
     <>
     <Router basename="/">
-      {/* Removed transparent background image */}
-        {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
-        <div style={{ display: 'none' }}>
-          <appkit-button />
-        </div>
-        <div className="App" style={{
-          minHeight: '100vh',
-          transition: 'background 0.3s',
-          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
-        }}>
+      {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
+      <div style={{ display: 'none' }}>
+        <appkit-button />
+      </div>
+      <div className="App" style={{
+        minHeight: '100vh',
+        transition: 'background 0.3s',
+        background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
+      }}>
         <Popup 
           visible={popup.visible} 
           message={popup.message} 
@@ -288,29 +287,33 @@ function App() {
           onConnect={handleConnect}
           onDisconnect={handleDisconnect}
         />
-        <div style={{ padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center', paddingLeft: 340 }}>
-          <Routes>
-            <Route path="/" element={( 
-              <div
-                style={{
-                  maxWidth: 900,
-                  borderRadius: 16,
-                  boxShadow: `0 2px 24px ${theme.shadow}`,
-                  padding: '32px 36px',
-                  textAlign: 'center',
-                  fontFamily: 'Inter, Arial, sans-serif',
-                  fontWeight: 500,
-                  fontSize: '1.12em',
-                  letterSpacing: '0.01em',
-                  opacity: showWelcome ? 1 : 0,
-                  transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                  transition: 'opacity 1s, transform 1s',
-                  background: 'rgba(255,255,255,0.82)',
-                  backdropFilter: 'blur(8px)',
-                  WebkitBackdropFilter: 'blur(8px)',
-                  border: '1px solid rgba(0,0,0,0.07)'
-                }}
-              >
+        <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
+          {/* Sidebar placeholder (fixed width, matches nav) */}
+          <div style={{ width: 340, flexShrink: 0 }} />
+          {/* Main content area */}
+          <div style={{ flex: 1, padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center' }}>
+            <Routes>
+              <Route path="/" element={( 
+                <div
+                  style={{
+                    maxWidth: 900,
+                    borderRadius: 16,
+                    boxShadow: `0 2px 24px ${theme.shadow}`,
+                    padding: '32px 36px',
+                    textAlign: 'center',
+                    fontFamily: 'Inter, Arial, sans-serif',
+                    fontWeight: 500,
+                    fontSize: '1.12em',
+                    letterSpacing: '0.01em',
+                    opacity: showWelcome ? 1 : 0,
+                    transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
+                    transition: 'opacity 1s, transform 1s',
+                    background: 'rgba(255,255,255,0.82)',
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
+                    border: '1px solid rgba(0,0,0,0.07)'
+                  }}
+                >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
                   <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
                     Deploy Your Contract – Fast & Secure!
