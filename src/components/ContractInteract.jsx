@@ -593,8 +593,8 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             </div>
           </div>
         </div>
-        </div>
       </div>
+    </div>
     </>
   );
 };
