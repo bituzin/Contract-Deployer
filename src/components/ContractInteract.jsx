@@ -356,7 +356,8 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
           </div>
         </div>
       )}
-      <div style={{ maxWidth: 1100, margin: '60px auto 32px auto' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', paddingLeft: 340, paddingTop: 60, marginBottom: 32 }}>
+        <div style={{ maxWidth: 1000, width: '100%' }}>
         {showClickCounterDescription && (
           <div style={{
             background: theme.cardBgDark,
@@ -592,8 +593,8 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             </div>
           </div>
         </div>
+        </div>
       </div>
-    </div>
     </>
   );
 };
