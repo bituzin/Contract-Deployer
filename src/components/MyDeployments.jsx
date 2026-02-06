@@ -72,7 +72,6 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
     <div style={{
       maxWidth: 900,
       margin: '60px auto 32px auto',
-      marginLeft: 40,
     }}>
       <div style={{
         background: theme.cardBg + 'E6',
