@@ -255,48 +255,49 @@ function App() {
 
   return (
     <>
-    <Router basename="/">
-      {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
-      <div style={{ display: 'none' }}>
-        <appkit-button />
-      </div>
-      <div className="App" style={{
-        minHeight: '100vh',
-        transition: 'background 0.3s',
-        background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
-      }}>
-        <Popup 
-          visible={popup.visible} 
-          message={popup.message} 
-          txHash={popup.txHash}
-          network={popup.network || network}
-          onClose={() => setPopup({ visible: false, message: "", txHash: null, content: null })}
-          theme={theme}
-        >
-          {popup.content}
-        </Popup>
-        <Header 
-          theme={theme}
-          showHeader={showHeader}
-          showNav={showNav}
-          network={network}
-          networks={networks}
-          onNetworkChange={handleNetworkChange}
-          isConnected={isConnected}
-          address={address}
-          onConnect={handleConnect}
-          onDisconnect={handleDisconnect}
-        />
-        <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
-          {/* Sidebar placeholder (fixed width, matches nav) */}
-          <div style={{ width: 340, flexShrink: 0 }} />
-          {/* Main content area */}
-          <div style={{ flex: 1, padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center' }}>
-            <Routes>
-              <Route path="/" element={( 
-                <div
-                  style={{
-                    maxWidth: 900,
+      <Router basename="/">
+        {/* Removed transparent background image */}
+        {/* Niewidoczny przycisk WalletConnect do programowego wywoływania */}
+        <div style={{ display: 'none' }}>
+          <appkit-button />
+        </div>
+        <div className="App" style={{
+          minHeight: '100vh',
+          transition: 'background 0.3s',
+          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
+        }}>
+          <Popup 
+            visible={popup.visible} 
+            message={popup.message} 
+            txHash={popup.txHash}
+            network={popup.network || network}
+            onClose={() => setPopup({ visible: false, message: "", txHash: null, content: null })}
+            theme={theme}
+          >
+            {popup.content}
+          </Popup>
+          <Header 
+            theme={theme}
+            showHeader={showHeader}
+            showNav={showNav}
+            network={network}
+            networks={networks}
+            onNetworkChange={handleNetworkChange}
+            isConnected={isConnected}
+            address={address}
+            onConnect={handleConnect}
+            onDisconnect={handleDisconnect}
+          />
+          <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
+            {/* Sidebar placeholder (fixed width, matches nav) */}
+            <div style={{ width: 340, flexShrink: 0 }} />
+            {/* Main content area */}
+            <div style={{ flex: 1, padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center' }}>
+              <Routes>
+                <Route path="/" element={( 
+                  <div
+                    style={{
+                      maxWidth: 900,
                     borderRadius: 16,
                     boxShadow: `0 2px 24px ${theme.shadow}`,
                     padding: '32px 36px',
@@ -568,60 +569,61 @@ function App() {
               />
             )} />
             <Route path="/interact" element={(
-              <InteractPage theme={theme} network={network} />
-            )} />
-          </Routes>
-        </div>
-      </div>
-      {deployLoading && (
-  <div style={{
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100vw',
-    height: '100vh',
-    background: 'rgba(0, 0, 0, 0.5)',
-    backdropFilter: 'blur(8px)',
-    WebkitBackdropFilter: 'blur(8px)',
-    zIndex: 9999,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexDirection: 'column'
-  }}>
-    <div style={{
-      width: '60px',
-      height: '60px',
-      border: `4px solid ${theme.primary}`,
-      borderTop: '4px solid transparent',
-      borderRadius: '50%',
-      animation: 'spin 1s linear infinite'
-    }} />
-    <style>{`
-      @keyframes spin {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-      }
-    `}</style>
-    <div style={{
-      marginTop: '20px',
-      color: '#fff',
-      fontSize: '1.1em',
-      fontWeight: 600,
-      textShadow: '0 2px 4px rgba(0,0,0,0.5)'
-    }}>
-      Processing transaction...
-    </div>
-  </div>
-)}
-    </Router>
-    <Footer network={network} />
-    <InteractModal
-      theme={theme}
-      visible={interactModalVisible}
-      onClose={handleInteractModalClose}
-      onSubmit={handleInteractModalSubmit}
-    />
+                <InteractPage theme={theme} network={network} />
+              )} />
+            </Routes>
+            </div> {/* End Main content area */}
+          </div> {/* End flex row */}
+          {deployLoading && (
+            <div style={{
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100vw',
+              height: '100vh',
+              background: 'rgba(0, 0, 0, 0.5)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              zIndex: 9999,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'column'
+            }}>
+              <div style={{
+                width: '60px',
+                height: '60px',
+                border: `4px solid ${theme.primary}`,
+                borderTop: '4px solid transparent',
+                borderRadius: '50%',
+                animation: 'spin 1s linear infinite'
+              }} />
+              <style>{`
+                @keyframes spin {
+                  0% { transform: rotate(0deg); }
+                  100% { transform: rotate(360deg); }
+                }
+              `}</style>
+              <div style={{
+                marginTop: '20px',
+                color: '#fff',
+                fontSize: '1.1em',
+                fontWeight: 600,
+                textShadow: '0 2px 4px rgba(0,0,0,0.5)'
+              }}>
+                Processing transaction...
+              </div>
+            </div>
+          )}
+        </div> {/* End App */}
+        <Footer network={network} />
+        <InteractModal
+          theme={theme}
+          visible={interactModalVisible}
+          onClose={handleInteractModalClose}
+          onSubmit={handleInteractModalSubmit}
+        />
+      </Router>
     </>
   );
 }
