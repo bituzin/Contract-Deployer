@@ -125,9 +125,9 @@ export const Header = ({ theme, showHeader, showNav, network, networks, onNetwor
           {isConnected && (
             <button
               style={{
-                background: 'transparent',
-                color: theme.textPrimary,
-                border: `1px solid ${theme.highlight}`,
+                background: theme.highlight,
+                color: '#222',
+                border: 'none',
                 borderRadius: 8,
                 padding: '4px 14px',
                 fontWeight: 700,
