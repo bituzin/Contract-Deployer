@@ -292,7 +292,7 @@ function App() {
             {/* Sidebar placeholder (fixed width, matches nav) */}
             <div style={{ width: 340, flexShrink: 0 }} />
             {/* Main content area */}
-            <div style={{ flex: 1, padding: 40, paddingTop: 120, display: 'flex', justifyContent: 'center' }}>
+            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'center' }}>
               <Routes>
                 <Route path="/" element={( 
                   <div
