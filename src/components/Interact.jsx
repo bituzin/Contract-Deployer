@@ -86,55 +86,55 @@ export const Interact = ({ theme, address, isConnected, openModal, network, depl
               color: theme.textPrimary,
               border: 'none',
               borderRadius: '6px',
-              return (
-                <div style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  paddingLeft: 340,
-                  paddingTop: 60,
-                  marginBottom: 32
-                }}>
-                  <div style={{
-                    background: theme.cardBg + 'E6',
-                    border: `1px solid ${theme.primary}`,
-                    borderRadius: 10,
-                    boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-                    padding: '28px 32px',
-                    color: theme.textPrimary,
-                    fontSize: '0.96em',
-                    fontFamily: 'Inter, Arial, sans-serif',
-                    fontWeight: 500,
-                    textAlign: 'left',
-                    lineHeight: 1.7,
-                    maxWidth: 1000,
-                    width: '100%'
-                  }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-                      <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Interact</h2>
-                    </div>
-                    {deployments.length === 0 ? (
-                      <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
-                        <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments</p>
-                        <p style={{ fontSize: '0.92em' }}>Deploy your first contract to see it here.</p>
-                      </div>
-                    ) : filteredDeployments.length === 0 ? (
-                      <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
-                        <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments on {network}</p>
-                        <p style={{ fontSize: '0.92em' }}>Switch networks to view other deployments.</p>
-                      </div>
-                    ) : (
-                      <div>
-                        <div style={{ fontSize: '0.92em', color: theme.textSecondary, marginBottom: 24 }}>
-                          Deployments on {network || 'all networks'}: <b>{filteredDeployments.length}</b>
-                        </div>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                          {filteredDeployments.map(renderDeploymentCard)}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              );
+              fontWeight: 600,
+              cursor: 'pointer',
+              boxShadow: `0 2px 8px ${theme.shadow}`,
+              transition: 'background 0.2s'
+            }}
+            onClick={openModal}
+          >
+            Connect Wallet
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div style={{
+      display: 'flex',
+      justifyContent: 'center',
+      paddingLeft: 340,
+      paddingTop: 60,
+      marginBottom: 32
+    }}>
+      <div style={{
+        background: theme.cardBg + 'E6',
+        border: `1px solid ${theme.primary}`,
+        borderRadius: 10,
+        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+        padding: '28px 32px',
+        color: theme.textPrimary,
+        fontSize: '0.96em',
+        fontFamily: 'Inter, Arial, sans-serif',
+        fontWeight: 500,
+        textAlign: 'left',
+        lineHeight: 1.7,
+        maxWidth: 1000,
+        width: '100%'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
+          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Interact</h2>
+        </div>
+        {deployments.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
+            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments</p>
+            <p style={{ fontSize: '0.92em' }}>Deploy your first contract to see it here.</p>
+          </div>
+        ) : filteredDeployments.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
+            <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments on {network}</p>
+            <p style={{ fontSize: '0.92em' }}>Switch networks to view other deployments.</p>
           </div>
         ) : (
           <div>

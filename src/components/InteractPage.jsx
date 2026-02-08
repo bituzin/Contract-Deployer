@@ -4,17 +4,18 @@ import { fetchCodeFromRpc } from '../utils/fetchCodeFromRpc';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
-    // Clear address input when network changes
-    useEffect(() => {
-      setAddress('');
-      setSubmitted(false);
-      setAbi(null);
-      setAbiError(null);
-    }, [network]);
-  const [submitted, setSubmitted] = useState(false);
+  const [_submitted, setSubmitted] = useState(false);
   const [abi, setAbi] = useState(null);
   const [abiError, setAbiError] = useState(null);
   const [loadingAbi, setLoadingAbi] = useState(false);
+
+  // Clear address input when network changes
+  useEffect(() => {
+    setAddress('');
+    setSubmitted(false);
+    setAbi(null);
+    setAbiError(null);
+  }, [network]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -118,7 +119,6 @@ export const InteractPage = ({ theme, network }) => {
           </ul>
         </div>
       )}
-      </div>
     </div>
   );
 };
