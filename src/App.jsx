@@ -277,7 +277,7 @@ function App() {
             onDisconnect={handleDisconnect}
           />
           <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
-            {/* Sidebar placeholder (fixed width, matches nav) */}
+            {/* Sidebar normal flow */}
             <div style={{ width: 340, flexShrink: 0 }} />
             {/* Main content area */}
             <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'center' }}>
