@@ -4,17 +4,18 @@ import { fetchCodeFromRpc } from '../utils/fetchCodeFromRpc';
 
 export const InteractPage = ({ theme, network }) => {
   const [address, setAddress] = useState('');
-    // Clear address input when network changes
-    useEffect(() => {
-      setAddress('');
-      setSubmitted(false);
-      setAbi(null);
-      setAbiError(null);
-    }, [network]);
-  const [submitted, setSubmitted] = useState(false);
+  const [_submitted, setSubmitted] = useState(false);
   const [abi, setAbi] = useState(null);
   const [abiError, setAbiError] = useState(null);
   const [loadingAbi, setLoadingAbi] = useState(false);
+
+  // Clear address input when network changes
+  useEffect(() => {
+    setAddress('');
+    setSubmitted(false);
+    setAbi(null);
+    setAbiError(null);
+  }, [network]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,25 +43,19 @@ export const InteractPage = ({ theme, network }) => {
 
   return (
     <div style={{
-      display: 'flex',
-      justifyContent: 'center',
-      paddingLeft: 340,
-      paddingTop: 60,
-      marginBottom: 32
+      background: theme.cardBg + 'E6',
+      maxWidth: 540,
+      width: 'auto',
+      margin: '0 auto',
+      border: `1px solid ${theme.primary}`,
+      borderRadius: 10,
+      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+      padding: '28px 32px',
+      textAlign: 'center',
+      fontFamily: 'Inter, Arial, sans-serif',
+      fontWeight: 500,
+      color: theme.textPrimary
     }}>
-      <div style={{
-        background: theme.cardBg + 'E6',
-        maxWidth: 540,
-        width: '100%',
-        border: `1px solid ${theme.primary}`,
-        borderRadius: 10,
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-        padding: '28px 32px',
-        textAlign: 'center',
-        fontFamily: 'Inter, Arial, sans-serif',
-        fontWeight: 500,
-        color: theme.textPrimary
-      }}>
       <h2 style={{ fontWeight: 700, fontSize: '1.18em', marginBottom: 18 }}>Enter Contract Address</h2>
       <form onSubmit={handleSubmit}>
         <input
@@ -124,7 +119,6 @@ export const InteractPage = ({ theme, network }) => {
           </ul>
         </div>
       )}
-      </div>
     </div>
   );
 };
