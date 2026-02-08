@@ -42,27 +42,19 @@ export const InteractPage = ({ theme, network }) => {
 
   return (
     <div style={{
-      width: '100%',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'flex-start',
-      paddingTop: 60,
-      marginBottom: 32,
+      background: theme.cardBg + 'E6',
+      maxWidth: 540,
+      width: 'auto',
+      margin: '0 auto',
+      border: `1px solid ${theme.primary}`,
+      borderRadius: 10,
+      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+      padding: '28px 32px',
+      textAlign: 'center',
+      fontFamily: 'Inter, Arial, sans-serif',
+      fontWeight: 500,
+      color: theme.textPrimary
     }}>
-      <div style={{
-        background: theme.cardBg + 'E6',
-        maxWidth: 540,
-        width: 'auto',
-        margin: '0 auto',
-        border: `1px solid ${theme.primary}`,
-        borderRadius: 10,
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-        padding: '28px 32px',
-        textAlign: 'center',
-        fontFamily: 'Inter, Arial, sans-serif',
-        fontWeight: 500,
-        color: theme.textPrimary
-      }}>
       <h2 style={{ fontWeight: 700, fontSize: '1.18em', marginBottom: 18 }}>Enter Contract Address</h2>
       <form onSubmit={handleSubmit}>
         <input
