@@ -42,12 +42,12 @@ export const InteractPage = ({ theme, network }) => {
 
   return (
     <div style={{
+      width: '100%',
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'flex-start',
       paddingTop: 60,
       marginBottom: 32,
-      width: '100%',
     }}>
       <div style={{
         background: theme.cardBg + 'E6',
