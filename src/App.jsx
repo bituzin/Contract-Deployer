@@ -276,34 +276,34 @@ function App() {
             onConnect={handleConnect}
             onDisconnect={handleDisconnect}
           />
-          <div style={{ position: 'relative', width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'row' }}>
-            {/* Sidebar absolute */}
-            <div style={{ position: 'absolute', left: 0, top: 0, width: 340, height: '100vh', flexShrink: 0, zIndex: 10 }} />
+          <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'row' }}>
+            {/* Sidebar jako flexbox */}
+            <div style={{ width: 340, minHeight: '100vh', flexShrink: 0, zIndex: 10 }} />
             {/* Main content area */}
-            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex' }}>
-              <Routes>
-              <Route path="/" element={( 
-                <div
-                  style={{
-                    maxWidth: 900,
-                    borderRadius: 16,
-                    boxShadow: `0 2px 24px ${theme.shadow}`,
-                    padding: '32px 36px',
-                    textAlign: 'center',
-                    fontFamily: 'Inter, Arial, sans-serif',
-                    fontWeight: 500,
-                    fontSize: '1.12em',
-                    letterSpacing: '0.01em',
-                    opacity: showWelcome ? 1 : 0,
-                    transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                    transition: 'opacity 1s, transform 1s',
-                    background: 'rgba(255,255,255,0.82)',
-                    backdropFilter: 'blur(8px)',
-                    WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(0,0,0,0.07)',
-                    margin: '0 auto'
-                  }}
-                >
+            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', flexDirection: 'column' }}>
+              <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+                <Routes>
+                <Route path="/" element={( 
+                  <div
+                    style={{
+                      maxWidth: 900,
+                      borderRadius: 16,
+                      boxShadow: `0 2px 24px ${theme.shadow}`,
+                      padding: '32px 36px',
+                      textAlign: 'center',
+                      fontFamily: 'Inter, Arial, sans-serif',
+                      fontWeight: 500,
+                      fontSize: '1.12em',
+                      letterSpacing: '0.01em',
+                      opacity: showWelcome ? 1 : 0,
+                      transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
+                      transition: 'opacity 1s, transform 1s',
+                      background: 'rgba(255,255,255,0.82)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(0,0,0,0.07)'
+                    }}
+                  >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
                   <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
                     Deploy Your Contract – Fast & Secure!
