@@ -43,17 +43,17 @@ export const InteractPage = ({ theme, network }) => {
   return (
     <div style={{
       display: 'flex',
-      justifyContent: 'flex-start',
-      alignItems: 'center',
+      justifyContent: 'center',
+      alignItems: 'flex-start',
       paddingTop: 60,
       marginBottom: 32,
       width: '100%',
-      marginLeft: 340,
     }}>
       <div style={{
         background: theme.cardBg + 'E6',
         maxWidth: 540,
-        width: '100%',
+        width: 'auto',
+        margin: '0 auto',
         border: `1px solid ${theme.primary}`,
         borderRadius: 10,
         boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
