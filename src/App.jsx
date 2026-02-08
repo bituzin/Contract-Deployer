@@ -276,11 +276,11 @@ function App() {
             onConnect={handleConnect}
             onDisconnect={handleDisconnect}
           />
-          <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
-            {/* Sidebar placeholder (fixed width, matches nav) */}
-            <div style={{ width: 340, flexShrink: 0 }} />
+          <div style={{ position: 'relative', width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'row' }}>
+            {/* Sidebar absolute */}
+            <div style={{ position: 'absolute', left: 0, top: 0, width: 340, height: '100vh', flexShrink: 0, zIndex: 10 }} />
             {/* Main content area */}
-            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'flex-start' }}>
+            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex' }}>
               <Routes>
               <Route path="/" element={( 
                 <div
@@ -300,7 +300,8 @@ function App() {
                     background: 'rgba(255,255,255,0.82)',
                     backdropFilter: 'blur(8px)',
                     WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(0,0,0,0.07)'
+                    border: '1px solid rgba(0,0,0,0.07)',
+                    margin: '0 auto'
                   }}
                 >
                 <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
