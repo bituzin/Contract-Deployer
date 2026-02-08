@@ -277,7 +277,7 @@ function App() {
             paddingTop: 120,
             paddingBottom: 40,
             minHeight: '100vh',
-            width: '100%',
+            width: '100vw',
           }}>
             <Routes>
               <Route path="/" element={( 
