@@ -262,24 +262,38 @@ function App() {
           <appkit-button />
         </div>
         <div className="App" style={{
-          display: 'grid',
-          gridTemplateColumns: '340px 1fr',
           minHeight: '100vh',
+          transition: 'background 0.3s',
+          background: `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5'}`
         }}>
-          {/* Sidebar placeholder (fixed width, matches nav) */}
-          <div style={{ width: 340, flexShrink: 0 }} />
-          {/* Main content area */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'flex-start',
-            justifyContent: 'center',
-            paddingTop: 120,
-            paddingBottom: 40,
-            minHeight: '100vh',
-            width: '100vw',
-          }}>
-            <Routes>
+          <Popup 
+            visible={popup.visible} 
+            message={popup.message} 
+            txHash={popup.txHash}
+            network={popup.network || network}
+            onClose={() => setPopup({ visible: false, message: "", txHash: null, content: null })}
+            theme={theme}
+          >
+            {popup.content}
+          </Popup>
+          <Header 
+            theme={theme}
+            showHeader={showHeader}
+            showNav={showNav}
+            network={network}
+            networks={networks}
+            onNetworkChange={handleNetworkChange}
+            isConnected={isConnected}
+            address={address}
+            onConnect={handleConnect}
+            onDisconnect={handleDisconnect}
+          />
+          <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
+            {/* Sidebar placeholder (fixed width, matches nav) */}
+            <div style={{ width: 340, flexShrink: 0 }} />
+            {/* Main content area */}
+            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'center' }}>
+              <Routes>
               <Route path="/" element={( 
                 <div
                   style={{
