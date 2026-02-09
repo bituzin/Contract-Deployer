@@ -276,11 +276,9 @@ function App() {
             onConnect={handleConnect}
             onDisconnect={handleDisconnect}
           />
-          <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
-            {/* Sidebar placeholder (fixed width, matches nav) */}
-            <div style={{ width: 340, flexShrink: 0 }} />
-            {/* Main content area */}
-            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'flex-start' }}>
+          <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+            {/* Main content area wyśrodkowany względem menu */}
+            <div style={{ width: '100%', flex: 1, paddingTop: 120, paddingBottom: 40, paddingLeft: 220, boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
               <Routes>
               <Route path="/" element={( 
                 <div
@@ -603,7 +601,7 @@ function App() {
               </div>
             </div>
           )}
-          <Footer network={network} />
+          <Footer network={network} theme={theme} />
           <InteractModal
             theme={theme}
             visible={interactModalVisible}

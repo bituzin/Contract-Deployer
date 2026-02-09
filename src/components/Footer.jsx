@@ -10,21 +10,24 @@ const networkStyles = {
   default: { bg: `rgba(245, 245, 245, ${TRANSPARENCY})`, text: '#333', link: '#0070f3' }
 };
 
-const Footer = ({ network = 'Celo' }) => {
+const Footer = ({ network = 'Celo', theme }) => {
   const style = networkStyles[network] || networkStyles.default;
   return (
     <footer style={{
-      background: 'transparent',
-      marginTop: 4,
-      padding: 0,
+      background: 'rgba(255,255,255,0.82)',
+      width: 'calc(100% - 200px)',
+      marginTop: 0,
+      marginLeft: 200,
+      padding: '0',
       border: 'none',
-      boxShadow: 'none',
-      minHeight: 0
+      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+      minHeight: 0,
+      position: 'relative',
+      left: 0
     }}>
       <div style={{
-        background: '#fff',
-        borderRadius: 16,
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+        maxWidth: 540,
+        margin: '0 auto',
         padding: '4px 18px',
         display: 'flex',
         flexWrap: 'nowrap',
@@ -34,9 +37,6 @@ const Footer = ({ network = 'Celo' }) => {
         color: style.text,
         fontSize: '0.85em',
         lineHeight: 1.2,
-        maxWidth: 540,
-        width: 'auto',
-        margin: '0 auto',
         boxSizing: 'border-box',
         textAlign: 'center',
         whiteSpace: 'nowrap',
