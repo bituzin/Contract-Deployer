@@ -15,8 +15,9 @@ const Footer = ({ network = 'Celo', theme }) => {
   return (
     <footer style={{
       background: 'rgba(255,255,255,0.82)',
-      width: '100%',
+      width: 'calc(100% - 200px)',
       marginTop: 0,
+      marginLeft: 200,
       padding: '0',
       border: 'none',
       boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
