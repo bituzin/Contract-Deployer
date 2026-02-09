@@ -10,11 +10,11 @@ const networkStyles = {
   default: { bg: `rgba(245, 245, 245, ${TRANSPARENCY})`, text: '#333', link: '#0070f3' }
 };
 
-const Footer = ({ network = 'Celo' }) => {
+const Footer = ({ network = 'Celo', theme }) => {
   const style = networkStyles[network] || networkStyles.default;
   return (
     <footer style={{
-      background: '#fff',
+      background: 'rgba(255,255,255,0.82)',
       width: '100%',
       marginTop: 0,
       padding: '0',

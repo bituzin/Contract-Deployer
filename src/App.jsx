@@ -603,7 +603,7 @@ function App() {
               </div>
             </div>
           )}
-          <Footer network={network} />
+          <Footer network={network} theme={theme} />
           <InteractModal
             theme={theme}
             visible={interactModalVisible}
