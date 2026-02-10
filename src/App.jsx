@@ -325,8 +325,8 @@ function App() {
                   <br />
                   Deploy your own contract in seconds!
                 </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
-                  *currently 4 contracts available, more coming soon.
+                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                  read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
                 </span>
               </div>
             )} />
