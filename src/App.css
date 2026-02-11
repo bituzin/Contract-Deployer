@@ -12,3 +12,5 @@
   padding: 2rem;
   text-align: center;
 }
+
+/* Usunięte tło z body, sidebar dziedziczy z .App */

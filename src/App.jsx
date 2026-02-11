@@ -123,6 +123,14 @@ function App() {
   React.useEffect(() => {
     localStorage.setItem("network", network);
   }, [network]);
+  
+  // Ustaw tło body dla fixed elementów (sidebar)
+  React.useEffect(() => {
+    const bgColor = network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5';
+    document.body.style.background = `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${bgColor}`;
+    document.body.style.minHeight = '100vh';
+  }, [network]);
+  
   const [showNav] = useState(true);
 
   // Użyj hooka do obsługi motywu
@@ -276,62 +284,110 @@ function App() {
             onConnect={handleConnect}
             onDisconnect={handleDisconnect}
           />
-          <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            {/* Main content area wyśrodkowany względem menu */}
-            <div style={{ width: '100%', flex: 1, paddingTop: 120, paddingBottom: 40, paddingLeft: 220, boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+          <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'row' }}>
+            {/* Sidebar z nawigacją */}
+            <div style={{
+              width: 200,
+              minWidth: 200,
+              maxWidth: 200,
+              height: 'calc(100vh - 68px)',
+              position: 'fixed',
+              top: 68,
+              left: 0,
+              background: 'rgba(255,255,255,0.82)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              border: '1px solid rgba(0,0,0,0.07)',
+              boxShadow: `0 2px 24px ${theme.shadow}`,
+              zIndex: 1100,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              paddingTop: 0
+            }}>
+              {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx, arr) => {
+                const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
+                return (
+                  <React.Fragment key={path}>
+                    <a
+                      href={path}
+                      style={{
+                        textDecoration: 'none',
+                        color: theme.textPrimary,
+                        padding: '12px 24px',
+                        fontWeight: 600,
+                        fontSize: '1em',
+                        borderRadius: 8,
+                        margin: '4px 0',
+                        display: 'block',
+                        background: 'transparent',
+                        transition: 'background 0.2s, color 0.2s',
+                        borderBottom: idx !== arr.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none'
+                      }}
+                    >
+                      {names[idx]}
+                    </a>
+                  </React.Fragment>
+                );
+              })}
+            </div>
+            {/* Główna treść */}
+            <div style={{ flex: 1, marginLeft: 200, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
               <Routes>
-              <Route path="/" element={( 
-                <div
-                  style={{
-                    maxWidth: 900,
-                    borderRadius: 16,
-                    boxShadow: `0 2px 24px ${theme.shadow}`,
-                    padding: '32px 36px',
-                    textAlign: 'center',
-                    fontFamily: 'Inter, Arial, sans-serif',
-                    fontWeight: 500,
-                    fontSize: '1.12em',
-                    letterSpacing: '0.01em',
-                    opacity: showWelcome ? 1 : 0,
-                    transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
-                    transition: 'opacity 1s, transform 1s',
-                    background: 'rgba(255,255,255,0.82)',
-                    backdropFilter: 'blur(8px)',
-                    WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(0,0,0,0.07)'
-                  }}
-                >
-                <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
-                  <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
-                    Deploy Your Contract – Fast & Secure!
-                  </span>
-                  Welcome to panel for deploying smart contracts on 
-                  <span style={{ color: '#627EEA', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Sepolia')}> Sepolia</span>, 
-                  <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Celo')}> Celo</span>, 
-                  <span style={{ color: '#0052FF', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Base')}> Base</span> and 
-                  <span style={{ color: '#FF0420', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Optimism')}> Optimism</span> blockchain.<br />
-                  <br />
-                  Simple to use:
-                  <br />
-                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
-                    <div style={{ width: 220, textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', margin: '0 auto' }}>
-                      <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Connect</span>
-                      <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Check</span>
-                      <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Read</span>
-                      <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Deploy</span>
-                      <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Interact</span>
-                    </div>
+                <Route path="/" element={(
+                  <div
+                    style={{
+                      maxWidth: 900,
+                      borderRadius: 16,
+                      boxShadow: `0 2px 24px ${theme.shadow}`,
+                      padding: '32px 36px',
+                      textAlign: 'center',
+                      fontFamily: 'Inter, Arial, sans-serif',
+                      fontWeight: 500,
+                      fontSize: '1.12em',
+                      letterSpacing: '0.01em',
+                      opacity: showWelcome ? 1 : 0,
+                      transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
+                      transition: 'opacity 1s, transform 1s',
+                      background: 'rgba(255,255,255,0.82)',
+                      backdropFilter: 'blur(8px)',
+                      WebkitBackdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(0,0,0,0.07)',
+                      margin: '0 auto'
+                    }}
+                  >
+                    <span style={{ color: theme.textPrimary, fontWeight: 700 }}>
+                      <span style={{ fontSize: '1.08em', fontWeight: 700, display: 'block', marginBottom: '32px' }}>
+                        Deploy Your Contract – Fast & Secure!
+                      </span>
+                      Welcome to panel for deploying smart contracts on 
+                      <span style={{ color: '#627EEA', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Sepolia')}> Sepolia</span>, 
+                      <span style={{ color: 'rgba(221, 181, 0, 1)', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Celo')}> Celo</span>, 
+                      <span style={{ color: '#0052FF', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Base')}> Base</span> and 
+                      <span style={{ color: '#FF0420', fontWeight: 700, cursor: 'pointer', textDecoration: 'none' }} onClick={() => setNetwork('Optimism')}> Optimism</span> blockchain.<br />
+                      <br />
+                      Simple to use:
+                      <br />
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
+                        <div style={{ width: 220, textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', margin: '0 auto' }}>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Connect</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Check</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Read</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Deploy</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Interact</span>
+                        </div>
+                      </div>
+                      <br />
+                      Deploy your own contract in seconds!
+                    </span>
+                    <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                      *read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
+                    </span>
+                    <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                      *currently 4 contracts available, more coming soon.
+                    </span>
                   </div>
-                  <br />
-                  Deploy your own contract in seconds!
-                </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif', textAlign: 'left', marginLeft: 0 }}>
-                  * read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
-                </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif', textAlign: 'left', marginLeft: 0 }}>
-                  *currently 4 contracts available, more coming soon.
-                </span>
-              </div>
+                )} />
             )} />
             
             <Route path="/deploy" element={(
