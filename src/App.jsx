@@ -276,9 +276,10 @@ function App() {
             onConnect={handleConnect}
             onDisconnect={handleDisconnect}
           />
-          <div style={{ width: '100vw', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-            {/* Main content area wyśrodkowany względem menu */}
-            <div style={{ width: '100%', flex: 1, paddingTop: 120, paddingBottom: 40, paddingLeft: 220, boxSizing: 'border-box', display: 'flex', justifyContent: 'center', alignItems: 'flex-start' }}>
+          <div style={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
+            // ...sidebar usunięty...
+            {/* Main content area */}
+            <div style={{ flex: 1, paddingTop: 120, paddingBottom: 40, display: 'flex', justifyContent: 'flex-start' }}>
               <Routes>
               <Route path="/" element={( 
                 <div
@@ -325,10 +326,10 @@ function App() {
                   <br />
                   Deploy your own contract in seconds!
                 </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif', textAlign: 'left', marginLeft: 0 }}>
-                  * read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
+                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 24, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
+                  *read <a href="/how" style={{ color: theme.textPrimary, textDecoration: 'underline', fontWeight: 'bold' }}>How it works</a>.
                 </span>
-                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif', textAlign: 'left', marginLeft: 0 }}>
+                <span style={{ fontSize: '0.74em', fontStyle: 'italic', color: theme.textSecondary, marginTop: 8, display: 'block', fontFamily: 'Georgia, Times, Times New Roman, serif' }}>
                   *currently 4 contracts available, more coming soon.
                 </span>
               </div>
