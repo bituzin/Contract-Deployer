@@ -305,27 +305,29 @@ function App() {
               alignItems: 'flex-start',
               paddingTop: 0
             }}>
-              {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx) => {
+              {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx, arr) => {
                 const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
                 return (
-                  <a
-                    key={path}
-                    href={path}
-                    style={{
-                      textDecoration: 'none',
-                      color: theme.textPrimary,
-                      padding: '12px 24px',
-                      fontWeight: 600,
-                      fontSize: '1em',
-                      borderRadius: 8,
-                      margin: '4px 0',
-                      display: 'block',
-                      background: 'transparent',
-                      transition: 'background 0.2s, color 0.2s',
-                    }}
-                  >
-                    {names[idx]}
-                  </a>
+                  <React.Fragment key={path}>
+                    <a
+                      href={path}
+                      style={{
+                        textDecoration: 'none',
+                        color: theme.textPrimary,
+                        padding: '12px 24px',
+                        fontWeight: 600,
+                        fontSize: '1em',
+                        borderRadius: 8,
+                        margin: '4px 0',
+                        display: 'block',
+                        background: 'transparent',
+                        transition: 'background 0.2s, color 0.2s',
+                        borderBottom: idx !== arr.length - 1 ? '1px solid rgba(0,0,0,0.08)' : 'none'
+                      }}
+                    >
+                      {names[idx]}
+                    </a>
+                  </React.Fragment>
                 );
               })}
             </div>
