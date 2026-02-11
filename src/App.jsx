@@ -123,6 +123,14 @@ function App() {
   React.useEffect(() => {
     localStorage.setItem("network", network);
   }, [network]);
+  
+  // Ustaw tło body dla fixed elementów (sidebar)
+  React.useEffect(() => {
+    const bgColor = network === 'Base' ? '#e6f0fb' : network === 'Celo' ? '#fffbe6' : network === 'Optimism' ? '#fff0f0' : network === 'Sepolia' ? '#f7f3e6' : '#f5f5f5';
+    document.body.style.background = `url('/${network.toLowerCase()}.webp') center center / cover no-repeat fixed, ${bgColor}`;
+    document.body.style.minHeight = '100vh';
+  }, [network]);
+  
   const [showNav] = useState(true);
 
   // Użyj hooka do obsługi motywu
@@ -278,8 +286,25 @@ function App() {
           />
           <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'row' }}>
             {/* Sidebar z nawigacją */}
-            <div style={{ width: 200, minWidth: 200, maxWidth: 200, height: '100vh', position: 'fixed', top: 0, left: 0, background: theme.cardBg, boxShadow: `0 2px 8px ${theme.shadow}`, zIndex: 1100, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', paddingTop: 68 }}>
-              {/* Nawigacja */}
+            <div style={{
+              width: 200,
+              minWidth: 200,
+              maxWidth: 200,
+              height: 'calc(100vh - 68px)',
+              position: 'fixed',
+              top: 68,
+              left: 0,
+              background: 'rgba(255,255,255,0.82)',
+              backdropFilter: 'blur(8px)',
+              WebkitBackdropFilter: 'blur(8px)',
+              border: '1px solid rgba(0,0,0,0.07)',
+              boxShadow: `0 2px 24px ${theme.shadow}`,
+              zIndex: 1100,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'flex-start',
+              paddingTop: 0
+            }}>
               {['/', '/how', '/contracts', '/bytecodes', '/deploy', '/verify', '/my-deployments', '/interact'].map((path, idx) => {
                 const names = ['Home', 'How It Works', 'Contracts', 'Bytecodes', 'Deploy', 'Verify', 'My Deployments', 'Interact'];
                 return (
