@@ -35,6 +35,7 @@ export const ContractsList = ({ theme }) => {
     <PageContainer
       theme={theme}
       title="Available Contracts"
+      maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/my-deployments">
           Back to My Deployments
@@ -53,7 +54,7 @@ export const ContractsList = ({ theme }) => {
       </div>
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+        gridTemplateColumns: 'repeat(3, 1fr)', 
         gap: '18px' 
       }}>
         {contracts.map((contract) => (

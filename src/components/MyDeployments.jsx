@@ -4,6 +4,8 @@ import { DeploymentCard } from './DeploymentCard';
 
 
 
+import { PageContainer } from './common/PageContainer';
+
 export const MyDeployments = ({ theme, deployments, isConnected, openModal, network }) => {
   // Stan do filtrowania po nazwie kontraktu (tylko dla Optimism)
   const [filteredContractName, setFilteredContractName] = useState(null);
@@ -40,9 +42,12 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
 
   if (!isConnected) {
     return (
-      <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-        <div style={{ border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'center', lineHeight: 1.7, minHeight: 320, maxWidth: 720 }}>
-          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0, marginBottom: 18 }}>My Deployments</h2>
+      <PageContainer
+        theme={theme}
+        title="My Deployments"
+        maxWidth={1000}
+      >
+        <div style={{ textAlign: 'center', minHeight: 320 }}>
           <div style={{ marginBottom: 24 }}>
             Connect your wallet to view your deployed contracts.
           </div>
@@ -64,37 +69,22 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             onClick={openModal}
           >Connect</button>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   return (
-    <div style={{
-      maxWidth: 900,
-      margin: '60px auto 32px auto',
-    }}>
-      <div style={{
-        background: theme.cardBg + 'E6',
-        border: `1px solid ${theme.primary}`,
-        borderRadius: 10,
-        boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
-        padding: '28px 32px',
-        color: theme.textPrimary,
-        fontSize: '0.96em',
-        fontFamily: 'Inter, Arial, sans-serif',
-        fontWeight: 500,
-        textAlign: 'left',
-        lineHeight: 1.7,
-        maxWidth: 1000,
-        width: '100%'
-      }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
-          <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>My Deployments</h2>
-          <BackButton theme={theme} to="/deploy">
-            Back to Deploy
-          </BackButton>
-        </div>
-        
+    <PageContainer
+      theme={theme}
+      title="My Deployments"
+      maxWidth={1000}
+      backButton={
+        <BackButton theme={theme} to="/deploy">
+          Back to Deploy
+        </BackButton>
+      }
+    >
+        {/* ...existing code... */}
         {networkDeployments.length > 0 && (
           <div style={{ marginBottom: 32 }}>
             <div style={{ fontSize: '0.88em', color: theme.textSecondary, fontWeight: 600, marginBottom: 14 }}>Deployment statistics ({currentNetworkLabel})</div>
@@ -136,7 +126,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             )}
           </div>
         )}
-        
+        {/* ...existing code... */}
         {deployments.length === 0 ? (
           <div style={{ textAlign: 'center', padding: '40px 20px', color: theme.textSecondary }}>
             <p style={{ fontSize: '1.08em', marginBottom: 16 }}>No deployments yet</p>
@@ -163,7 +153,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
             </div>
           </div>
         )}
-      </div>
-    </div>
+    
+    </PageContainer>
   );
 };
