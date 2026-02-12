@@ -370,11 +370,11 @@ function App() {
                       <br />
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', fontWeight: 600, margin: '12px 0', width: '100%' }}>
                         <div style={{ width: 220, textAlign: 'left', display: 'flex', flexDirection: 'column', alignItems: 'flex-start', margin: '0 auto' }}>
-                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Connect</span>
-                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Check</span>
-                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Read</span>
-                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Deploy</span>
-                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0' }}>• Interact</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 50 }}>• Connect</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 50 }}>• Check</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 50 }}>• Read</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 50 }}>• Deploy</span>
+                          <span style={{ whiteSpace: 'nowrap', margin: '2px 0', paddingLeft: 50 }}>• Interact</span>
                         </div>
                       </div>
                       <br />
@@ -391,8 +391,8 @@ function App() {
             )} />
             
             <Route path="/deploy" element={(
-              <div style={{ maxWidth: 940, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 940 }}>
+              <div style={{ maxWidth: 1200, margin: '60px auto 32px auto' }}>
+                <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320, maxWidth: 1200 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                     <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Deploy Contract</h2>
                     <BackButton theme={theme} to="/contracts">
@@ -405,7 +405,7 @@ function App() {
                     <b>Wallet connection required.</b>
                   </div>
                   <div style={{ height: 18 }} />
-                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'flex-start' }}>
+                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'center' }}>
                     {contracts.map((contract) => (
                         <div key={contract.name} style={{
                           background: `rgba(${theme.primaryRgb},0.10)`,
