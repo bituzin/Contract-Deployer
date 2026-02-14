@@ -380,7 +380,7 @@ export const ContractInteract = ({ theme, isConnected, openModal, network: selec
             Contract: {contractName}
           </h2>
           <BackButton theme={theme} to="/my-deployments">
-            Back to My Deployments
+            Go to My Deployments
           </BackButton>
         </div>
         <div style={{ marginBottom: 12, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '2px' }}>

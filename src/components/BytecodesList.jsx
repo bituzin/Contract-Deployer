@@ -15,6 +15,7 @@ export const BytecodesList = ({ theme }) => {
     <PageContainer
       theme={theme}
       title="Bytecodes"
+      maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/contracts">
           Back to Contracts
@@ -33,7 +34,7 @@ export const BytecodesList = ({ theme }) => {
       </div>
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', 
+        gridTemplateColumns: 'repeat(3, 1fr)', 
         gap: '18px' 
       }}>
         {contracts.map((contract) => (
