@@ -56,54 +56,55 @@ contract SimpleStorage {
   };
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: '100%' }}>
-      <div style={{ maxWidth: 1000, margin: '60px auto 32px auto', background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
-        <BackButton theme={theme} to="/contracts">Go to Contracts</BackButton>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: '16px' }}>
-        <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
-          SimpleStorage
-        </h2>
-        {!isConnected ? (
-          <button
-            style={{
-              minWidth: '70px',
-              fontSize: '0.92em',
-              padding: '0.32em 0.8em',
-              background: theme.gradient,
-              color: theme.network === 'celo' ? '#444' : '#fff',
-              border: `1px solid ${theme.primary}`,
-              borderRadius: '10px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-            onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-            onClick={openModal}
-          >Connect</button>
-        ) : (
-          <button
-            style={{
-              minWidth: '70px',
-              fontSize: '0.92em',
-              padding: '0.32em 0.8em',
-              background: theme.gradient,
-              color: theme.network === 'celo' ? '#444' : '#fff',
-              border: `1px solid ${theme.primary}`,
-              borderRadius: '10px',
-              fontWeight: 500,
-              cursor: 'pointer',
-              boxShadow: `0 2px 8px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
-            onMouseOut={e => e.currentTarget.style.background = theme.gradient}
-            onClick={handleDeploy}
-          >Deploy</button>
-        )}
-      </div>
-      <div style={{ color: theme.textPrimary, fontWeight: 500, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', marginBottom: '14px', maxWidth: '1000px', lineHeight: 1.7, textAlign: 'left' }}>
+    <div style={{ maxWidth: 1000, margin: '60px auto 32px auto', background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
+              SimpleStorage
+            </h2>
+            {!isConnected ? (
+              <button
+                style={{
+                  minWidth: '70px',
+                  fontSize: '0.92em',
+                  padding: '0.32em 0.8em',
+                  background: theme.gradient,
+                  color: theme.network === 'celo' ? '#444' : '#fff',
+                  border: `1px solid ${theme.primary}`,
+                  borderRadius: '10px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  boxShadow: `0 2px 8px ${theme.shadow}`,
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                onClick={openModal}
+              >Connect</button>
+            ) : (
+              <button
+                style={{
+                  minWidth: '70px',
+                  fontSize: '0.92em',
+                  padding: '0.32em 0.8em',
+                  background: theme.gradient,
+                  color: theme.network === 'celo' ? '#444' : '#fff',
+                  border: `1px solid ${theme.primary}`,
+                  borderRadius: '10px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  boxShadow: `0 2px 8px ${theme.shadow}`,
+                  transition: 'background 0.2s'
+                }}
+                onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                onClick={handleDeploy}
+              >Deploy</button>
+            )}
+          </div>
+          <BackButton theme={theme} to="/contracts">Go to Contracts</BackButton>
+        </div>
+        <div style={{ color: theme.textPrimary, fontWeight: 500, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', marginBottom: '14px', maxWidth: '1000px', lineHeight: 1.7, textAlign: 'left' }}>
         SimpleStorage is a minimal contract for storing a single integer value on the blockchain. It is perfect for learning, testing, and demonstrating how persistent storage works in smart contracts. Anyone can update the value, and anyone can read it at any time. There are no restrictions or access controls, making it ideal for public demos and tutorials.
         <div style={{ marginTop: 16, marginBottom: 0, fontWeight: 700, color: theme.textSecondary, fontSize: '0.98em' }}>Function:</div>
         <ul style={{ marginTop: 14, marginBottom: 0, paddingLeft: 18 }}>
@@ -194,7 +195,6 @@ contract SimpleStorage {
           </div>
         </div>
       )}
-      </div>
     </div>
   );
 };
