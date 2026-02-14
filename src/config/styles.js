@@ -74,7 +74,7 @@ export const getContractCardStyles = (theme) => ({
   borderRadius: 10,
   boxShadow: '0 2px 12px rgba(0,0,0,0.06)',
   border: `1px solid ${theme.primary}`,
-  padding: '24px 20px',
+  padding: '14px 20px',
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
