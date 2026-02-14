@@ -396,7 +396,7 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                     <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>Deploy Contract</h2>
                     <BackButton theme={theme} to="/contracts">
-                      Back to Contracts
+                        Go to Contracts
                     </BackButton>
                   </div>
                   <div style={{ fontSize: '0.95em', color: theme.textPrimary, fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', marginBottom: 18 }}>
@@ -405,7 +405,7 @@ function App() {
                     <b>Wallet connection required.</b>
                   </div>
                   <div style={{ height: 18 }} />
-                  <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '14px', justifyContent: 'center' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
                     {contracts.map((contract) => (
                         <div key={contract.name} style={{
                           background: `rgba(${theme.primaryRgb},0.10)`,
@@ -413,8 +413,6 @@ function App() {
                           boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
                           border: `1px solid ${theme.primary}`,
                           padding: '22px 28px',
-                          minWidth: 270,
-                          maxWidth: 340,
                           marginBottom: 12,
                           display: 'flex',
                           flexDirection: 'column',
@@ -578,7 +576,7 @@ function App() {
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                     <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>How It Works</h2>
                     <BackButton theme={theme} to="/">
-                      Back to Home
+                        Go to Home
                     </BackButton>
                   </div>
                   <div>
