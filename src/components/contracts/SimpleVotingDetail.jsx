@@ -139,52 +139,55 @@ contract SimpleVoting {
           <span style={{ color: '#444', fontSize: '0.86em', fontWeight: 600, letterSpacing: '0.04em' }}>solidity</span>
           <div>
             <button
-              onClick={() => {
-                navigator.clipboard.writeText(sourceCode);
-                setCopied(true);
-                setTimeout(() => setCopied(false), 1000);
-              }}
-              style={{
-                background: theme.highlight,
-                color: '#444',
-                border: 'none',
-                fontWeight: 500,
-                fontSize: '0.86em',
-                cursor: 'pointer',
-                marginRight: '10px',
-                padding: '2px 10px',
-                borderRadius: '4px',
-                transition: 'background 0.2s',
-                position: 'relative',
-                minWidth: 48,
-                display: 'inline-flex',
-                alignItems: 'center',
-                justifyContent: 'center'
-              }}
-            >
-              {copied ? (
-                <span style={{ fontSize: '0.92em', color: '#444', width: 32, textAlign: 'center' }}>✔</span>
-              ) : <span style={{ width: 32, textAlign: 'center' }}>Copy</span>}
-            </button>
-          </div>
-        </div>
-        <pre style={{ background: theme.cardBgDark, color: '#222', fontSize: '0.9em', fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', padding: '18px 16px', margin: 0, borderBottomLeftRadius: '10px', borderBottomRightRadius: '10px', overflowX: 'auto', minHeight: '160px' }}>
-          {sourceCode}
-        </pre>
-      </div>
-      {deployLoading && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100vw',
-          height: '100vh',
-          background: 'rgba(0, 0, 0, 0.5)',
-          backdropFilter: 'blur(8px)',
-          WebkitBackdropFilter: 'blur(8px)',
-          zIndex: 9999,
-          display: 'flex',
-          alignItems: 'center',
+              return (
+                <div style={{ maxWidth: 1000, margin: '60px auto 32px auto', background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '24px 28px', textAlign: 'left', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, fontSize: '0.96em', color: theme.textPrimary }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+                      <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>
+                        SimpleVoting
+                      </h2>
+                      {!isConnected ? (
+                        <button
+                          style={{
+                            minWidth: '70px',
+                            fontSize: '0.92em',
+                            padding: '0.32em 0.8em',
+                            background: theme.gradient,
+                            color: theme.network === 'celo' ? '#444' : '#fff',
+                            border: `1px solid ${theme.primary}`,
+                            borderRadius: '10px',
+                            fontWeight: 500,
+                            cursor: 'pointer',
+                            boxShadow: `0 2px 8px ${theme.shadow}`,
+                            transition: 'background 0.2s'
+                          }}
+                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                          onClick={openModal}
+                        >Connect</button>
+                      ) : (
+                        <button
+                          style={{
+                            minWidth: '70px',
+                            fontSize: '0.92em',
+                            padding: '0.32em 0.8em',
+                            background: theme.gradient,
+                            color: theme.network === 'celo' ? '#444' : '#fff',
+                            border: `1px solid ${theme.primary}`,
+                            borderRadius: '10px',
+                            fontWeight: 500,
+                            cursor: 'pointer',
+                            boxShadow: `0 2px 8px ${theme.shadow}`,
+                            transition: 'background 0.2s'
+                          }}
+                          onMouseOver={e => e.currentTarget.style.background = theme.gradientHover}
+                          onMouseOut={e => e.currentTarget.style.background = theme.gradient}
+                          onClick={handleDeploy}
+                        >Deploy</button>
+                      )}
+                    </div>
+                    <BackButton theme={theme} to="/contracts">Go to Contracts</BackButton>
+                  </div>
           justifyContent: 'center',
           flexDirection: 'column'
         }}>
