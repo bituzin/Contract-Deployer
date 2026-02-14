@@ -23,7 +23,7 @@ export const BytecodeDetail = ({ theme }) => {
         title="Contract not found"
         backButton={
           <BackButton theme={theme} to="/bytecodes">
-            Back to Bytecodes
+            Go to Bytecodes
           </BackButton>
         }
         maxWidth={720}
@@ -43,7 +43,7 @@ export const BytecodeDetail = ({ theme }) => {
       title={`${contract.name} Bytecode`}
       backButton={
         <BackButton theme={theme} to="/bytecodes">
-          Back to Bytecodes
+          Go to Bytecodes
         </BackButton>
       }
       maxWidth={720}
