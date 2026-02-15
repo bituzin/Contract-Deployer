@@ -8,10 +8,6 @@ import { useDeployments } from "./hooks/useDeployments";
 import { useSigner } from "./hooks/useSigner";
 import { Header } from "./components/Header";
 import { Popup } from "./components/Popup";
-import { SimpleStorageDetail } from "./components/contracts/SimpleStorageDetail";
-import { ClickCounterDetail } from "./components/contracts/ClickCounterDetail";
-import { MessageBoardDetail } from "./components/contracts/MessageBoardDetail";
-import { SimpleVotingDetail } from "./components/contracts/SimpleVotingDetail";
 import { MyDeployments } from "./components/MyDeployments";
 // import { Interact } from "./components/Interact";
 import { ContractInteract } from "./components/ContractInteract";
@@ -338,9 +334,9 @@ function App() {
                   <div
                     style={{
                       maxWidth: 900,
-                      borderRadius: 16,
-                      boxShadow: `0 2px 24px ${theme.shadow}`,
-                      padding: '32px 36px',
+                      borderRadius: 10,
+                      boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
+                      padding: '28px 32px',
                       textAlign: 'center',
                       fontFamily: 'Inter, Arial, sans-serif',
                       fontWeight: 500,
@@ -349,10 +345,10 @@ function App() {
                       opacity: showWelcome ? 1 : 0,
                       transform: showWelcome ? 'translateY(0)' : 'translateY(30px)',
                       transition: 'opacity 1s, transform 1s',
-                      background: 'rgba(255,255,255,0.82)',
+                      background: theme.cardBg + 'E6',
                       backdropFilter: 'blur(8px)',
                       WebkitBackdropFilter: 'blur(8px)',
-                      border: '1px solid rgba(0,0,0,0.07)',
+                      border: `1px solid ${theme.primary}`,
                       margin: '0 auto'
                     }}
                   >
@@ -518,52 +514,9 @@ function App() {
               </div>
             )} />
             
-            <Route path="/contract/simple-storage" element={(
-              <SimpleStorageDetail 
-                theme={theme}
-                setPopup={setPopup}
-                isConnected={isConnected}
-                openModal={handleConnect}
-                network={network}
-              />
-            )} />
+            {/* Usunięta trasa do SimpleStorageDetail */}
             
-            <Route path="/contract/click-counter" element={(
-              <ClickCounterDetail 
-                theme={theme}
-                setPopup={setPopup}
-                isConnected={isConnected}
-                openModal={handleConnect}
-                network={network}
-              />
-            )} />
-            
-            <Route path="/contract/message-board" element={(
-              <MessageBoardDetail 
-                theme={theme}
-                setPopup={setPopup}
-                isConnected={isConnected}
-                openModal={handleConnect}
-                network={network}
-              />
-            )} />
-            
-            <Route path="/contract/simple-voting" element={(
-              <SimpleVotingDetail 
-                theme={theme}
-                setPopup={setPopup}
-                isConnected={isConnected}
-                openModal={handleConnect}
-                network={network}
-              />
-            )} />
-            
-            <Route path="/bytecodes" element={(
-              <BytecodesList theme={theme} />
-            )} />
-            
-            <Route path="/bytecode/:contractName" element={(
-              <BytecodeDetail theme={theme} />
+            {/* Usunięte stare szczegóły kontraktów */}
             )} />
             
             <Route path="/contracts" element={(
@@ -572,7 +525,7 @@ function App() {
             
             <Route path="/how" element={( 
               <div style={{ maxWidth: 720, margin: '60px auto 32px auto' }}>
-                <div style={{ background: theme.cardBg + 'E6', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
+                <div style={{ background: theme.cardBg + 'E6', border: `1px solid ${theme.primary}`, borderRadius: 10, boxShadow: '0 2px 12px rgba(0,0,0,0.04)', padding: '28px 32px', color: theme.textPrimary, fontSize: '0.96em', fontFamily: 'Inter, Arial, sans-serif', fontWeight: 500, textAlign: 'left', lineHeight: 1.7, minHeight: 320 }}>
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 18 }}>
                     <h2 style={{ color: theme.textPrimary, fontWeight: 700, fontSize: '1.2em', margin: 0 }}>How It Works</h2>
                     <BackButton theme={theme} to="/">
