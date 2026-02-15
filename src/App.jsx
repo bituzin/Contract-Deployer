@@ -14,6 +14,7 @@ import { ContractInteract } from "./components/ContractInteract";
 import { ContractsList } from "./components/ContractsList";
 import { BytecodesList } from "./components/BytecodesList";
 import { BytecodeDetail } from "./components/BytecodeDetail";
+import { ContractDetail } from "./components/ContractDetail";
 import { BackButton } from "./components/common/BackButton";
 import { contracts } from "./config/contracts.js";
 import { networks, getNetworkParam } from "./config/networks";
@@ -384,7 +385,6 @@ function App() {
                     </span>
                   </div>
                 )} />
-            )} />
             
             <Route path="/deploy" element={(
               <div style={{ maxWidth: 1200, margin: '60px auto 32px auto' }}>
@@ -526,6 +526,10 @@ function App() {
             
             <Route path="/contracts" element={(
               <ContractsList theme={theme} />
+            )} />
+            
+            <Route path="/contract/:contractName" element={(
+              <ContractDetail theme={theme} />
             )} />
             
             <Route path="/how" element={( 

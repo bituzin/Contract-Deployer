@@ -50,7 +50,7 @@ export const ContractsList = ({ theme }) => {
         textAlign: 'left', 
         marginBottom: 28 
       }}>
-        Choose a contract to deploy.
+        Choose a contract to view details.
       </div>
       <div style={{ 
         display: 'grid', 
@@ -61,7 +61,7 @@ export const ContractsList = ({ theme }) => {
           <ContractCard
             key={contract.name}
             theme={theme}
-            to="/deploy"
+            to={`/contract/${toKebabCase(contract.name)}`}
             title={contract.name}
             description={contract.description}
           />
