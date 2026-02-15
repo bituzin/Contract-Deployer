@@ -333,7 +333,7 @@ function App() {
                 <Route path="/" element={(
                   <div
                     style={{
-                      maxWidth: 900,
+                      maxWidth: 720,
                       borderRadius: 10,
                       boxShadow: '0 2px 12px rgba(0,0,0,0.04)',
                       padding: '28px 32px',
