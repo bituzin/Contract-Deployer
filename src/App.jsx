@@ -514,9 +514,14 @@ function App() {
               </div>
             )} />
             
-            {/* Usunięta trasa do SimpleStorageDetail */}
-            
             {/* Usunięte stare szczegóły kontraktów */}
+            
+            <Route path="/bytecodes" element={(
+              <BytecodesList theme={theme} />
+            )} />
+            
+            <Route path="/bytecode/:contractName" element={(
+              <BytecodeDetail theme={theme} />
             )} />
             
             <Route path="/contracts" element={(

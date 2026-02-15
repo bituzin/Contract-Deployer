@@ -38,7 +38,7 @@ export const ContractsList = ({ theme }) => {
       maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/my-deployments">
-          Back to My Deployments
+          Go to My Deployments
         </BackButton>
       }
     >
@@ -50,7 +50,7 @@ export const ContractsList = ({ theme }) => {
         textAlign: 'left', 
         marginBottom: 28 
       }}>
-        Choose a contract to view details.
+        Choose a contract to deploy.
       </div>
       <div style={{ 
         display: 'grid', 
@@ -61,7 +61,7 @@ export const ContractsList = ({ theme }) => {
           <ContractCard
             key={contract.name}
             theme={theme}
-            to={`/contract/${toKebabCase(contract.name)}`}
+            to="/deploy"
             title={contract.name}
             description={contract.description}
           />
