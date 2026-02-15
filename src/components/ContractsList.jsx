@@ -38,7 +38,7 @@ export const ContractsList = ({ theme }) => {
       maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/my-deployments">
-          Back to My Deployments
+          Go to My Deployments
         </BackButton>
       }
     >
