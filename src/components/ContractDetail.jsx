@@ -20,6 +20,9 @@ export const ContractDetail = ({ theme }) => {
   // Kod źródłowy SimpleStorage
   const simpleStorageSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract SimpleStorage {\n    uint256 private value;\n\n    event ValueChanged(uint256 newValue);\n\n    function set(uint256 newValue) public {\n        value = newValue;\n        emit ValueChanged(newValue);\n    }\n\n    function get() public view returns (uint256) {\n        return value;\n    }\n}`;
 
+  // Kod źródłowy ClickCounter
+  const clickCounterSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract ClickCounter {\n    uint256 public count;\n\n    event Clicked(address indexed sender, uint256 newCount);\n\n    function click() public {\n        count += 1;\n        emit Clicked(msg.sender, count);\n    }\n\n    function getCount() public view returns (uint256) {\n        return count;\n    }\n}`;
+
   if (!contract) {
     return (
       <PageContainer
@@ -180,7 +183,7 @@ export const ContractDetail = ({ theme }) => {
             minHeight: '120px', 
             letterSpacing: '0.01em' 
           }}>
-            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.bytecode}
+            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.bytecode}
           </pre>
         </div>
       </div>
