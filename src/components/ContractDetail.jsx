@@ -125,7 +125,8 @@ export const ContractDetail = ({ theme }) => {
           marginTop: '8px', 
           borderRadius: '10px', 
           background: theme.codeBg, 
-          boxShadow: '0 2px 12px rgba(0,0,0,0.07)', 
+          boxShadow: '0 4px 24px rgba(0,0,0,0.13)', 
+          border: `2px solid ${theme.primary}`,
           position: 'relative', 
           overflow: 'hidden' 
         }}>
@@ -176,18 +177,19 @@ export const ContractDetail = ({ theme }) => {
           </div>
           <pre style={{ 
             background: theme.cardBgDark, 
-            color: '#2a3244', 
-            fontSize: '0.95em', 
+            color: '#1a223a', 
+            fontSize: '1.04em', 
             fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', 
-            padding: '18px 16px', 
+            padding: '22px 20px', 
             margin: 0, 
             borderBottomLeftRadius: '10px', 
             borderBottomRightRadius: '10px', 
             whiteSpace: 'pre-wrap', 
             wordBreak: 'break-word', 
             overflowWrap: 'anywhere', 
-            minHeight: '120px', 
-            letterSpacing: '0.01em' 
+            minHeight: '140px', 
+            letterSpacing: '0.01em',
+            boxShadow: '0 2px 12px rgba(0,0,0,0.10)'
           }}>
             {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.name === 'SimpleVoting' ? simpleVotingSource : contract.bytecode}
           </pre>
