@@ -1,15 +1,23 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
+pragma solidity ^0.8.0;
 
 contract SimpleVoting {
-    uint256 public votesOptionA;
-    uint256 public votesOptionB;
+    uint256 public votesA;
+    uint256 public votesB;
+
+    event Voted(address indexed voter, string option);
 
     function voteA() public {
-        votesOptionA += 1;
+        votesA += 1;
+        emit Voted(msg.sender, "A");
     }
 
     function voteB() public {
-        votesOptionB += 1;
+        votesB += 1;
+        emit Voted(msg.sender, "B");
+    }
+
+    function getVotes() public view returns (uint256, uint256) {
+        return (votesA, votesB);
     }
 }
