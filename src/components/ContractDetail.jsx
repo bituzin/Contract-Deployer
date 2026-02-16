@@ -54,18 +54,20 @@ export const ContractDetail = ({ theme }) => {
           <button
             onClick={handleDeploy}
             style={{
-              fontSize: '0.92em',
-              padding: '2px 16px',
+              fontSize: '0.85em',
+              padding: '1px 10px',
               background: theme.primary,
               color: '#fff',
               border: 'none',
-              borderRadius: '6px',
+              borderRadius: '5px',
               fontWeight: 500,
               cursor: 'pointer',
               marginLeft: 8,
               boxShadow: `0 1px 4px ${theme.shadow}`,
               transition: 'background 0.2s',
-              height: 28
+              height: 22,
+              lineHeight: '20px',
+              minWidth: 48
             }}
             onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
             onMouseOut={e => e.currentTarget.style.background = theme.primary}
