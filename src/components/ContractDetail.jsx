@@ -124,9 +124,8 @@ export const ContractDetail = ({ theme }) => {
         <div style={{ 
           marginTop: '8px', 
           borderRadius: '10px', 
-          background: theme.codeBg, 
-          boxShadow: '0 4px 24px rgba(0,0,0,0.13)', 
-          border: `2px solid ${theme.primary}`,
+          background: `linear-gradient(135deg, ${theme.codeBg} 70%, #dbeaff 100%)`,
+          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.13)',
           position: 'relative', 
           overflow: 'hidden' 
         }}>
@@ -134,7 +133,7 @@ export const ContractDetail = ({ theme }) => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            background: theme.codeBg, 
+            background: `linear-gradient(90deg, #f6faff 60%, ${theme.codeBg} 100%)`,
             padding: '8px 18px 8px 18px', 
             borderTopLeftRadius: '10px', 
             borderTopRightRadius: '10px', 
@@ -177,19 +176,18 @@ export const ContractDetail = ({ theme }) => {
           </div>
           <pre style={{ 
             background: theme.cardBgDark, 
-            color: '#1a223a', 
-            fontSize: '1.04em', 
+            color: '#2a3244', 
+            fontSize: '0.95em', 
             fontFamily: 'Fira Mono, Menlo, Monaco, Consolas, monospace', 
-            padding: '22px 20px', 
+            padding: '18px 16px', 
             margin: 0, 
             borderBottomLeftRadius: '10px', 
             borderBottomRightRadius: '10px', 
             whiteSpace: 'pre-wrap', 
             wordBreak: 'break-word', 
             overflowWrap: 'anywhere', 
-            minHeight: '140px', 
-            letterSpacing: '0.01em',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.10)'
+            minHeight: '120px', 
+            letterSpacing: '0.01em' 
           }}>
             {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.name === 'SimpleVoting' ? simpleVotingSource : contract.bytecode}
           </pre>
