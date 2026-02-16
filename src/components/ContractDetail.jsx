@@ -54,7 +54,7 @@ export const ContractDetail = ({ theme }) => {
           <button
             onClick={handleDeploy}
             style={{
-              fontSize: '0.85em',
+              fontSize: '0.75em',
               padding: '1px 10px',
               background: theme.primary,
               color: '#fff',
@@ -72,7 +72,7 @@ export const ContractDetail = ({ theme }) => {
             onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
             onMouseOut={e => e.currentTarget.style.background = theme.primary}
           >
-            Deploy
+            <span style={{ fontSize: '0.85em', letterSpacing: '0.01em' }}>Deploy</span>
           </button>
         </span>
       }
