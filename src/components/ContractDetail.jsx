@@ -23,6 +23,9 @@ export const ContractDetail = ({ theme }) => {
   // Kod źródłowy ClickCounter
   const clickCounterSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract ClickCounter {\n    uint256 public count;\n\n    event Clicked(address indexed sender, uint256 newCount);\n\n    function click() public {\n        count += 1;\n        emit Clicked(msg.sender, count);\n    }\n\n    function getCount() public view returns (uint256) {\n        return count;\n    }\n}`;
 
+  // Kod źródłowy MessageBoard
+  const messageBoardSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract MessageBoard {\n    string public lastMessage;\n    address public lastSender;\n\n    event MessagePosted(address indexed sender, string message);\n\n    function postMessage(string memory message) public {\n        lastMessage = message;\n        lastSender = msg.sender;\n        emit MessagePosted(msg.sender, message);\n    }\n\n    function getLastMessage() public view returns (string memory, address) {\n        return (lastMessage, lastSender);\n    }\n}`;
+
   if (!contract) {
     return (
       <PageContainer
@@ -183,7 +186,7 @@ export const ContractDetail = ({ theme }) => {
             minHeight: '120px', 
             letterSpacing: '0.01em' 
           }}>
-            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.bytecode}
+            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.bytecode}
           </pre>
         </div>
       </div>
