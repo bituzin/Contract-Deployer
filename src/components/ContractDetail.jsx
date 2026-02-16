@@ -26,6 +26,9 @@ export const ContractDetail = ({ theme }) => {
   // Kod źródłowy MessageBoard
   const messageBoardSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract MessageBoard {\n    string public lastMessage;\n    address public lastSender;\n\n    event MessagePosted(address indexed sender, string message);\n\n    function postMessage(string memory message) public {\n        lastMessage = message;\n        lastSender = msg.sender;\n        emit MessagePosted(msg.sender, message);\n    }\n\n    function getLastMessage() public view returns (string memory, address) {\n        return (lastMessage, lastSender);\n    }\n}`;
 
+  // Kod źródłowy SimpleVoting
+  const simpleVotingSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract SimpleVoting {\n    uint256 public votesA;\n    uint256 public votesB;\n\n    event Voted(address indexed voter, string option);\n\n    function voteA() public {\n        votesA += 1;\n        emit Voted(msg.sender, \"A\");\n    }\n\n    function voteB() public {\n        votesB += 1;\n        emit Voted(msg.sender, \"B\");\n    }\n\n    function getVotes() public view returns (uint256, uint256) {\n        return (votesA, votesB);\n    }\n}`;
+
   if (!contract) {
     return (
       <PageContainer
@@ -186,7 +189,7 @@ export const ContractDetail = ({ theme }) => {
             minHeight: '120px', 
             letterSpacing: '0.01em' 
           }}>
-            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.bytecode}
+            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.name === 'SimpleVoting' ? simpleVotingSource : contract.bytecode}
           </pre>
         </div>
       </div>
