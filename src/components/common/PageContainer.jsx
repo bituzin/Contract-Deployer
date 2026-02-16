@@ -1,7 +1,7 @@
 import React from 'react';
 import { getPageContainerStyles } from '../../config/styles';
 
-export const PageContainer = ({ theme, title, children, backButton, maxWidth = 940 }) => {
+export const PageContainer = ({ theme, title, children, backButton, maxWidth = 720 }) => {
   const styles = getPageContainerStyles(theme);
 
   // Ensure maxWidth is a CSS value (append 'px' when a number is provided)

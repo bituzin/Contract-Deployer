@@ -38,7 +38,6 @@ export const getButtonStyles = (theme, variant = 'primary') => {
 
 export const getPageContainerStyles = (theme) => ({
   outer: {
-    maxWidth: 940,
     margin: '60px auto 32px auto',
   },
   inner: {
