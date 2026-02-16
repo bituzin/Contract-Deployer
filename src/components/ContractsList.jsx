@@ -35,7 +35,7 @@ export const ContractsList = ({ theme }) => {
     <PageContainer
       theme={theme}
       title="Available Contracts"
-      maxWidth={1000}
+      maxWidth={900}
       backButton={
         <BackButton theme={theme} to="/my-deployments">
           Go to My Deployments

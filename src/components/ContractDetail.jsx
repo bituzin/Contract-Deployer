@@ -17,6 +17,18 @@ export const ContractDetail = ({ theme }) => {
 
   const contract = contracts.find(c => toKebabCase(c.name) === contractName);
 
+  // Kod źródłowy SimpleStorage
+  const simpleStorageSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract SimpleStorage {\n    uint256 private value;\n\n    event ValueChanged(uint256 newValue);\n\n    function set(uint256 newValue) public {\n        value = newValue;\n        emit ValueChanged(newValue);\n    }\n\n    function get() public view returns (uint256) {\n        return value;\n    }\n}`;
+
+  // Kod źródłowy ClickCounter
+  const clickCounterSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract ClickCounter {\n    uint256 public count;\n\n    event Clicked(address indexed sender, uint256 newCount);\n\n    function click() public {\n        count += 1;\n        emit Clicked(msg.sender, count);\n    }\n\n    function getCount() public view returns (uint256) {\n        return count;\n    }\n}`;
+
+  // Kod źródłowy MessageBoard
+  const messageBoardSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract MessageBoard {\n    string public lastMessage;\n    address public lastSender;\n\n    event MessagePosted(address indexed sender, string message);\n\n    function postMessage(string memory message) public {\n        lastMessage = message;\n        lastSender = msg.sender;\n        emit MessagePosted(msg.sender, message);\n    }\n\n    function getLastMessage() public view returns (string memory, address) {\n        return (lastMessage, lastSender);\n    }\n}`;
+
+  // Kod źródłowy SimpleVoting
+  const simpleVotingSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract SimpleVoting {\n    uint256 public votesA;\n    uint256 public votesB;\n\n    event Voted(address indexed voter, string option);\n\n    function voteA() public {\n        votesA += 1;\n        emit Voted(msg.sender, \"A\");\n    }\n\n    function voteB() public {\n        votesB += 1;\n        emit Voted(msg.sender, \"B\");\n    }\n\n    function getVotes() public view returns (uint256, uint256) {\n        return (votesA, votesB);\n    }\n}`;
+
   if (!contract) {
     return (
       <PageContainer
@@ -27,7 +39,7 @@ export const ContractDetail = ({ theme }) => {
             Go to Contracts
           </BackButton>
         }
-        maxWidth={900}
+        maxWidth={720}
       />
     );
   }
@@ -45,13 +57,40 @@ export const ContractDetail = ({ theme }) => {
   return (
     <PageContainer
       theme={theme}
-      title={contract.name}
+      title={
+        <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {contract.name}
+          <button
+            onClick={handleDeploy}
+            style={{
+              fontSize: '0.75em',
+              padding: '1px 10px',
+              background: theme.primary,
+              color: '#fff',
+              border: 'none',
+              borderRadius: '5px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              marginLeft: 8,
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+              height: 22,
+              lineHeight: '20px',
+              minWidth: 48
+            }}
+            onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+            onMouseOut={e => e.currentTarget.style.background = theme.primary}
+          >
+            <span style={{ fontSize: '0.85em', letterSpacing: '0.01em' }}>Deploy</span>
+          </button>
+        </span>
+      }
       backButton={
         <BackButton theme={theme} to="/contracts">
           Go to Contracts
         </BackButton>
       }
-      maxWidth={900}
+      maxWidth={720}
     >
       <div style={{ marginBottom: 28 }}>
         <h3 style={{ 
@@ -70,28 +109,6 @@ export const ContractDetail = ({ theme }) => {
         }}>
           {contract.description}
         </p>
-
-        <div style={{ marginBottom: 24 }}>
-          <button
-            onClick={handleDeploy}
-            style={{
-              fontSize: '1em',
-              padding: '0.6em 1.8em',
-              background: theme.primary,
-              color: '#fff',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              boxShadow: `0 2px 12px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-            onMouseOut={e => e.currentTarget.style.background = theme.primary}
-          >
-            Deploy This Contract
-          </button>
-        </div>
       </div>
 
       <div style={{ marginBottom: 32 }}>
@@ -102,20 +119,13 @@ export const ContractDetail = ({ theme }) => {
           marginBottom: 12,
           marginTop: 0 
         }}>
-          Bytecode
+          Contract Source Code
         </h3>
-        <p style={{ 
-          color: theme.textSecondary, 
-          fontSize: '0.9em',
-          marginBottom: 16 
-        }}>
-          Contract compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization.
-        </p>
         <div style={{ 
           marginTop: '8px', 
           borderRadius: '10px', 
-          background: theme.codeBg, 
-          boxShadow: '0 2px 12px rgba(0,0,0,0.07)', 
+          background: `linear-gradient(135deg, ${theme.codeBg} 70%, #dbeaff 100%)`,
+          boxShadow: '0 8px 32px 0 rgba(0,0,0,0.13)',
           position: 'relative', 
           overflow: 'hidden' 
         }}>
@@ -123,7 +133,7 @@ export const ContractDetail = ({ theme }) => {
             display: 'flex', 
             alignItems: 'center', 
             justifyContent: 'space-between', 
-            background: theme.codeBg, 
+            background: `linear-gradient(90deg, #f6faff 60%, ${theme.codeBg} 100%)`,
             padding: '8px 18px 8px 18px', 
             borderTopLeftRadius: '10px', 
             borderTopRightRadius: '10px', 
@@ -135,7 +145,7 @@ export const ContractDetail = ({ theme }) => {
               fontWeight: 600, 
               letterSpacing: '0.04em' 
             }}>
-              {contract.name} bytecode
+              {contract.name} source code
             </span>
             <div>
               <button
@@ -179,7 +189,7 @@ export const ContractDetail = ({ theme }) => {
             minHeight: '120px', 
             letterSpacing: '0.01em' 
           }}>
-            {contract.bytecode}
+            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.name === 'ClickCounter' ? clickCounterSource : contract.name === 'MessageBoard' ? messageBoardSource : contract.name === 'SimpleVoting' ? simpleVotingSource : contract.bytecode}
           </pre>
         </div>
       </div>

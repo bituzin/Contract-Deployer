@@ -15,10 +15,10 @@ export const BytecodesList = ({ theme }) => {
     <PageContainer
       theme={theme}
       title="Bytecodes"
-      maxWidth={1000}
+      maxWidth={900}
       backButton={
         <BackButton theme={theme} to="/contracts">
-          Back to Contracts
+          Go to Contracts
         </BackButton>
       }
     >

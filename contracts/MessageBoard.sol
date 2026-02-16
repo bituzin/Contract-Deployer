@@ -1,12 +1,19 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.30;
+pragma solidity ^0.8.0;
 
 contract MessageBoard {
-    string public message;
-    address public sender;
+    string public lastMessage;
+    address public lastSender;
 
-    function post(string calldata _message) external {
-        message = _message;
-        sender = msg.sender;
+    event MessagePosted(address indexed sender, string message);
+
+    function postMessage(string memory message) public {
+        lastMessage = message;
+        lastSender = msg.sender;
+        emit MessagePosted(msg.sender, message);
+    }
+
+    function getLastMessage() public view returns (string memory, address) {
+        return (lastMessage, lastSender);
     }
 }
