@@ -17,6 +17,9 @@ export const ContractDetail = ({ theme }) => {
 
   const contract = contracts.find(c => toKebabCase(c.name) === contractName);
 
+  // Kod źródłowy SimpleStorage
+  const simpleStorageSource = `// SPDX-License-Identifier: MIT\npragma solidity ^0.8.0;\n\ncontract SimpleStorage {\n    uint256 private value;\n\n    event ValueChanged(uint256 newValue);\n\n    function set(uint256 newValue) public {\n        value = newValue;\n        emit ValueChanged(newValue);\n    }\n\n    function get() public view returns (uint256) {\n        return value;\n    }\n}`;
+
   if (!contract) {
     return (
       <PageContainer
@@ -102,15 +105,8 @@ export const ContractDetail = ({ theme }) => {
           marginBottom: 12,
           marginTop: 0 
         }}>
-          Bytecode
+          Contract Source Code
         </h3>
-        <p style={{ 
-          color: theme.textSecondary, 
-          fontSize: '0.9em',
-          marginBottom: 16 
-        }}>
-          Contract compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization.
-        </p>
         <div style={{ 
           marginTop: '8px', 
           borderRadius: '10px', 
@@ -135,7 +131,7 @@ export const ContractDetail = ({ theme }) => {
               fontWeight: 600, 
               letterSpacing: '0.04em' 
             }}>
-              {contract.name} bytecode
+              {contract.name} source code
             </span>
             <div>
               <button
@@ -179,7 +175,7 @@ export const ContractDetail = ({ theme }) => {
             minHeight: '120px', 
             letterSpacing: '0.01em' 
           }}>
-            {contract.bytecode}
+            {contract.name === 'SimpleStorage' ? simpleStorageSource : contract.bytecode}
           </pre>
         </div>
       </div>
