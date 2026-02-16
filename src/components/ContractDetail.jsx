@@ -48,7 +48,32 @@ export const ContractDetail = ({ theme }) => {
   return (
     <PageContainer
       theme={theme}
-      title={contract.name}
+      title={
+        <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {contract.name}
+          <button
+            onClick={handleDeploy}
+            style={{
+              fontSize: '0.92em',
+              padding: '2px 16px',
+              background: theme.primary,
+              color: '#fff',
+              border: 'none',
+              borderRadius: '6px',
+              fontWeight: 500,
+              cursor: 'pointer',
+              marginLeft: 8,
+              boxShadow: `0 1px 4px ${theme.shadow}`,
+              transition: 'background 0.2s',
+              height: 28
+            }}
+            onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
+            onMouseOut={e => e.currentTarget.style.background = theme.primary}
+          >
+            Deploy
+          </button>
+        </span>
+      }
       backButton={
         <BackButton theme={theme} to="/contracts">
           Go to Contracts
@@ -73,28 +98,6 @@ export const ContractDetail = ({ theme }) => {
         }}>
           {contract.description}
         </p>
-
-        <div style={{ marginBottom: 24 }}>
-          <button
-            onClick={handleDeploy}
-            style={{
-              fontSize: '1em',
-              padding: '0.6em 1.8em',
-              background: theme.primary,
-              color: '#fff',
-              border: 'none',
-              borderRadius: '8px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              boxShadow: `0 2px 12px ${theme.shadow}`,
-              transition: 'background 0.2s'
-            }}
-            onMouseOver={e => e.currentTarget.style.background = theme.primaryDark}
-            onMouseOut={e => e.currentTarget.style.background = theme.primary}
-          >
-            Deploy This Contract
-          </button>
-        </div>
       </div>
 
       <div style={{ marginBottom: 32 }}>
