@@ -30,7 +30,7 @@ export const ContractDetail = ({ theme }) => {
             Go to Contracts
           </BackButton>
         }
-        maxWidth={900}
+        maxWidth={720}
       />
     );
   }
@@ -54,7 +54,7 @@ export const ContractDetail = ({ theme }) => {
           Go to Contracts
         </BackButton>
       }
-      maxWidth={900}
+      maxWidth={720}
     >
       <div style={{ marginBottom: 28 }}>
         <h3 style={{ 
