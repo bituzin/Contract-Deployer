@@ -45,7 +45,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
       <PageContainer
         theme={theme}
         title="My Deployments"
-        maxWidth={1000}
+        maxWidth={900}
       >
         <div style={{ textAlign: 'center', minHeight: 320 }}>
           <div style={{ marginBottom: 24 }}>
@@ -77,7 +77,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
     <PageContainer
       theme={theme}
       title="My Deployments"
-      maxWidth={1000}
+      maxWidth={900}
       backButton={
         <BackButton theme={theme} to="/deploy">
           Go to Deploy

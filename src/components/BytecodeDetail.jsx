@@ -26,7 +26,7 @@ export const BytecodeDetail = ({ theme }) => {
             Go to Bytecodes
           </BackButton>
         }
-        maxWidth={720}
+        maxWidth={900}
       />
     );
   }
@@ -46,7 +46,7 @@ export const BytecodeDetail = ({ theme }) => {
           Go to Bytecodes
         </BackButton>
       }
-      maxWidth={720}
+      maxWidth={900}
     >
       <p style={{ marginBottom: 24 }}>
         Contract compiled with Hardhat version 3.0.10, Solidity compiler version 0.8.30 with 200 runs optimization.
