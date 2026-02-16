@@ -18,7 +18,7 @@ export const BytecodesList = ({ theme }) => {
       maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/contracts">
-          Back to Contracts
+          Go to Contracts
         </BackButton>
       }
     >

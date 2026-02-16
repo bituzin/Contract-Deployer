@@ -80,7 +80,7 @@ export const MyDeployments = ({ theme, deployments, isConnected, openModal, netw
       maxWidth={1000}
       backButton={
         <BackButton theme={theme} to="/deploy">
-          Back to Deploy
+          Go to Deploy
         </BackButton>
       }
     >
